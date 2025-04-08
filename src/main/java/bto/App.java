@@ -1,6 +1,6 @@
 package bto;
 
-import bto.user.User;
+import bto.model.user.User;
 
 /**
  * Hello world!
@@ -20,11 +20,11 @@ public final class App {
         // You can add more functionality here, such as initializing the user interface
         // or loading data.
 
-        // Example of creating a user object
-        User user = new User("John Doe", "johndoe", "password123", 30, "Single", "Applicant") {
+        // Example of creating a user (this should be replaced with actual user creation logic)
+        User user = new User("John Doe", "johndoe", "password", 30, null, "Applicant") {
             // This is an anonymous class extending the abstract User class
         };
-        System.out.println("User created: " + user.getName() + ", User ID: " + user.getUserId());
+        System.out.println("User created: " + user.getName());
         
     }
 }

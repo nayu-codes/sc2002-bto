@@ -1,6 +1,6 @@
-package bto.user;
+package bto.model.user;
 
-public class HDBOfficer extends User {
+public class HDBOfficer extends Applicant {
     /**
      * Constructor to initialise the HDBOfficer object with common attributes.
      * 
@@ -10,8 +10,8 @@ public class HDBOfficer extends User {
      * @param age The age of the HDBOfficer.
      * @param maritalStatus The marital status of the HDBOfficer (e.g., "Single", "Married").
      */
-    public HDBOfficer(String name, String userId, String password, int age, String maritalStatus) {
-        super(name, userId, password, age, maritalStatus, "HDBOfficer");
+    public HDBOfficer(String name, String userId, String password, int age, MaritalStatus maritalStatus, String userType) {
+        super(name, userId, password, age, maritalStatus, userType);
     }
 
 }

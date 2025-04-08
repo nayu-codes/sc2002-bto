@@ -1,4 +1,4 @@
-package bto.user;
+package bto.model.user;
 
 public abstract class User {
     /**
@@ -26,7 +26,7 @@ public abstract class User {
     private String userId;
     private String password;
     private int age;
-    private String maritalStatus; // "Single", "Married"
+    private MaritalStatus maritalStatus; // Enum for marital status (e.g., "Single", "Married")
     private String userType; // "Applicant", "HDBOfficer", "HDBManager"
 
     /**
@@ -39,7 +39,7 @@ public abstract class User {
      * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
      * @param userType The type of user (e.g., "Applicant", "HDBOfficer", "HDBManager").
      */
-    public User(String name, String userId, String password, int age, String maritalStatus, String userType) {
+    public User(String name, String userId, String password, int age, MaritalStatus maritalStatus, String userType) {
         this.name = name;
         this.userId = userId;
         this.password = password;
@@ -85,7 +85,7 @@ public abstract class User {
      * @return The marital status of the user.
      * This method returns the marital status of the user as a String.
      */
-    public String getMaritalStatus() {
+    public MaritalStatus getMaritalStatus() {
         return maritalStatus;
     }
     /**
@@ -134,7 +134,7 @@ public abstract class User {
      * @return void
      * This method sets the marital status of the user to the provided value.
      */
-    public void setMaritalStatus(String maritalStatus) {
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
     /**

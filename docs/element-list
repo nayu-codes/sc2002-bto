@@ -1,2 +1,5 @@
 bto
-bto.user
+bto.model.application
+bto.model.project
+bto.model.registration
+bto.model.user

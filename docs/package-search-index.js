@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"bto"},{"l":"bto.user"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"bto"},{"l":"bto.model.application"},{"l":"bto.model.project"},{"l":"bto.model.registration"},{"l":"bto.model.user"}]

@@ -1,4 +1,4 @@
-package bto.user;
+package bto.model.user;
 
 public class Applicant extends User {
     /**
@@ -10,7 +10,7 @@ public class Applicant extends User {
      * @param age The age of the applicant.
      * @param maritalStatus The marital status of the applicant (e.g., "Single", "Married").
      */
-    public Applicant(String name, String userId, String password, int age, String maritalStatus) {
-        super(name, userId, password, age, maritalStatus, "Applicant");
+    public Applicant(String name, String userId, String password, int age, MaritalStatus maritalStatus, String userType) {
+        super(name, userId, password, age, maritalStatus, userType);
     }
 }
