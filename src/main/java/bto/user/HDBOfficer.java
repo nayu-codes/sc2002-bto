@@ -1,0 +1,17 @@
+package bto.user;
+
+public class HDBOfficer extends User {
+    /**
+     * Constructor to initialise the HDBOfficer object with common attributes.
+     * 
+     * @param name The name of the HDBOfficer.
+     * @param userId The unique identifier for the HDBOfficer.
+     * @param password The password for the HDBOfficer.
+     * @param age The age of the HDBOfficer.
+     * @param maritalStatus The marital status of the HDBOfficer (e.g., "Single", "Married").
+     */
+    public HDBOfficer(String name, String userId, String password, int age, String maritalStatus) {
+        super(name, userId, password, age, maritalStatus, "HDBOfficer");
+    }
+
+}

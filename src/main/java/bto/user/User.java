@@ -47,73 +47,101 @@ public abstract class User {
         this.maritalStatus = maritalStatus;
         this.userType = userType;
     }
-    
-    /**
-     * Constructor to initialize the User object with common attributes.
-     * This constructor is used for creating a new user with default values for password and userType.
-     * @param name
-     * @param userId
-     * @param age
-     * @param maritalStatus
-     */
-    public User(String name, String userId, int age, String maritalStatus) {
-        this.name = name;
-        this.userId = userId;
-        this.password = "password"; // Default password, can be changed later
-        this.userType = "Applicant"; // Default user type, can be changed later
-        this.age = age;
-        this.maritalStatus = maritalStatus;
-    }
 
     /**
-     * Getter methods to access the attributes of the User class.
-     * These methods are used to retrieve the values of the private attributes.
-     * @return
+     * Getter method to access the name of the User class.
+     * @return The name of the user.
+     *         This method returns the name of the user as a String.
      */
     public String getName() {
         return name;
     }
+    /**
+     * Getter method to access the UserID of the User class.
+     * @return The userId of the user.
+     * This method returns the userId of the user as a String.
+     */
     public String getUserId() {
         return userId;
     }
+    /**
+     * Getter method to access the password of the User class.
+     * @return The password of the user.
+     * This method returns the password of the user as a String.
+     */
     public String getPassword() {
         return password;
     }
+    /**
+     * Getter method to access the age of the User class.
+     * @return The age of the user.
+     * This method returns the age of the user as an int.
+     */
     public int getAge() {
         return age;
     }
+    /**
+     * Getter method to access the marital status of the User class.
+     * @return The marital status of the user.
+     * This method returns the marital status of the user as a String.
+     */
     public String getMaritalStatus() {
         return maritalStatus;
     }
+    /**
+     * Getter method to access the user type of the User class.
+     * @return The user type of the user.
+     * This method returns the user type of the user as a String.
+     */
     public String getUserType() {
         return userType;
     }
 
     /**
-     * Setter methods to modify the attributes of the User class.
-     * These methods are used to set the values of the private attributes.
-     * @param name
-     * @param userId
-     * @param password
-     * @param age
-     * @param maritalStatus
-     * @param userType
+     * Setter methods to set the name of the User class.
+     * @return void
+     * This method sets the name of the user to the provided value.
      */
     public void setName(String name) {
         this.name = name;
     }
+    /**
+     * Setter methods to set the userId of the User class.
+     * @return void
+     * This method sets the userId of the user to the provided value.
+     */
     public void setUserId(String userId) {
         this.userId = userId;
     }
+    /**
+     * Setter methods to set the password of the User class.
+     * @return void
+     * This method sets the password of the user to the provided value.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
+    /**
+     * Setter methods to set the age of the User class.
+     * @return void
+     * This method sets the age of the user to the provided value.
+     */
     public void setAge(int age) {
         this.age = age;
     }
+    /**
+     * Setter methods to set the marital status of the User class.
+     * @return void
+     * This method sets the marital status of the user to the provided value.
+     */
     public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
+    /**
+     * Setter methods to set the user type of the User class.
+     * @return void
+     * This method sets the user type of the user to the provided value.
+     */
     public void setUserType(String userType) {
         this.userType = userType;
     }
