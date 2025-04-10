@@ -13,6 +13,7 @@ public class BTOProject {
     private String neighbourhood;
     private List<FlatType> flatType;
     private HashMap<FlatType, Integer> flatCount;
+    private HashMap<FlatType, Integer> flatPrice;
     private Date applicationOpeningDate;
     private Date applicationClosingDate;
     private HDBManager projectManager;
@@ -28,6 +29,7 @@ public class BTOProject {
      * @param neighbourhood The neighbourhood where the BTO project is located.
      * @param flatType A List containing the type of flats available in the BTO project (e.g., "2 Room Flat", "3 Room Flat").
      * @param flatCount A HashMap containing the count of each flat type available in the project.
+     * @param flatPrice A HashMap containing the price of each flat type available in the project.
      * @param applicationOpeningDate The date when applications for the BTO project open.
      * @param applicationClosingDate The date when applications for the BTO project close.
      * @param projectManager The HDBManager responsible for managing the BTO project.
