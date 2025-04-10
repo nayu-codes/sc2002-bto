@@ -37,7 +37,7 @@ public abstract class User {
      * @param password The password for the user.
      * @param age The age of the user.
      * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
-     * @param userType The type of user (e.g., "Applicant", "HDBOfficer", "HDBManager").
+     * @param userType The type of user (e.g., "Applicant", "HDB Officer", "HDB Manager").
      */
     public User(String name, String userId, String password, int age, MaritalStatus maritalStatus, UserType userType) {
         this.name = name;
@@ -83,7 +83,9 @@ public abstract class User {
     /**
      * Getter method to access the marital status of the User class.
      * @return The marital status of the user.
-     * This method returns the marital status of the user as a String.
+     * This method returns the marital status of the user as a MaritalStatus enum.
+     * 
+     * @see MaritalStatus
      */
     public MaritalStatus getMaritalStatus() {
         return maritalStatus;
@@ -91,7 +93,9 @@ public abstract class User {
     /**
      * Getter method to access the user type of the User class.
      * @return The user type of the user.
-     * This method returns the user type of the user as a String.
+     * This method returns the user type of the user as a UserType enum.
+     * 
+     * @see UserType
      */
     public UserType getUserType() {
         return userType;

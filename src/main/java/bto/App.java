@@ -1,8 +1,12 @@
 package bto;
 
 import bto.model.user.User;
+import bto.model.user.Applicant;
+import bto.model.user.HDBOfficer;
+import bto.model.user.HDBManager;
 import bto.model.user.UserType;
 import bto.model.user.MaritalStatus;
+import bto.database.UserDB;
 
 /**
  * Hello world!
@@ -22,11 +26,12 @@ public final class App {
         // You can add more functionality here, such as initializing the user interface
         // or loading data.
 
-        // Example of creating a user (this should be replaced with actual user creation logic)
-        User user = new User("John Doe", "johndoe", "password", 30, MaritalStatus.SINGLE, UserType.APPLICANT) {
-            // This is an anonymous class extending the abstract User class
-        };
-        System.out.println("User created: " + user.getName());
+        // Call UserDB
+        UserDB userDB = new UserDB();
+
+        // Print all users in the user list
+        System.out.println("User List:");
+        userDB.printUserList();
         
     }
 }
