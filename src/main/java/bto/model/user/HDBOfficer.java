@@ -10,7 +10,7 @@ public class HDBOfficer extends Applicant {
      * @param age The age of the HDBOfficer.
      * @param maritalStatus The marital status of the HDBOfficer (e.g., "Single", "Married").
      */
-    public HDBOfficer(String name, String userId, String password, int age, MaritalStatus maritalStatus, String userType) {
+    public HDBOfficer(String name, String userId, String password, int age, MaritalStatus maritalStatus, UserType userType) {
         super(name, userId, password, age, maritalStatus, userType);
     }
 

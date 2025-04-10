@@ -10,7 +10,7 @@ public class HDBManager extends User{
      * @param age The age of the HDBManager.
      * @param maritalStatus The marital status of the HDBManager (e.g., "Single", "Married").
      */
-    public HDBManager(String name, String userId, String password, int age, MaritalStatus maritalStatus, String userType) {
+    public HDBManager(String name, String userId, String password, int age, MaritalStatus maritalStatus, UserType userType) {
         super(name, userId, password, age, maritalStatus, userType);
     }
 }

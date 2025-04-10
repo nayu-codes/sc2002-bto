@@ -27,7 +27,7 @@ public abstract class User {
     private String password;
     private int age;
     private MaritalStatus maritalStatus; // Enum for marital status (e.g., "Single", "Married")
-    private String userType; // "Applicant", "HDBOfficer", "HDBManager"
+    private UserType userType; // "Applicant", "HDBOfficer", "HDBManager"
 
     /**
      * Constructor to initialize the User object with common attributes.
@@ -39,7 +39,7 @@ public abstract class User {
      * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
      * @param userType The type of user (e.g., "Applicant", "HDBOfficer", "HDBManager").
      */
-    public User(String name, String userId, String password, int age, MaritalStatus maritalStatus, String userType) {
+    public User(String name, String userId, String password, int age, MaritalStatus maritalStatus, UserType userType) {
         this.name = name;
         this.userId = userId;
         this.password = password;
@@ -93,7 +93,7 @@ public abstract class User {
      * @return The user type of the user.
      * This method returns the user type of the user as a String.
      */
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
@@ -142,7 +142,7 @@ public abstract class User {
      * @return void
      * This method sets the user type of the user to the provided value.
      */
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 }
