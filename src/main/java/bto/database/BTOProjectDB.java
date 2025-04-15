@@ -89,7 +89,7 @@ public class BTOProjectDB {
      */
     public static void exportProjectsToCsv() {
         // Export the BTO projects to a CSV file
-        String filename = "resources/ProjectListTest.csv";
+        String filename = "resources/ProjectList.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             // Write the header line
             bw.write("Project Name,Neighborhood,Type 1,Number of units for Type 1,Selling price for Type 1,Type 2,Number of units for Type 2,Selling price for Type 2,Application opening date,Application closing date,Manager,Officer Slot,Officer");
