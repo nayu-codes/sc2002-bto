@@ -26,12 +26,12 @@ public final class App {
         // You can add more functionality here, such as initializing the user interface
         // or loading data.
 
-        // Call UserDB
+        // Initialise the user database
         UserDB userDB = new UserDB();
 
         // Print all users in the user list
         System.out.println("User List:");
-        userDB.printUserList();
+        UserDB.printUserList();
         
     }
 }

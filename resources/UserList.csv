@@ -1,0 +1,11 @@
+Name,userId,age,maritalStatus,password,userType
+Michael,T8765432F,36,Single,password,HDB_MANAGER
+Rachel,S3456789E,25,Single,password,APPLICANT
+Emily,S6543210I,28,Single,password,HDB_OFFICER
+David,T1234567J,29,Married,password,HDB_OFFICER
+Sarah,T7654321B,40,Married,password,APPLICANT
+Daniel,T2109876H,36,Single,password,HDB_OFFICER
+Jessica,S5678901G,26,Married,password,HDB_MANAGER
+Grace,S9876543C,37,Married,password,APPLICANT
+John,S1234567A,35,Single,password,APPLICANT
+James,T2345678D,30,Married,password,APPLICANT
