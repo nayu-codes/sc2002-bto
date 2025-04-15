@@ -9,6 +9,8 @@ public class Applicant extends User {
      * @param password The password for the applicant.
      * @param age The age of the applicant.
      * @param maritalStatus The marital status of the applicant (e.g., "Single", "Married").
+     * @param userType The type of user (e.g., {@link UserType#APPLICANT}).
+     * @see UserType
      */
     public Applicant(String name, String userId, String password, int age, MaritalStatus maritalStatus, UserType userType) {
         super(name, userId, password, age, maritalStatus, userType);

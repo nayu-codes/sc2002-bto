@@ -15,7 +15,7 @@ public class OfficerRegistration {
     /**
      * Constructor to initialise the OfficerRegistration object with common attributes.
      * @param registrationId The unique identifier for the registration.
-     * @param HDBOfficer The HDBOfficer associated with this registration.
+     * @param officer The HDBOfficer associated with this registration.
      * @param status The current status of the registration (e.g., Pending, Successful, Unsuccessful).
      * @param project The BTO project associated with this registration.
      * @param applicationDate The date the registration was submitted.

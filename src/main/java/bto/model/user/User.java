@@ -6,13 +6,6 @@ public abstract class User {
      * This class is abstract and should be extended by specific user types.
      * It contains common attributes and methods for all users.
      * 
-     * @param name The name of the user.
-     * @param userId The unique identifier for the user.
-     * @param password The password for the user.
-     * @param age The age of the user.
-     * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
-     * @param userType The type of user (e.g., "Applicant", "HDBOfficer", "HDBManager").
-     * 
      * This class is part of the BTO application system.
      * It is designed to be extended by specific user types such as Applicant, HDBOfficer, and HDBManager.
      * The class provides a constructor to initialise the common attributes of a user.
@@ -37,7 +30,7 @@ public abstract class User {
      * @param password The password for the user.
      * @param age The age of the user.
      * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
-     * @param userType The type of user (e.g., "Applicant", "HDB Officer", "HDB Manager").
+     * @param userType The type of user (e.g., {@link UserType#APPLICANT}, {@link UserType#HDB_OFFICER}, {@link UserType#HDB_MANAGER}).
      */
     public User(String name, String userId, String password, int age, MaritalStatus maritalStatus, UserType userType) {
         this.name = name;
@@ -103,7 +96,8 @@ public abstract class User {
 
     /**
      * Setter methods to set the name of the User class.
-     * @return void
+     * @param name The name of the user.
+     * 
      * This method sets the name of the user to the provided value.
      */
     public void setName(String name) {
@@ -111,7 +105,8 @@ public abstract class User {
     }
     /**
      * Setter methods to set the userId of the User class.
-     * @return void
+     * @param userId The userId of the user.
+     * 
      * This method sets the userId of the user to the provided value.
      */
     public void setUserId(String userId) {
@@ -119,7 +114,8 @@ public abstract class User {
     }
     /**
      * Setter methods to set the password of the User class.
-     * @return void
+     * @param password The password of the user.
+     * 
      * This method sets the password of the user to the provided value.
      */
     public void setPassword(String password) {
@@ -127,7 +123,8 @@ public abstract class User {
     }
     /**
      * Setter methods to set the age of the User class.
-     * @return void
+     * @param age The age of the user.
+     * 
      * This method sets the age of the user to the provided value.
      */
     public void setAge(int age) {
@@ -135,7 +132,8 @@ public abstract class User {
     }
     /**
      * Setter methods to set the marital status of the User class.
-     * @return void
+     * @param maritalStatus The marital status of the user.
+     * 
      * This method sets the marital status of the user to the provided value.
      */
     public void setMaritalStatus(MaritalStatus maritalStatus) {
@@ -143,7 +141,8 @@ public abstract class User {
     }
     /**
      * Setter methods to set the user type of the User class.
-     * @return void
+     * @param userType The user type of the user.
+     * 
      * This method sets the user type of the user to the provided value.
      */
     public void setUserType(UserType userType) {

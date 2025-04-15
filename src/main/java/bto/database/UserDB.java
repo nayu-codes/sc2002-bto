@@ -74,7 +74,9 @@ public class UserDB {
     /**
      * Method to read users from a CSV file.
      * This method is only useful after the first run of the program where the users are processed and exported before. If first-run, use {@link #processRawCsv(String, UserType)} instead.
-     * @param filename
+     * @param filename The name of the CSV file to read users from.
+     * 
+     * @return true if the users were read successfully, false otherwise.
      */
     public boolean readUsersFromCsv(String filename){
         String csvFilePath = "resources/" + filename;
@@ -136,6 +138,12 @@ public class UserDB {
         return true;
     }
 
+    /**
+     * Method to process raw CSV files for different user types.
+     * This method reads the CSV file, creates User objects, and adds them to the user list.
+     * @param filename The name of the CSV file to be processed.
+     * @param userType The type of user to be processed (Applicant, HDB Officer, or HDB Manager).
+     */
     public void processRawCsv(String filename, UserType userType) {
         String csvFilePath = "resources/" + filename;
         String line = "";
@@ -195,23 +203,54 @@ public class UserDB {
     public static void addUser(User user) {
         userList.put(user.getUserId(), user);
     }
+
+    /**
+     * Helper function to typecast the user object to the correct type.
+     * Takes in a general User object and returns the specific type of user.
+     * @param user The User object to be typecasted.
+     * @return The specific type of user (Applicant, HDBOfficer, or HDBManager).
+     */
+    public static User typecastUser(User user) {
+        if (user instanceof Applicant) {
+            return (Applicant) user;
+        } else if (user instanceof HDBOfficer) {
+            return (HDBOfficer) user;
+        } else if (user instanceof HDBManager) {
+            return (HDBManager) user;
+        }
+        return null; // Return null if the user is not of a known type
+    }
+
     /**
      * Method to retrieve a user from the user list using the userId.
      * @param userId The unique identifier of the user to be retrieved.
      * @return The User object associated with the given userId, or null if not found.
      */
-    public static User getUser(String userId) {
+    public static User getUserById(String userId) {
         // Return either Applicant, HDB Officer or HDB Manager class on the user retrieval
-        if (userList.get(userId) instanceof Applicant) {
-            return (Applicant) userList.get(userId);
-        } else if (userList.get(userId) instanceof HDBOfficer) {
-            return (HDBOfficer) userList.get(userId);
-        } else if (userList.get(userId) instanceof HDBManager) {
-            return (HDBManager) userList.get(userId);
+        User user = userList.get(userId);
+        if (user != null) {
+            return typecastUser(user); // Typecast the user to the correct type
+        }
+        
+        // If user not found, return null
+        return null;
+    }
+    /**
+     * Method to retrieve a user from the user list using their name.
+     * @param name The name of the user to be retrieved. (This program assumes that names are unique)
+     * @return The User object associated with the given name, or null if not found.
+     */
+    public static User getUserByName(String name) {
+        for (User user : userList.values()) {
+            if (user.getName().equalsIgnoreCase(name)) {
+                return typecastUser(user); // Typecast the user to the correct type
+            }
         }
         // If the user is not found, return null
         return null;
     }
+    
     /**
      * Method to remove a user from the user list using the userId.
      * @param userId The unique identifier of the user to be removed.
