@@ -22,27 +22,33 @@ public class UserDB {
      * 
      * @see User
      */
-    public static HashMap<String, User> userList;
+    private static HashMap<String, User> userList = new HashMap<>(); // HashMap to store users with userId as the key
+    private static final String CSV_FILE_PATH = "resources/UserList.csv"; // Path to the CSV file
 
     /**
      * Constructor to initialize the UserDB object with a user list.
      * The user list is represented as a HashMap where the key is the userId and the value is the User object.
      */
     public UserDB() {
+        // Constructor to initialize the user list
+    }
+
+    /**
+     * Method to initialize the user list.
+     * This method is called to reload the user list from the CSV file.
+     */
+    public static void init(){
         userList = new HashMap<>();
 
         // Load users from CSV file, if available
-        if (!readUsersFromCsv("UserList.csv")) {
-            System.out.println("No existing user data found. Loading default users."); // TODO: Remove in production
+        if (!readUsersFromCsv(CSV_FILE_PATH)) {
             // Load users from raw CSV files for different user types
             processRawCsv("ApplicantList.csv", UserType.APPLICANT);
             processRawCsv("OfficerList.csv", UserType.HDB_OFFICER);
             processRawCsv("ManagerList.csv", UserType.HDB_MANAGER);
 
             // Export users to CSV file after loading
-            exportUsersToCsv("UserList.csv");
-        } else {
-            System.out.println("User data loaded successfully from CSV file."); // TODO: Remove in production
+            exportUsersToCsv(CSV_FILE_PATH);
         }
     }
 
@@ -52,10 +58,9 @@ public class UserDB {
      * This method is only useful after the first run of the program.
      * @param filename The name of the CSV file to export users to.
      */
-    public void exportUsersToCsv(String filename) {
+    public static void exportUsersToCsv(String filename) {
         // Write to CSV file
-        String csvFilePath = "resources/" + filename;
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFilePath))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             // Write header
             bw.write("Name,userId,age,maritalStatus,password,userType\n");
 
@@ -78,13 +83,12 @@ public class UserDB {
      * 
      * @return true if the users were read successfully, false otherwise.
      */
-    public boolean readUsersFromCsv(String filename){
-        String csvFilePath = "resources/" + filename;
+    public static boolean readUsersFromCsv(String filename){
         String line = "";
         String csvSplitBy = ","; // The character used to separate values
 
         // Use try-with-resources to ensure the reader is closed automatically
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 
             br.readLine(); // Skip the header line
 
@@ -144,7 +148,7 @@ public class UserDB {
      * @param filename The name of the CSV file to be processed.
      * @param userType The type of user to be processed (Applicant, HDB Officer, or HDB Manager).
      */
-    public void processRawCsv(String filename, UserType userType) {
+    public static void processRawCsv(String filename, UserType userType) {
         String csvFilePath = "resources/" + filename;
         String line = "";
         String csvSplitBy = ","; // The character used to separate values
@@ -202,6 +206,9 @@ public class UserDB {
      */
     public static void addUser(User user) {
         userList.put(user.getUserId(), user);
+
+        // Save to CSV file after adding the user
+        exportUsersToCsv(CSV_FILE_PATH);
     }
 
     /**
@@ -227,14 +234,13 @@ public class UserDB {
      * @return The User object associated with the given userId, or null if not found.
      */
     public static User getUserById(String userId) {
-        // Return either Applicant, HDB Officer or HDB Manager class on the user retrieval
-        User user = userList.get(userId);
-        if (user != null) {
-            return typecastUser(user); // Typecast the user to the correct type
+        // Check if the userId exists in the user list
+        if (!userExists(userId)) {
+            return null; // User not found
         }
-        
-        // If user not found, return null
-        return null;
+
+        User user = userList.get(userId);
+        return typecastUser(user); // Typecast the user to the correct type
     }
     /**
      * Method to retrieve a user from the user list using their name.
@@ -257,6 +263,9 @@ public class UserDB {
      */
     public static void removeUser(String userId) {
         userList.remove(userId);
+
+        // Save to CSV file after removing the user
+        exportUsersToCsv(CSV_FILE_PATH);
     }
     /**
      * Method to check if a user exists in the user list using the userId.
@@ -279,6 +288,9 @@ public class UserDB {
      */
     public static void clearUserList() {
         userList.clear();
+        
+        // Save to CSV file after nuking the user list
+        exportUsersToCsv(CSV_FILE_PATH);
     }
     /**
      * Method to get the count of users in the user list.
@@ -320,6 +332,9 @@ public class UserDB {
     public static void updateUser(User user) {
         if (userList.containsKey(user.getUserId())) {
             userList.put(user.getUserId(), user);
+
+            // Save to CSV file after adding the user
+            exportUsersToCsv(CSV_FILE_PATH);
         } else {
             System.out.println("User not found in the database.");
         }

@@ -3,7 +3,6 @@ package bto.database;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.HDBManager;
-import bto.database.UserDB;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
