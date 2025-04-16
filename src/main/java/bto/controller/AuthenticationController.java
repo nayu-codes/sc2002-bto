@@ -10,8 +10,8 @@ public class AuthenticationController {
 
     /**
      * Validates the user credentials against the database.
-     * @param userId
-     * @param password
+     * @param userId the user ID entered by the user
+     * @param password the password entered by the user
      * @return true if the credentials are valid, false otherwise
      */
     public static boolean validateCredentials(String userId, String password) {
