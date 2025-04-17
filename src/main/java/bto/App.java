@@ -4,7 +4,7 @@ import bto.database.UserDB;
 import bto.database.BTOProjectDB;
 import bto.ui.LoginScreen;
 
-import bto.database.EnquiryDB;
+import bto.database.RegistrationDB;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public final class App {
     public static void main(String[] args) {
 
         // Test EnquiryDB
-        EnquiryDB.init();
+        RegistrationDB.init();
 
         int option;
         Scanner scanner = new Scanner(System.in);
