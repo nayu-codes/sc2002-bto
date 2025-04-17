@@ -28,7 +28,7 @@ public class RegistrationDB {
 
         // Print the details of each registration loaded from the CSV file
         for (OfficerRegistration registration : registrationList) {
-            System.out.println("Registration ID: " + registration.getRegistrationId() + ", Officer Name: " + registration.getOfficer().getName() + ", Registration Status: " + registration.getRegistrationStatus().toString()); // TODO: Remove in production
+            System.out.println("Registration ID: " + registration.getRegistrationId() + ", Officer Name: " + registration.getOfficer().getName() + "Project Name" + registration.getProject().getName() + ", Registration Status: " + registration.getRegistrationStatus().toString()); // TODO: Remove in production
         }
         // Export the registrationList to a CSV file
         exportToCSV();
@@ -46,7 +46,7 @@ public class RegistrationDB {
             // Format: registrationId, officerName, projectName, status
 
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 4); // Split into 6 parts by comma, but ignore commas inside quotes
+                String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 4); // Split into 4 parts by comma, but ignore commas inside quotes
                 // Parse the values from the CSV line
                 int enquiryId = Integer.parseInt(values[0].trim());
 
@@ -84,7 +84,10 @@ public class RegistrationDB {
             bw.write("registrationId, officerName, projectName, status\n");
             // Write each registration to the CSV file
             for (OfficerRegistration registration : registrationList) {
-                bw.write(registration.getRegistrationId() + ", " + registration.getOfficer().getName() + ", " + registration.getProject().getName() + ", " + registration.getRegistrationStatus().toString() + "\n");
+                bw.write(registration.getRegistrationId() + ", " +
+                registration.getOfficer().getName() + ", " +
+                registration.getProject().getName() + ", " +
+                registration.getRegistrationStatus().toString() + "\n");
             }
         } catch (IOException e) {
             System.err.println("Error writing to CSV file: " + e.getMessage()); // TODO: Remove in production
@@ -105,5 +108,54 @@ public class RegistrationDB {
             }
         }
         return officerRegistrations;
+    }
+
+    /**
+     * Get the list of all registrations.
+     * 
+     * @return A list of all OfficerRegistration objects.
+     */
+    public static ArrayList<OfficerRegistration> getAllRegistrations() {
+        return registrationList;
+    }
+
+    /**
+     * Adds a new registration to the database.
+     * @param registration The registration to be added.
+     * 
+     * @return true if the registration was added successfully, false otherwise.
+     */
+    public static boolean addRegistration(OfficerRegistration registration) {
+        // Check if the registration already exists in the list
+        for (OfficerRegistration existingRegistration : registrationList) {
+            if (existingRegistration.getRegistrationId() == registration.getRegistrationId()) {
+                return false; // Registration already exists, do not add
+            }
+        }
+        // Add the new registration to the list
+        registrationList.add(registration);
+        // Export the updated list to CSV
+        exportToCSV();
+        return true; // Registration added successfully
+    }
+
+    /**
+     * Updates the registration in the database.
+     * @param registration The registration to be updated.
+     * 
+     * @return true if the registration was updated successfully, false otherwise.
+     */
+    public static boolean updateRegistration(OfficerRegistration registration) {
+        // Find the existing registration in the list
+        for (int i = 0; i < registrationList.size(); i++) {
+            if (registrationList.get(i).getRegistrationId() == registration.getRegistrationId()) {
+                // Update the existing registration with the new values
+                registrationList.set(i, registration);
+                // Export the updated list to CSV
+                exportToCSV();
+                return true; // Registration updated successfully
+            }
+        }
+        return false; // Registration not found, update failed
     }
 }

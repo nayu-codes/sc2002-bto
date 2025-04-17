@@ -21,14 +21,12 @@ public class BTOProjectDB {
     public static Integer totalProjects = 0;
 
     public BTOProjectDB() {
-        // Initialize the BTO project database
-        readProjectsFromCsv();
+    }
 
-        // TODO: Remove in production
-        System.out.println("Read projects from CSV file: " + btoProjectList.size() + " projects loaded.");
-        // Print the BTO project list to the console
+    public static void init() {
+        readProjectsFromCsv();
         exportProjectsToCsv();
-        System.out.println("Exported projects to CSV file.");
+        System.out.println("Total BTO projects loaded: " + totalProjects); // TODO: Remove in production
     }
 
     /**

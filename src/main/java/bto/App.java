@@ -1,10 +1,7 @@
 package bto;
 
-import bto.database.UserDB;
-import bto.database.BTOProjectDB;
 import bto.ui.LoginScreen;
-
-import bto.database.RegistrationDB;
+import bto.database.Database;
 
 import java.util.Scanner;
 
@@ -17,13 +14,12 @@ public final class App {
      * 
      * @param args Command line arguments (not used)
      */
-    public static void main(String[] args) {
-
-        // Test EnquiryDB
-        RegistrationDB.init();
-
+    public static void main(String[] args) { 
         int option;
         Scanner scanner = new Scanner(System.in);
+
+        // Initialise the database
+        Database.init();
 
         do{
             // Menu for the user to select an option
@@ -36,9 +32,7 @@ public final class App {
             option = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
             System.out.println();
-    
-            // Initialise UserDB
-            UserDB.init();
+            
             switch (option) {
                 case 1:
                     // Login option
@@ -62,22 +56,6 @@ public final class App {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        } while(option != 3);
-
-        if (UserDB.isEmpty()){
-            UserDB.init();
-        }
-
-        // Print all users in the user list
-        System.out.println("User List:");
-        UserDB.printUserList();
-
-        // Initialise the project database
-        BTOProjectDB btoProjectDB = new BTOProjectDB();
-
-        // Print all BTO projects in the project list
-        System.out.println("BTO Project List:");
-        BTOProjectDB.printBTOProjectList();
-        
+        } while(option != 3);        
     }
 }

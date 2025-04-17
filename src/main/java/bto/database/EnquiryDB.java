@@ -52,7 +52,7 @@ public class EnquiryDB {
             br.readLine();
             // Format: enquiryId, applicantName, projectName, applicantMessage, applicantMessageDate, replyName, replyMessage, replyMessageDate
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 8); // Split into 7 parts by comma, but ignore commas inside quotes
+                String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 8); // Split into 8 parts by comma, but ignore commas inside quotes
                 // Parse the values from the CSV line
                 int enquiryId = Integer.parseInt(values[0].trim());
                 String applicantName = values[1].trim().replace("\"", ""); // Remove quotes
@@ -127,5 +127,70 @@ public class EnquiryDB {
         } catch (IOException e) {
             System.err.println("Error writing to CSV file: " + e.getMessage()); // TODO: Remove in production
         }
+    }
+
+    /**
+     * Adds a new enquiry to the database.
+     * @param enquiry The enquiry to be added.
+     * 
+     * @return true if the enquiry was added successfully, false otherwise.
+     */
+    public static boolean addEnquiry(Enquiry enquiry) {
+        // Check if the enquiry already exists in the list
+        for (Enquiry existingEnquiry : enquiryList) {
+            if (existingEnquiry.getEnquiryId() == enquiry.getEnquiryId()) {
+                return false; // Enquiry already exists, do not add
+            }
+        }
+        // Add the new enquiry to the list
+        enquiryList.add(enquiry);
+        // Export the updated list to CSV
+        exportToCSV();
+        return true; // Enquiry added successfully
+    }
+
+    /**
+     * Gets the list of all enquiries.
+     * 
+     * @return The list of all enquiries.
+     */
+    public static ArrayList<Enquiry> getEnquiryList() {
+        return enquiryList;
+    }
+
+    /**
+     * Gets the enquiry by its ID.
+     * 
+     * @param enquiryId The ID of the enquiry to be retrieved.
+     * 
+     * @return The enquiry with the specified ID, or null if not found.
+     */
+    public static Enquiry getEnquiryById(int enquiryId) {
+        for (Enquiry enquiry : enquiryList) {
+            if (enquiry.getEnquiryId() == enquiryId) {
+                return enquiry; // Return the found enquiry
+            }
+        }
+        return null; // Enquiry not found
+    }
+
+    /**
+     * Updates the enquiry in the database.
+     * @param enquiry The enquiry to be updated.
+     * 
+     * @return true if the enquiry was updated successfully, false otherwise.
+     */
+    public static boolean updateEnquiry(Enquiry enquiry) {
+        // Find the existing enquiry in the list
+        for (int i = 0; i < enquiryList.size(); i++) {
+            if (enquiryList.get(i).getEnquiryId() == enquiry.getEnquiryId()) {
+                // Update the enquiry in the list
+                enquiryList.set(i, enquiry);
+                // Export the updated list to CSV
+                exportToCSV();
+                return true; // Enquiry updated successfully
+            }
+        }
+        return false; // Enquiry not found, update failed
     }
 }
