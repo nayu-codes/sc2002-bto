@@ -77,7 +77,7 @@ public class Enquiry {
     /**
      * Sets the applicant message of the enquiry.
      * 
-     * @return
+     * @param applicantMessage The message from the applicant.
      */
     public void setApplicantMessage(EnquiryMessage applicantMessage) {
         this.applicantMessage = applicantMessage;

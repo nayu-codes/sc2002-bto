@@ -15,6 +15,9 @@ public class ProjectDashboard {
     /**
      * Starts the project dashboard for the user to see available projects.
      * The method only shows the projects available for a user depending on their age and maritalStatus
+     * 
+     * @param age The age of the user.
+     * @param maritalStatus The marital status of the user.
      */
     public static void start(int age, MaritalStatus maritalStatus) {
         ProjectFilter filter = (age, maritalStatus) -> {

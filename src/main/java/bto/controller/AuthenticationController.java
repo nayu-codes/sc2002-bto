@@ -9,9 +9,10 @@ public class AuthenticationController {
     }
 
     /**
-     * Login method to authenticate the user.     * 
-     * @param userId
-     * @param password
+     * Login method to authenticate the user.
+     * @param userId the user ID entered by the user
+     * @param password the password entered by the user
+     * 
      * @return User object if authentication is successful, null otherwise
      */
     public static User loginAsUser(String userId, String password) {

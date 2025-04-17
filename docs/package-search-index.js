@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"bto"},{"l":"bto.controller"},{"l":"bto.database"},{"l":"bto.model.application"},{"l":"bto.model.project"},{"l":"bto.model.registration"},{"l":"bto.model.user"},{"l":"bto.ui"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"bto"},{"l":"bto.controller"},{"l":"bto.database"},{"l":"bto.model.application"},{"l":"bto.model.enquiry"},{"l":"bto.model.project"},{"l":"bto.model.registration"},{"l":"bto.model.user"},{"l":"bto.ui"}]

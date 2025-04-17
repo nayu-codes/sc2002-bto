@@ -2,6 +2,7 @@ bto
 bto.controller
 bto.database
 bto.model.application
+bto.model.enquiry
 bto.model.project
 bto.model.registration
 bto.model.user
