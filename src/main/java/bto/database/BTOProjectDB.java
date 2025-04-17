@@ -4,6 +4,7 @@ import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.HDBManager;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -150,6 +151,22 @@ public class BTOProjectDB {
             if (project.getName().equalsIgnoreCase(name)) {
                 return project;
             }
+        }
+        return null;
+    }
+
+    /**
+     * Returns BTO projects with visibility 'on'.
+     * 
+     * @return The BTO projects with the visibility 'on', or null if not found.
+     */
+    public static ArrayList<BTOProject> getVisibleProjects() {
+        ArrayList<BTOProject> visibleProjects = new ArrayList<>();
+        for (BTOProject project : btoProjectList.values()) {
+            if (project.getVisibility()) {
+                visibleProjects.add(project);
+            }
+            return visibleProjects;
         }
         return null;
     }

@@ -17,21 +17,20 @@ public final class App {
      */
     public static void main(String[] args) {
         int option;
+        Scanner scanner = new Scanner(System.in);
 
+        do{
         // Menu for the user to select an option
         System.out.println("Welcome to the BTO Application System!");
         System.out.println("  1. Login");
         System.out.println("  2. Register");
-        System.out.println("  3. Exit");
-        System.out.println();
+        System.out.println("  3. Exit\n");
         System.out.print("Please select an option: ");
 
-        Scanner scanner = new Scanner(System.in);
         option = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
         System.out.println();
-
-        while(option != 3) {
+    
             // Initialise UserDB
             UserDB.init();
             switch (option) {
@@ -48,6 +47,7 @@ public final class App {
                     String newPassword = scanner.nextLine();
                     // Call the register method (not implemented yet)
                     System.out.println("Registration successful! Welcome, " + newUserId + "."); // Placeholder message
+                    // might want to call ProjectDashboard.start() after successful login here
                     break;
                 case 3:
                     // Exit option
@@ -56,17 +56,7 @@ public final class App {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-            System.out.println();
-            System.out.println("Welcome to the BTO Application System!");
-            System.out.println("  1. Login");
-            System.out.println("  2. Register");
-            System.out.println("  3. Exit");
-            System.out.println();
-            System.out.print("Please select an option: ");
-            
-            option = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
-        }
+        } while(option != 3);
 
         if (UserDB.isEmpty()){
             UserDB.init();

@@ -44,7 +44,7 @@ public abstract class User {
     /**
      * Getter method to access the name of the User class.
      * @return The name of the user.
-     *         This method returns the name of the user as a String.
+     * This method returns the name of the user as a String.
      */
     public String getName() {
         return name;

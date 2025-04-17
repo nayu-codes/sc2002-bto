@@ -309,7 +309,7 @@ public class BTOProject {
      * Get the visibility status of the project.
      * @return The visibility status of the project.
      */
-    public boolean isVisibility() {
+    public boolean getVisibility() {
         return visibility;
     }
 
