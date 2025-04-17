@@ -1,11 +1,28 @@
 package bto.controller;
 
-import bto.model.user.User;
 import bto.database.UserDB;
+import bto.model.user.User;
 
 public class AuthenticationController {
     public AuthenticationController() {
         // Constructor for the AuthenticationController class
+    }
+
+    /**
+     * Login method to authenticate the user.     * 
+     * @param userId
+     * @param password
+     * @return User object if authentication is successful, null otherwise
+     */
+    public static User loginAsUser(String userId, String password) {
+        // Validate the user credentials
+        if (validateCredentials(userId, password)) {
+            // If valid, retrieve the user from the database
+            return UserDB.getUserById(userId);
+        } else {
+            // If invalid, return null
+            return null;
+        }
     }
 
     /**
@@ -27,12 +44,7 @@ public class AuthenticationController {
             return false; // User not found
         }
 
-        // Check if the password matches
-        if (!user.getPassword().equals(password)) {
-            return false; // Password does not match
-        }
-
-        // User is authenticated successfully
-        return true;
+        // Check if the password matches, true if it does, false otherwise
+        return user.getPassword().equals(password);
     }
 }

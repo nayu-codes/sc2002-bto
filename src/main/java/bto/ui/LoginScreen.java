@@ -1,10 +1,9 @@
 package bto.ui;
 
+import java.util.Scanner;
+
 import bto.controller.AuthenticationController;
 import bto.model.user.User;
-import bto.database.UserDB;
-
-import java.util.Scanner;
 
 public class LoginScreen {
     public LoginScreen() {
@@ -29,18 +28,16 @@ public class LoginScreen {
         String password = scanner.nextLine();
 
         // Authenticate the user
-        if (AuthenticationController.validateCredentials(userId, password)) {
+        User user = AuthenticationController.loginAsUser(userId, password);
+        if (user != null) {
             // If authentication is successful, retrieve the user object
-            User user = UserDB.getUserById(userId);
             System.out.println("Login successful! Welcome, " + user.getName() + ".");
 
             // Proceed to the next screen or functionality
             // ProfileScreen.showProfile(user);
         } else {
+            // Display an error message if authentication fails, and exit back to the main menu
             System.out.println("Invalid username or password. Please try again.");
-            
-            // Exit back to main menu
-            return;
         }
     }
 
