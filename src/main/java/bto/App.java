@@ -4,6 +4,8 @@ import bto.database.UserDB;
 import bto.database.BTOProjectDB;
 import bto.ui.LoginScreen;
 
+import bto.database.EnquiryDB;
+
 import java.util.Scanner;
 
 public final class App {
@@ -16,20 +18,24 @@ public final class App {
      * @param args Command line arguments (not used)
      */
     public static void main(String[] args) {
+
+        // Test EnquiryDB
+        EnquiryDB.init();
+
         int option;
         Scanner scanner = new Scanner(System.in);
 
         do{
-        // Menu for the user to select an option
-        System.out.println("Welcome to the BTO Application System!");
-        System.out.println("  1. Login");
-        System.out.println("  2. Register");
-        System.out.println("  3. Exit\n");
-        System.out.print("Please select an option: ");
+            // Menu for the user to select an option
+            System.out.println("Welcome to the BTO Application System!");
+            System.out.println("  1. Login");
+            System.out.println("  2. Register");
+            System.out.println("  3. Exit\n");
+            System.out.print("Please select an option: ");
 
-        option = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-        System.out.println();
+            option = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+            System.out.println();
     
             // Initialise UserDB
             UserDB.init();
