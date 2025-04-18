@@ -1,6 +1,7 @@
 package bto;
 
 import bto.ui.LoginScreen;
+import bto.ui.RegisterUserScreen;
 import bto.database.Database;
 
 import java.util.Scanner;
@@ -26,11 +27,19 @@ public final class App {
             System.out.println("Welcome to the BTO Application System!");
             System.out.println("  1. Login");
             System.out.println("  2. Register");
-            System.out.println("  3. Exit\n");
+            System.out.println("  ------------------------------------");
+            System.out.println("  0. Exit\n");
             System.out.print("Please select an option: ");
-
-            option = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            
+            option = 999; // Default value to enter the loop
+            try {
+                option = scanner.nextInt(); // Read the user's choice
+                scanner.nextLine(); // Consume the newline character
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input
+                continue; // Skip to the next iteration of the loop
+            }
             System.out.println();
             
             switch (option) {
@@ -41,21 +50,15 @@ public final class App {
                     break;
                 case 2:
                     // Register option
-                    System.out.print("Enter your username: ");
-                    String newUserId = scanner.nextLine();
-                    System.out.print("Enter your password: ");
-                    String newPassword = scanner.nextLine();
-                    // Call the register method (not implemented yet)
-                    System.out.println("Registration successful! Welcome, " + newUserId + "."); // Placeholder message
-                    // might want to call ProjectDashboard.start() after successful login here
+                    RegisterUserScreen.start();
                     break;
-                case 3:
+                case 0:
                     // Exit option
                     System.out.println("Exiting the application. Goodbye!");
                     return; // Exit the application
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        } while(option != 3);        
+        } while(option != 0);        
     }
 }
