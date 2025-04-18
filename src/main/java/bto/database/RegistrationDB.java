@@ -103,7 +103,7 @@ public class RegistrationDB implements CsvDatabase {
     public static ArrayList<OfficerRegistration> getRegistrationsByOfficer(HDBOfficer officer) {
         ArrayList<OfficerRegistration> officerRegistrations = new ArrayList<>();
         for (OfficerRegistration registration : registrationList) {
-            if (registration.getOfficer().equals(officer)) {
+            if (registration.getOfficer().getUserId().equals(officer.getUserId())) {
                 officerRegistrations.add(registration);
             }
         }
@@ -117,6 +117,15 @@ public class RegistrationDB implements CsvDatabase {
      */
     public static ArrayList<OfficerRegistration> getAllRegistrations() {
         return registrationList;
+    }
+
+    /**
+     * Get the number of registrations in the database.
+     * 
+     * @return The number of registrations in the database.
+     */
+    public static int getRegistrationCount() {
+        return registrationList.size();
     }
 
     /**

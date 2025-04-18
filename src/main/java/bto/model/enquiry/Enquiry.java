@@ -146,7 +146,7 @@ public class Enquiry {
         if (isSolved) {
             throw new IllegalStateException("Cannot add reply to a solved enquiry.");
         }
-        this.replyMessage = new EnquiryMessage("HDB Officer", message, new Date());
+        this.replyMessage = new EnquiryMessage(user.getName(), message, new Date());
         this.isSolved = true; // Set the enquiry as solved
 
         // Update the enquiry in the database
