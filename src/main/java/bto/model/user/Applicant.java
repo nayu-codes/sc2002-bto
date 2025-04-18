@@ -2,6 +2,7 @@ package bto.model.user;
 
 import bto.database.ApplicationDB;
 import bto.database.EnquiryDB;
+import bto.model.application.ApplicationStatus;
 import bto.model.application.BTOApplication;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
@@ -50,6 +51,14 @@ public class Applicant extends User {
      * @throws IllegalStateException if the applicant does not meet the requirements for the specified flat type.
      */
     public void submitApplication(BTOProject project, FlatType flatType) throws IllegalStateException {
+        // Check if Applicant applied for other projects that is not unsuccessful
+        for (BTOApplication application : ApplicationDB.getApplicationsByApplicant(getUserId())) {
+            if (application.getProject().getProjectId() == project.getProjectId()) {
+                if (application.getStatus() != ApplicationStatus.UNSUCCESSFUL) {
+                    throw new IllegalStateException("Cannot apply for this project as there is a pending/completed application for the same project.");
+                }
+            }
+        }
         if (flatType == FlatType.THREE_ROOM){
             // Applicant must be married, and above 21 years old
             if (getMaritalStatus() != MaritalStatus.MARRIED || getAge() < 21) {
