@@ -14,7 +14,7 @@ import bto.model.enquiry.EnquiryMessage;
 import bto.model.project.BTOProject;
 import bto.model.user.User;
 
-public class EnquiryDB {
+public class EnquiryDB implements CsvDatabase {
     /**
      * UserDB class to manage the user database.
      * This class is responsible for adding, removing, and retrieving users from the database.

@@ -16,7 +16,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class BTOProjectDB {
+public class BTOProjectDB implements CsvDatabase {
     public static HashMap<Integer, BTOProject> btoProjectList = new HashMap<>();
     public static Integer totalProjects = 0;
 
@@ -24,8 +24,8 @@ public class BTOProjectDB {
     }
 
     public static void init() {
-        readProjectsFromCsv();
-        exportProjectsToCsv();
+        readFromCsv();
+        exportToCsv();
         System.out.println("Total BTO projects loaded: " + totalProjects); // TODO: Remove in production
     }
 
@@ -35,7 +35,7 @@ public class BTOProjectDB {
      * Project Name,Neighborhood,Type 1,Number of units for Type 1,Selling price for Type 1,Type 2,Number of units for Type 2,Selling price for Type 2,Application opening date,Application closing date,Manager,Officer Slot,Officer
      * where Type 1 and Type 2 are the flat types (e.g., "2 Room Flat", "3 Room Flat").
      */
-    public static void readProjectsFromCsv() {
+    public static void readFromCsv() {
         // Read the BTO projects from the CSV file and populate the btoProjectList
         String filename = "resources/ProjectList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -85,7 +85,7 @@ public class BTOProjectDB {
      * Project Name,Neighborhood,Type 1,Number of units for Type 1,Selling price for Type 1,Type 2,Number of units for Type 2,Selling price for Type 2,Application opening date,Application closing date,Manager,Officer Slot,Officer
      * where Type 1 and Type 2 are the flat types (e.g., "2-Room", "3-Room").
      */
-    public static void exportProjectsToCsv() {
+    public static void exportToCsv() {
         // Export the BTO projects to a CSV file
         String filename = "resources/ProjectList.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {

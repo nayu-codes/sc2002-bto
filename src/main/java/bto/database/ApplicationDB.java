@@ -16,7 +16,7 @@ import bto.model.user.Applicant;
 import bto.model.application.BTOApplication;
 import bto.model.application.ApplicationStatus;
 
-public class ApplicationDB {
+public class ApplicationDB implements CsvDatabase {
     private static final String CSV_FILE_PATH = "resources/ApplicationList.csv"; // Path to the CSV file
     private static ArrayList<BTOApplication> applicationList = new ArrayList<>(); // List to store Application objects
 

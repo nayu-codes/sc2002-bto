@@ -41,15 +41,17 @@ public class UserDB {
         userList = new HashMap<>();
 
         // Load users from CSV file, if available
-        if (!readUsersFromCsv(CSV_FILE_PATH)) {
+        try {
+            readFromCsv(); // Read users from the CSV file
+        } catch (IOException e) {
             // Load users from raw CSV files for different user types
             processRawCsv("ApplicantList.csv", UserType.APPLICANT);
             processRawCsv("OfficerList.csv", UserType.HDB_OFFICER);
             processRawCsv("ManagerList.csv", UserType.HDB_MANAGER);
-
-            // Export users to CSV file after loading
-            exportUsersToCsv(CSV_FILE_PATH);
         }
+
+        // Export users to CSV file after loading
+        exportToCsv();
     }
 
     /**
@@ -58,9 +60,9 @@ public class UserDB {
      * This method is only useful after the first run of the program.
      * @param filename The name of the CSV file to export users to.
      */
-    public static void exportUsersToCsv(String filename) {
+    public static void exportToCsv() {
         // Write to CSV file
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
             // Write header
             bw.write("Name,userId,age,maritalStatus,password,userType\n");
 
@@ -83,12 +85,12 @@ public class UserDB {
      * 
      * @return true if the users were read successfully, false otherwise.
      */
-    public static boolean readUsersFromCsv(String filename){
+    public static void readFromCsv() throws IOException {
         String line = "";
         String csvSplitBy = ","; // The character used to separate values
 
         // Use try-with-resources to ensure the reader is closed automatically
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
 
             br.readLine(); // Skip the header line
 
@@ -131,15 +133,12 @@ public class UserDB {
             }
         } catch (IOException e) {
             System.err.println("Error reading the CSV file: " + e.getMessage());
-            return false;
+            throw e;
         } catch (IllegalArgumentException e) {
             System.err.println("Error processing user type: " + e.getMessage());
-            return false;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Error processing line: " + line + " - " + e.getMessage());
-            return false;
         }
-        return true;
     }
 
     /**
@@ -208,7 +207,7 @@ public class UserDB {
         userList.put(user.getUserId(), user);
 
         // Save to CSV file after adding the user
-        exportUsersToCsv(CSV_FILE_PATH);
+        exportToCsv();
     }
 
     /**
@@ -265,7 +264,7 @@ public class UserDB {
         userList.remove(userId);
 
         // Save to CSV file after removing the user
-        exportUsersToCsv(CSV_FILE_PATH);
+        exportToCsv();
     }
     /**
      * Method to check if a user exists in the user list using the userId.
@@ -290,7 +289,7 @@ public class UserDB {
         userList.clear();
         
         // Save to CSV file after nuking the user list
-        exportUsersToCsv(CSV_FILE_PATH);
+        exportToCsv();
     }
     /**
      * Method to get the count of users in the user list.
@@ -334,7 +333,7 @@ public class UserDB {
             userList.put(user.getUserId(), user);
 
             // Save to CSV file after adding the user
-            exportUsersToCsv(CSV_FILE_PATH);
+            exportToCsv();
         } else {
             System.out.println("User not found in the database.");
         }

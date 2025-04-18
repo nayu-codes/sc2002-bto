@@ -12,7 +12,7 @@ import bto.model.registration.OfficerRegistration;
 import bto.model.registration.RegistrationStatus;
 import bto.model.user.HDBOfficer;
 
-public class RegistrationDB {
+public class RegistrationDB implements CsvDatabase {
     private static final String CSV_FILE_PATH = "resources/OfficerRegistrationList.csv"; // Path to the CSV file
     private static ArrayList<OfficerRegistration> registrationList = new ArrayList<>(); // List to store Registration objects
 
