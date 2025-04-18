@@ -134,43 +134,44 @@ public class BTOApplication {
 
     /**
      * Approves the application by updating its status to SUCCESSFUL. Only the HDB Officer / Manager can approve an application.
+     * 
+     * @return true if the application is successfully approved, false otherwise.
      */
-    public boolean approve() {
+    public boolean approve() throws IllegalStateException {
         this.status = ApplicationStatus.SUCCESSFUL; // Set the status to SUCCESSFUL
-        ApplicationDB.updateApplication(this); // Update the application in the database
-
-        return true; // Return true to indicate success
+        return ApplicationDB.updateApplication(this); // Update the application in the database
     }
 
     /**
      * Rejects the application by updating its status to UNSUCCESSFUL. Only the HDB Officer / Manager can approve an application.
+     * 
+     * @return true if the application is successfully rejected, false otherwise.
      */
     public boolean reject() {
         this.status = ApplicationStatus.UNSUCCESSFUL; // Set the status to UNSUCCESSFUL
-        ApplicationDB.updateApplication(this); // Update the application in the database
-
-        return true; // Return true to indicate success
+        return ApplicationDB.updateApplication(this); // Update the application in the database
     }
 
     /**
      * Withdraws the application by updating its status to UNSUCCESSFUL.
+     * 
+     * @return true if the application is successfully withdrawn, false otherwise.
      */
     public boolean withdraw() {
         this.status = ApplicationStatus.UNSUCCESSFUL; // Set the status to UNSUCCESSFUL
-        ApplicationDB.updateApplication(this); // Update the application in the database
-
-        return true; // Return true to indicate success
+        return ApplicationDB.updateApplication(this); // Update the application in the database
     }
 
     /**
      * Books the application by updating its status to BOOKED.
      * 
      * @param bookingDate The date the booking was made.
+     * 
+     * @return true if the application is successfully booked, false otherwise.
      */
     public boolean book(Date bookingDate) {
         this.status = ApplicationStatus.BOOKED; // Set the status to BOOKED
         this.bookingDate = bookingDate; // Set the booking date
-        ApplicationDB.updateApplication(this); // Update the application in the database
-        return true; // Return true to indicate success
+        return ApplicationDB.updateApplication(this); // Update the application in the database
     }
 }

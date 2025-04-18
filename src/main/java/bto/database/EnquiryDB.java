@@ -172,7 +172,7 @@ public class EnquiryDB implements CsvDatabase {
     /**
      * Gets the list of enquiries by a specific applicant.
      * 
-     * @param applicant The {@link Applicant} representing the applicant whose enquiries are to be retrieved.
+     * @param applicant The Applicant representing the applicant whose enquiries are to be retrieved.
      * 
      * @return A list of enquiries made by the specified applicant.
      */

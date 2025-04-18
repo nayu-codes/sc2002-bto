@@ -1,6 +1,7 @@
 package bto.model.user;
 
 import bto.model.project.BTOProject;
+import bto.model.project.FlatType;
 import bto.database.ApplicationDB;
 import bto.database.BTOProjectDB;
 import bto.database.EnquiryDB;
@@ -30,7 +31,7 @@ public class HDBManager extends User{
     }
 
     /**
-     * Create a BTO project listing. Project information is provided from {@link ProjectController#createProject()}
+     * Create a BTO project listing. Project information is provided from ProjectController.createProject()
      * 
      * @param project The BTOProject object containing the project information.
      * 
@@ -58,7 +59,7 @@ public class HDBManager extends User{
     }
 
     /**
-     * Toggle project visibility between visible and hidden by toggling the {@link BTOProject#isVisible()} property.
+     * Toggle project visibility between visible and hidden by toggling the {@link BTOProject#getVisibility()}.
      * 
      * @param project The BTOProject object to be toggled.
      * 
@@ -74,6 +75,8 @@ public class HDBManager extends User{
 
     /**
      * Get all projects managed by all managers, regardless of visibility status.
+     * 
+     * @return A list of BTOProject objects managed by all managers.
      */
     public ArrayList<BTOProject> getAllProjects() {
         return BTOProjectDB.getBTOProjectList();
@@ -201,6 +204,7 @@ public class HDBManager extends User{
             System.out.println("Flat Type: " + application.getFlatType());
             System.out.println("------------------------------");
         }
+    }
 
     /**
      * Generate a report of the list of applicants with their respective flat booking - flat type, project name, age, marital status.
@@ -214,7 +218,7 @@ public class HDBManager extends User{
      * @param projectName The name of the project to be included in the report.
      * @param flatType The type of flat to be included in the report.
      */
-    public void generateReport(Integer minAge, Integer maxAge, MaritalStatus maritalStatus, String projectName) {
+    public void generateReport(Integer minAge, Integer maxAge, MaritalStatus maritalStatus, String projectName, FlatType flatType) {
         // Get the list of all applicants
         ArrayList<BTOApplication> applications = ApplicationDB.getAllApplications();
         // Filter the applications based on the provided criteria
@@ -222,7 +226,8 @@ public class HDBManager extends User{
             if ((minAge == null || application.getApplicant().getAge() >= minAge) &&
                 (maxAge == null || application.getApplicant().getAge() <= maxAge) &&
                 (maritalStatus == null || application.getApplicant().getMaritalStatus() == maritalStatus) &&
-                (projectName == null || application.getProject().getName().equalsIgnoreCase(projectName))) {
+                (projectName == null || application.getProject().getName().equalsIgnoreCase(projectName)) &&
+                (flatType == null || application.getFlatType() == flatType)) {
                 // Print the details of the filtered applications
                 System.out.println("Applicant Name: " + application.getApplicant().getName());
                 System.out.println("Age: " + application.getApplicant().getAge());
@@ -236,6 +241,8 @@ public class HDBManager extends User{
 
     /**
      * View enquiries of all projects, even if the projects are not managed by this manager.
+     * 
+     * @return A list of Enquiry objects for all projects.
      */
     public ArrayList<Enquiry> viewEnquiries() {
         return EnquiryDB.getEnquiryList();

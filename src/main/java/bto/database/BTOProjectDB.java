@@ -81,12 +81,14 @@ public class BTOProjectDB implements CsvDatabase {
     }
 
     /**
-     * * Reads BTO projects from a CSV file and populates the btoProjectList.
+     * Reads BTO projects from a CSV file and populates the btoProjectList.
      * The CSV file should be in the format:
      * projectName,neighborhood,type1,type1Count,type1Price,typ1CountRemaining,type2,type2Count,type2Price,
      * type2CountRemaining,applicationOpeningDate,applicationClosingDate,manager,officerSlot,officer
      * where Type 1 and Type 2 are the flat types (e.g., "2 Room Flat", "3 Room
      * Flat").
+     * 
+     * @throws IOException If there is an error reading the CSV file.
      */
     public static void readFromCsv() throws IOException {
         // Read the BTO projects from the CSV file and populate the btoProjectList

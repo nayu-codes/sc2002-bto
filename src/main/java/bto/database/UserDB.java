@@ -58,7 +58,6 @@ public class UserDB {
      * Method to export users to a CSV file.
      * As a no-databse implementation, data persistency is achieved through exporting to CSV files.
      * This method is only useful after the first run of the program.
-     * @param filename The name of the CSV file to export users to.
      */
     public static void exportToCsv() {
         // Write to CSV file
@@ -81,9 +80,8 @@ public class UserDB {
     /**
      * Method to read users from a CSV file.
      * This method is only useful after the first run of the program where the users are processed and exported before. If first-run, use {@link #processRawCsv(String, UserType)} instead.
-     * @param filename The name of the CSV file to read users from.
      * 
-     * @return true if the users were read successfully, false otherwise.
+     * @throws IOException If there is an error reading the CSV file.
      */
     public static void readFromCsv() throws IOException {
         String line = "";

@@ -61,7 +61,7 @@ public class BTOProject {
     }
 
     /**
-     * Constructor for importing BTOProject objects from CSV file. Should ONLY be called from {@link BTOProjectDB#readFromCSV()}.
+     * Constructor for importing BTOProject objects from CSV file. Should ONLY be called from BTOProjectDB.readFromCSV().
      * 
      * @param projectId The unique identifier for the BTO project.
      * @param name The name of the BTO project.
@@ -365,8 +365,14 @@ public class BTOProject {
     /**
      * Get the remaining flat count for the queried flat type.
      * @param flatType The flat type to get the remaining count for.
+     * 
+     * @return The remaining count of the flat type.
+     * @throws IllegalArgumentException if the flat type is not found in the project.
      */
-    public int getFlatCountRemaining(FlatType flatType) {
+    public int getFlatCountRemaining(FlatType flatType) throws IllegalArgumentException {
+        if (!flatCountRemaining.containsKey(flatType)) {
+            throw new IllegalArgumentException("Flat type not found in the project.");
+        }
         return flatCountRemaining.get(flatType);
     }
 }

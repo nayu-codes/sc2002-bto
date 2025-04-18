@@ -111,6 +111,8 @@ public class HDBOfficer extends Applicant {
      * Generate receipt of applicants with their respective flat booking details
      * (Applicant’s Name, NRIC, age, marital status, flat type
      * booked and its project details).
+     * 
+     * @param applicant The {@link Applicant} for whom the receipt is generated.
      */
     public void generateReceiptForApplicant(Applicant applicant) {
         ArrayList<BTOApplication> applications = ApplicationDB.getApplicationsByApplicant(applicant.getUserId());

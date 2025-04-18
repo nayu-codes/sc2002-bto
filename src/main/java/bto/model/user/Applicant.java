@@ -44,9 +44,10 @@ public class Applicant extends User {
      * 
      * Assumes that the application has been validated and is ready for submission.
      * 
-     * @param application The BTOApplication object representing the application to be submitted.
+     * @param project The BTOProject object representing the project to apply for.
+     * @param flatType The FlatType object representing the type of flat to apply for.
      * 
-     * @return true if the application was submitted successfully, false otherwise.
+     * @throws IllegalStateException if the applicant does not meet the requirements for the specified flat type.
      */
     public void submitApplication(BTOProject project, FlatType flatType) throws IllegalStateException {
         if (flatType == FlatType.THREE_ROOM){
@@ -85,7 +86,9 @@ public class Applicant extends User {
 
     /**
      * Submit an enquiry for a BTOProject
+     * 
      * @param project The BTOProject object representing the project to be enquired about.
+     * @param enquiry The message content of the enquiry.
      * 
      * @return true if the enquiry was submitted successfully, false otherwise.
      */
