@@ -94,6 +94,7 @@ public class Applicant extends User {
         Enquiry newEnquiry = new Enquiry(getName(), project.getName()); // Create a new enquiry object
         try {
             newEnquiry.addApplicantMessage(this, enquiry);
+            System.out.println("Enquiry (ID:" + newEnquiry.getEnquiryId() + ") submitted successfully."); // Print success message
             return true;
         } catch (IllegalStateException e) {
             System.out.println("Enquiry already solved. Cannot add message.");
@@ -112,11 +113,28 @@ public class Applicant extends User {
 
     /**
      * Edit the applicant message in the enquiry if the enquiry is not solved.
+     * 
+     * @param enquiry The Enquiry object representing the enquiry to be edited.
+     * @param message The new message content.
      */
     public void editEnquiry(Enquiry enquiry, String message) throws IllegalStateException {
         if (enquiry.isSolved()) {
             throw new IllegalStateException("Cannot modify message in a solved enquiry.");
         }
         enquiry.addApplicantMessage(this, message);; // Modify the applicant message in the enquiry
+        System.out.println("Enquiry (ID:" + enquiry.getEnquiryId() + ") updated successfully."); // Print success message
+    }
+
+    /**
+     * Delete the enquiry before it is solved.
+     * 
+     * @param enquiry The Enquiry object representing the enquiry to be deleted.
+     */
+    public void deleteEnquiry(Enquiry enquiry) throws IllegalStateException {
+        if (enquiry.isSolved()) {
+            throw new IllegalStateException("Cannot delete a solved enquiry.");
+        }
+        enquiry.deleteEnquiry();
+        System.out.println("Enquiry (ID:" + enquiry.getEnquiryId() + ") deleted successfully."); // Print success message
     }
 }
