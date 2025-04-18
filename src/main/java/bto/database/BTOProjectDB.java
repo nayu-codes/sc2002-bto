@@ -179,8 +179,8 @@ public class BTOProjectDB implements CsvDatabase {
         }
     }
 
-    public static HashMap<Integer, BTOProject> getBTOProjectList() {
-        return btoProjectList;
+    public static ArrayList<BTOProject> getBTOProjectList() {
+        return new ArrayList<>(btoProjectList.values());
     }
 
     /**

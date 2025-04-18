@@ -35,7 +35,10 @@ public class HDBOfficer extends Applicant {
         for (OfficerRegistration registration : RegistrationDB.getRegistrationsByOfficer(this)) {
             if (registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) { // If Officer is assigned to this project
                 BTOProject registeredProject = registration.getProject();
-                if (registeredProject.getApplicationOpeningDate().before(project.getApplicationClosingDate()) || registeredProject.getApplicationClosingDate().after(project.getApplicationOpeningDate())) {
+                if (registeredProject.getApplicationOpeningDate().before(project.getApplicationClosingDate()) ||
+                    registeredProject.getApplicationOpeningDate() == project.getApplicationClosingDate() ||
+                    registeredProject.getApplicationClosingDate().after(project.getApplicationOpeningDate()) ||
+                    registeredProject.getApplicationClosingDate() == project.getApplicationOpeningDate()) {
                     throw new IllegalStateException("Cannot register for this project as it overlaps with another assigned project.");
                 }
             }

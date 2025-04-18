@@ -50,6 +50,15 @@ public class OfficerRegistration {
     }
 
     /**
+     * Sets the current status of the registration.
+     * 
+     * @param status The new status of the registration (e.g., Pending, Successful, Unsuccessful).
+     */
+    public void setRegistrationStatus(RegistrationStatus status) {
+        this.status = status;
+    }
+
+    /**
      * Gets the BTO project associated with this registration.
      * 
      * @return The BTO project associated with this registration.
