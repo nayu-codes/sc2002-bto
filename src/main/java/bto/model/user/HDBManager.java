@@ -122,6 +122,11 @@ public class HDBManager extends User{
      * @throws IllegalStateException if the registration is not pending.
      */
     public void approveRegistration(OfficerRegistration registration) throws IllegalStateException {
+        // Check if project still has available slots for officers
+        if (registration.getProject().getAvailableOfficerSlots() - registration.getProject().getAssignedOfficers().size() <= 0) {
+            throw new IllegalStateException("Cannot approve registration as there are no available slots.");
+        }
+        
         // Check if the registration is pending
         if (registration.getRegistrationStatus() == RegistrationStatus.PENDING) {
             // Update the registration status to successful

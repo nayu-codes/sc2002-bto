@@ -53,6 +53,11 @@ public class HDBOfficer extends Applicant {
             }
         }
 
+        // Check that project still has available slots for officers
+        if (project.getAvailableOfficerSlots() - project.getAssignedOfficers().size() <= 0) {
+            throw new IllegalStateException("Cannot register for this project as there are no available slots.");
+        }
+
         // Create a new OfficerRegistration object
         OfficerRegistration registration = new OfficerRegistration(RegistrationDB.getRegistrationCount()+1, this, RegistrationStatus.PENDING, project);
         // Add the registration to the registration list
