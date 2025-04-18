@@ -3,7 +3,6 @@ package bto.model.user;
 import bto.database.ApplicationDB;
 import bto.database.EnquiryDB;
 import bto.model.application.BTOApplication;
-import bto.model.application.ApplicationStatus;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.enquiry.Enquiry;

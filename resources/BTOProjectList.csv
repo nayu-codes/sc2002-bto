@@ -1,0 +1,4 @@
+projectName,neighborhood,type1,type1Count,type1Price,typ1CountRemaining,type2,type2Count,type2Price, type2CountRemaining,applicationOpeningDate,applicationClosingDate,manager,officerSlot,officer,visibility
+"Acacia Breeze","Yishun",2-Room,2,350000,2,3-Room,3,450000,3,02/15/2025,03/20/2025,Jessica,3,"Daniel,Emily",true
+"Benzene Freeze","Woodlands",2-Room,2,250000,2,3-Room,3,400000,3,02/15/2025,03/20/2025,Jessica,3,"Daniel",true
+"Croatia Rizz","Ang Mo Kio",2-Room,2,450000,2,3-Room,3,650000,3,02/15/2025,03/20/2025,Jessica,3,"Daniel",true

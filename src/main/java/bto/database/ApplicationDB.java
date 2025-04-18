@@ -151,6 +151,25 @@ public class ApplicationDB implements CsvDatabase {
     }
 
     /**
+     * Get the list of Applications by a specific BTOProject name.
+     * 
+     * @param projectName The name of the BTOProject whose Applications are to be
+     *                   retrieved.
+     * 
+     * @return A list of Application objects associated with the specified
+     *         BTOProject.
+     */
+    public static ArrayList<BTOApplication> getApplicationsByProjectName(String projectName) {
+        ArrayList<BTOApplication> projectApplications = new ArrayList<>();
+        for (BTOApplication Application : applicationList) {
+            if (Application.getProject().getName().equals(projectName)) {
+                projectApplications.add(Application);
+            }
+        }
+        return projectApplications;
+    }
+
+    /**
      * Get the list of all Applications.
      * 
      * @return A list of all Application objects.

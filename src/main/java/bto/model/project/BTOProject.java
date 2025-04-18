@@ -1,6 +1,9 @@
 package bto.model.project;
 
 import bto.database.UserDB;
+import bto.database.ApplicationDB;
+import bto.model.application.ApplicationStatus;
+import bto.model.application.BTOApplication;
 import bto.model.user.HDBManager;
 import bto.model.user.UserType;
 
@@ -14,6 +17,7 @@ public class BTOProject {
     private String neighbourhood;
     private List<FlatType> flatType;
     private HashMap<FlatType, Integer> flatCount;
+    private HashMap<FlatType, Integer> flatCountRemaining; // Backup of flat count for rollback
     private HashMap<FlatType, Integer> flatPrice;
     private Date applicationOpeningDate;
     private Date applicationClosingDate;
@@ -46,6 +50,43 @@ public class BTOProject {
         this.neighbourhood = neighbourhood;
         this.flatType = flatType;
         this.flatCount = flatCount;
+        this.flatCountRemaining = new HashMap<>(flatCount); // initialize flatCountRemaining with the same values as flatCount
+        this.flatPrice = flatPrice;
+        this.applicationOpeningDate = applicationOpeningDate;
+        this.applicationClosingDate = applicationClosingDate;
+        this.projectManager = projectManager;
+        this.assignedOfficers = assignedOfficers;
+        this.availableOfficerSlots = availableOfficerSlots;
+        this.visibility = visibility;
+    }
+
+    /**
+     * Constructor for importing BTOProject objects from CSV file. Should ONLY be called from {@link BTOProjectDB#readFromCSV()}.
+     * 
+     * @param projectId The unique identifier for the BTO project.
+     * @param name The name of the BTO project.
+     * @param neighbourhood The neighbourhood where the BTO project is located.
+     * @param flatType A List containing the type of flats available in the BTO project (e.g., "2 Room Flat", "3 Room Flat").
+     * @param flatCount A HashMap containing the count of each flat type available in the project.
+     * @param flatCountRemaining A HashMap containing the count of each flat type remaining in the project.
+     * @param flatPrice A HashMap containing the price of each flat type available in the project.
+     * @param applicationOpeningDate The date when applications for the BTO project open.
+     * @param applicationClosingDate The date when applications for the BTO project close.
+     * @param projectManager The HDBManager responsible for managing the BTO project.
+     * @param assignedOfficers A list of HDBOfficers assigned to assist with the BTO project.
+     * @param availableOfficerSlots The number of available slots for HDBOfficers to be assigned to the project.
+     * @param visibility Indicates whether the project is visible to users or not.
+     */
+    public BTOProject(int projectId, String name, String neighbourhood, List<FlatType> flatType, HashMap<FlatType, Integer> flatCount,
+                        HashMap<FlatType, Integer> flatCountRemaining, HashMap<FlatType, Integer> flatPrice,
+                        Date applicationOpeningDate, Date applicationClosingDate, HDBManager projectManager,
+                        List<String> assignedOfficers, int availableOfficerSlots, boolean visibility) {
+        this.projectId = projectId;
+        this.name = name;
+        this.neighbourhood = neighbourhood;
+        this.flatType = flatType;
+        this.flatCount = flatCount;
+        this.flatCountRemaining = flatCountRemaining;
         this.flatPrice = flatPrice;
         this.applicationOpeningDate = applicationOpeningDate;
         this.applicationClosingDate = applicationClosingDate;
@@ -319,5 +360,13 @@ public class BTOProject {
      */
     public void setVisibility(boolean visibility) {
         this.visibility = visibility;
+    }
+
+    /**
+     * Get the remaining flat count for the queried flat type.
+     * @param flatType The flat type to get the remaining count for.
+     */
+    public int getFlatCountRemaining(FlatType flatType) {
+        return flatCountRemaining.get(flatType);
     }
 }
