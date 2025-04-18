@@ -109,4 +109,14 @@ public class Applicant extends User {
     public ArrayList<Enquiry> getEnquiries() {
         return EnquiryDB.getEnquiriesByApplicant(this); // Return the list of enquiries made by the applicant
     }
+
+    /**
+     * Edit the applicant message in the enquiry if the enquiry is not solved.
+     */
+    public void editEnquiry(Enquiry enquiry, String message) throws IllegalStateException {
+        if (enquiry.isSolved()) {
+            throw new IllegalStateException("Cannot modify message in a solved enquiry.");
+        }
+        enquiry.addApplicantMessage(this, message);; // Modify the applicant message in the enquiry
+    }
 }
