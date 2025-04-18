@@ -11,6 +11,8 @@ import java.util.Date;
 
 import bto.model.enquiry.Enquiry;
 import bto.model.enquiry.EnquiryMessage;
+import bto.model.project.BTOProject;
+import bto.model.user.User;
 
 public class EnquiryDB {
     /**
@@ -130,6 +132,15 @@ public class EnquiryDB {
     }
 
     /**
+     * Get the number of enquiries in the database.
+     * 
+     * @return The number of enquiries in the database.
+     */
+    public static int getEnquiryCount() {
+        return enquiryList.size(); // Return the size of the enquiryList
+    }
+
+    /**
      * Adds a new enquiry to the database.
      * @param enquiry The enquiry to be added.
      * 
@@ -156,6 +167,40 @@ public class EnquiryDB {
      */
     public static ArrayList<Enquiry> getEnquiryList() {
         return enquiryList;
+    }
+
+    /**
+     * Gets the list of enquiries by a specific applicant.
+     * 
+     * @param applicant The {@link Applicant} representing the applicant whose enquiries are to be retrieved.
+     * 
+     * @return A list of enquiries made by the specified applicant.
+     */
+    public static ArrayList<Enquiry> getEnquiriesByApplicant(User applicant) {
+        ArrayList<Enquiry> applicantEnquiries = new ArrayList<>(); // List to store enquiries made by the applicant
+        for (Enquiry enquiry : enquiryList) {
+            if (enquiry.getApplicantName().equals(applicant.getName())) { // Check if the enquiry is made by the specified applicant
+                applicantEnquiries.add(enquiry); // Add the enquiry to the list
+            }
+        }
+        return applicantEnquiries; // Return the list of enquiries made by the applicant
+    }
+
+    /**
+     * Gets the list of enquiries by a specific project.
+     * 
+     * @param project The {@link BTOProject} representing the project whose enquiries are to be retrieved.
+     * 
+     * @return A list of enquiries made for the specified project.
+     */
+    public static ArrayList<Enquiry> getEnquiriesByProject(BTOProject project) {
+        ArrayList<Enquiry> projectEnquiries = new ArrayList<>(); // List to store enquiries made for the project
+        for (Enquiry enquiry : enquiryList) {
+            if (enquiry.getProjectName().equals(project.getName())) { // Check if the enquiry is made for the specified project
+                projectEnquiries.add(enquiry); // Add the enquiry to the list
+            }
+        }
+        return projectEnquiries; // Return the list of enquiries made for the project
     }
 
     /**

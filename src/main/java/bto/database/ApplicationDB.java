@@ -133,17 +133,17 @@ public class ApplicationDB {
     }
 
     /**
-     * Get the list of Applications by a specific Applicant. TODO: Take Application Object or String?
+     * Get the list of Applications by a specific Applicant.
      * 
-     * @param applicant The Applicant whose Applications are to be retrieved.
+     * @param userId The userId of the Applicant whose Applications are to be retrieved.
      * 
      * @return A list of Application objects associated with the specified
      *         Applicant.
      */
-    public static ArrayList<BTOApplication> getApplicationsByApplicant(Applicant applicant) {
+    public static ArrayList<BTOApplication> getApplicationsByApplicant(String userId) {
         ArrayList<BTOApplication> applicantApplications = new ArrayList<>();
         for (BTOApplication Application : applicationList) {
-            if (Application.getApplicant().equals(applicant)) {
+            if (Application.getApplicant().getUserId().equals(userId)) {
                 applicantApplications.add(Application);
             }
         }
@@ -157,6 +157,15 @@ public class ApplicationDB {
      */
     public static ArrayList<BTOApplication> getAllApplications() {
         return applicationList;
+    }
+
+    /**
+     * Gets the number of Applications in the database.
+     * 
+     * @return The number of Applications in the database.
+     */
+    public static int getApplicationCount() {
+        return applicationList.size();
     }
 
     /**

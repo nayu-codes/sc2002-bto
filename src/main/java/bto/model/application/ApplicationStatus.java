@@ -14,17 +14,13 @@ public enum ApplicationStatus {
      */
     SUCCESSFUL("Successful"),
     /**
-     * The application has been rejected.
+     * The application has been rejected / withdrawn.
      */
     UNSUCCESSFUL("Unsuccessful"),
     /**
      * The application has been booked.
      */
-    BOOKED("Booked"),
-    /**
-     * The application has been withdrawn.
-     */
-    WITHDRAWN("Withdrawn");
+    BOOKED("Booked");
 
     private final String status;
 

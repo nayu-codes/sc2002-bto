@@ -1,7 +1,8 @@
 package bto.model.application;
 
-import java.util.Date; // Importing the Date class from java.util package
+import java.util.Date;
 
+import bto.database.ApplicationDB;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.Applicant;
@@ -18,26 +19,25 @@ public class BTOApplication {
     /**
      * Constructor to initialise the BTOApplication object with common attributes.
      * 
-     * @param applicationId The unique identifier for the application.
      * @param applicant The applicant associated with this application.
-     * @param status The current status of the application (e.g., Pending, Successful, Unsuccessful, Booked, Withdrawn).
      * @param project The BTO project associated with this application.
-     * @param flatType The type of flat applied for (e.g., 2-room, 3-room, etc.).
-     * @param applicationDate The date the application was submitted.
+     * @param flatType The type of flat applied for (e.g., 2-room, 3-room).
      */
-    public BTOApplication(int applicationId, Applicant applicant, ApplicationStatus status, BTOProject project,
-            FlatType flatType, Date applicationDate) {
-        this.applicationId = applicationId;
+    public BTOApplication(Applicant applicant, BTOProject project, FlatType flatType) {
+        this.applicationId = ApplicationDB.getApplicationCount() + 1; // Set the application ID to the next available ID
         this.applicant = applicant;
-        this.status = status;
+        this.status = ApplicationStatus.PENDING; // Setting the initial status to PENDING
         this.project = project;
         this.flatType = flatType;
-        this.applicationDate = applicationDate;
+        this.applicationDate = new Date(); // Setting the application date to the current date
         this.bookingDate = null; // Initialising bookingDate to null as it may not be set at the time of application
+
+        // Add the application to the database
+        ApplicationDB.addApplication(this);
     }
 
     /**
-     * Constructor to import a BTOApplication object.
+     * Constructor to import a BTOApplication object. This is ONLY called during {@link ApplicationDB#readFromCSV()}
      * 
      * @param applicationId   The unique identifier for the application.
      * @param applicant       The applicant associated with this application.
@@ -88,6 +88,15 @@ public class BTOApplication {
     }
 
     /**
+     * Sets the status of the application.
+     * 
+     * @param status The new status of the application.
+     */
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
+    /**
      * Gets the BTO project associated with this application.
      * 
      * @return The BTO project associated with this application.
@@ -121,5 +130,47 @@ public class BTOApplication {
      */
     public Date getBookingDate() {
         return bookingDate;
+    }
+
+    /**
+     * Approves the application by updating its status to SUCCESSFUL. Only the HDB Officer / Manager can approve an application.
+     */
+    public boolean approve() {
+        this.status = ApplicationStatus.SUCCESSFUL; // Set the status to SUCCESSFUL
+        ApplicationDB.updateApplication(this); // Update the application in the database
+
+        return true; // Return true to indicate success
+    }
+
+    /**
+     * Rejects the application by updating its status to UNSUCCESSFUL. Only the HDB Officer / Manager can approve an application.
+     */
+    public boolean reject() {
+        this.status = ApplicationStatus.UNSUCCESSFUL; // Set the status to UNSUCCESSFUL
+        ApplicationDB.updateApplication(this); // Update the application in the database
+
+        return true; // Return true to indicate success
+    }
+
+    /**
+     * Withdraws the application by updating its status to UNSUCCESSFUL.
+     */
+    public boolean withdraw() {
+        this.status = ApplicationStatus.UNSUCCESSFUL; // Set the status to UNSUCCESSFUL
+        ApplicationDB.updateApplication(this); // Update the application in the database
+
+        return true; // Return true to indicate success
+    }
+
+    /**
+     * Books the application by updating its status to BOOKED.
+     * 
+     * @param bookingDate The date the booking was made.
+     */
+    public boolean book(Date bookingDate) {
+        this.status = ApplicationStatus.BOOKED; // Set the status to BOOKED
+        this.bookingDate = bookingDate; // Set the booking date
+        ApplicationDB.updateApplication(this); // Update the application in the database
+        return true; // Return true to indicate success
     }
 }
