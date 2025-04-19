@@ -16,7 +16,7 @@ public final class App {
      * @param args Command line arguments (not used)
      */
     public static void main(String[] args) { 
-        int option;
+        int option = 999;
         Scanner scanner = new Scanner(System.in);
 
         // Initialise the database
@@ -31,7 +31,6 @@ public final class App {
             System.out.println("  0. Exit\n");
             System.out.print("Please select an option: ");
             
-            option = 999; // Default value to enter the loop
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character

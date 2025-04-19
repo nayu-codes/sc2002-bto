@@ -133,7 +133,7 @@ public class Applicant extends User {
         if (enquiry.isSolved()) {
             throw new IllegalStateException("Cannot modify message in a solved enquiry.");
         }
-        enquiry.addApplicantMessage(this, message);; // Modify the applicant message in the enquiry
+        enquiry.addApplicantMessage(this, message); // Modify the applicant message in the enquiry
         System.out.println("Enquiry (ID:" + enquiry.getEnquiryId() + ") updated successfully."); // Print success message
     }
 

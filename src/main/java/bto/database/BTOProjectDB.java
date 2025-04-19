@@ -181,8 +181,17 @@ public class BTOProjectDB implements CsvDatabase {
         }
     }
 
+    /**
+     * Returns a list of all BTO projects sorted in alphabetical order by project name.
+     * 
+     * @return A list of all BTO projects.
+     */
     public static List<BTOProject> getBTOProjectList() {
-        return new ArrayList<>(btoProjectList.values());
+        // Alphabetical order by project name
+        List<BTOProject> sortedBTOProjectList = new ArrayList<>(btoProjectList.values());
+        sortedBTOProjectList.sort((project1, project2) -> project1.getName().compareToIgnoreCase(project2.getName()));
+        
+        return sortedBTOProjectList;
     }
 
     /**
@@ -226,7 +235,8 @@ public class BTOProjectDB implements CsvDatabase {
      */
     public static List<BTOProject> getVisibleProjects() {
         List<BTOProject> visibleProjects = new ArrayList<>();
-        for (BTOProject project : btoProjectList.values()) {
+
+        for (BTOProject project : getBTOProjectList()) {
             if (project.getVisibility()) {
                 visibleProjects.add(project);
             }
