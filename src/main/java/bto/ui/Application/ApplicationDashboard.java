@@ -1,5 +1,6 @@
-package bto.ui.Application;
+package bto.ui.application;
 
 public class ApplicationDashboard {
-
+    public ApplicationDashboard() {
+    }
 }

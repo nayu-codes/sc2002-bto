@@ -2,9 +2,7 @@ package bto.ui;
 
 import java.util.Scanner;
 
-import bto.database.UserDB;
-import bto.model.user.Applicant;
-import bto.model.user.UserType;
+import bto.controller.AuthenticationController;
 import bto.model.user.MaritalStatus;
 
 public class RegisterUserScreen {
@@ -58,12 +56,7 @@ public class RegisterUserScreen {
             }
         } while (true); // Exit the loop if the marital status is valid
 
-        // Assume the user type is Applicant
-        UserType userType = UserType.APPLICANT;
-        // Create a new Applicant object with the provided details
-        Applicant newApplicant = new Applicant(newName, newUserId, newPassword, newAge, maritalStatus, userType);
-        // Add the new applicant to the database
-        UserDB.addUser(newApplicant);
+        AuthenticationController.createApplicant(newUserId, newPassword, newName, newAge, maritalStatus);
 
         System.out.println("  Registration successful! Your UserID is: " + newUserId);
         System.out.println("  Please login to continue.");

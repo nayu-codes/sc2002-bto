@@ -1,4 +1,4 @@
-package bto.ui.Project;
+package bto.ui.project;
 
 import java.util.List;
 import java.text.SimpleDateFormat;

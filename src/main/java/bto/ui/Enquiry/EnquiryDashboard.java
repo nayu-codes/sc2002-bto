@@ -1,4 +1,4 @@
-package bto.ui.Enquiry;
+package bto.ui.enquiry;
 
 public class EnquiryDashboard {
 
