@@ -9,6 +9,7 @@ import bto.model.project.FlatType;
 import bto.model.enquiry.Enquiry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Applicant extends User {
     /**
@@ -116,9 +117,9 @@ public class Applicant extends User {
     /**
      * Gets the list of enquiries made by the applicant.
      * 
-     * @return An ArrayList of Enquiry objects representing the enquiries made by the applicant.
+     * @return An List of Enquiry objects representing the enquiries made by the applicant.
      */
-    public ArrayList<Enquiry> getEnquiries() {
+    public List<Enquiry> getEnquiries() {
         return EnquiryDB.getEnquiriesByApplicant(this); // Return the list of enquiries made by the applicant
     }
 

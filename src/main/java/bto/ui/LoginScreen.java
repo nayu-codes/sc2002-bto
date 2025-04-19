@@ -35,6 +35,8 @@ public class LoginScreen {
 
             // Proceed to the next screen or functionality
             // ProfileScreen.showProfile(user);
+            // Temp: Call the ProjectDashboard class to show available projects
+            ProjectDashboard.start(user);
         } else {
             // Display an error message if authentication fails, and exit back to the main menu
             System.out.println("Invalid username or password. Please try again.");

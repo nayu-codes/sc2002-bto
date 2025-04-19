@@ -181,7 +181,7 @@ public class BTOProjectDB implements CsvDatabase {
         }
     }
 
-    public static ArrayList<BTOProject> getBTOProjectList() {
+    public static List<BTOProject> getBTOProjectList() {
         return new ArrayList<>(btoProjectList.values());
     }
 
@@ -230,9 +230,8 @@ public class BTOProjectDB implements CsvDatabase {
             if (project.getVisibility()) {
                 visibleProjects.add(project);
             }
-            return visibleProjects;
         }
-        return null;
+        return visibleProjects;
     }
 
     /**

@@ -12,6 +12,7 @@ import bto.model.registration.OfficerRegistration;
 import bto.model.registration.RegistrationStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HDBOfficer extends Applicant {
     /**
@@ -120,7 +121,7 @@ public class HDBOfficer extends Applicant {
      * @param applicant The {@link Applicant} for whom the receipt is generated.
      */
     public void generateReceiptForApplicant(Applicant applicant) {
-        ArrayList<BTOApplication> applications = ApplicationDB.getApplicationsByApplicant(applicant.getUserId());
+        List<BTOApplication> applications = ApplicationDB.getApplicationsByApplicant(applicant.getUserId());
         for (BTOApplication application : applications) {
             if (application.getStatus() == ApplicationStatus.BOOKED) {
                 System.out.println("Receipt for " + applicant.getName() + ":");

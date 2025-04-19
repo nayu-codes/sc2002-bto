@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -140,7 +141,7 @@ public class ApplicationDB implements CsvDatabase {
      * @return A list of Application objects associated with the specified
      *         Applicant.
      */
-    public static ArrayList<BTOApplication> getApplicationsByApplicant(String userId) {
+    public static List<BTOApplication> getApplicationsByApplicant(String userId) {
         ArrayList<BTOApplication> applicantApplications = new ArrayList<>();
         for (BTOApplication Application : applicationList) {
             if (Application.getApplicant().getUserId().equals(userId)) {
@@ -159,7 +160,7 @@ public class ApplicationDB implements CsvDatabase {
      * @return A list of Application objects associated with the specified
      *         BTOProject.
      */
-    public static ArrayList<BTOApplication> getApplicationsByProjectName(String projectName) {
+    public static List<BTOApplication> getApplicationsByProjectName(String projectName) {
         ArrayList<BTOApplication> projectApplications = new ArrayList<>();
         for (BTOApplication Application : applicationList) {
             if (Application.getProject().getName().equals(projectName)) {
@@ -174,7 +175,7 @@ public class ApplicationDB implements CsvDatabase {
      * 
      * @return A list of all Application objects.
      */
-    public static ArrayList<BTOApplication> getAllApplications() {
+    public static List<BTOApplication> getAllApplications() {
         return applicationList;
     }
 

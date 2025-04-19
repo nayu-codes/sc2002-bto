@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 import bto.model.enquiry.Enquiry;
@@ -165,7 +166,7 @@ public class EnquiryDB implements CsvDatabase {
      * 
      * @return The list of all enquiries.
      */
-    public static ArrayList<Enquiry> getEnquiryList() {
+    public static List<Enquiry> getEnquiryList() {
         return enquiryList;
     }
 
@@ -176,7 +177,7 @@ public class EnquiryDB implements CsvDatabase {
      * 
      * @return A list of enquiries made by the specified applicant.
      */
-    public static ArrayList<Enquiry> getEnquiriesByApplicant(User applicant) {
+    public static List<Enquiry> getEnquiriesByApplicant(User applicant) {
         ArrayList<Enquiry> applicantEnquiries = new ArrayList<>(); // List to store enquiries made by the applicant
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getApplicantName().equals(applicant.getName())) { // Check if the enquiry is made by the specified applicant
@@ -193,7 +194,7 @@ public class EnquiryDB implements CsvDatabase {
      * 
      * @return A list of enquiries made for the specified project.
      */
-    public static ArrayList<Enquiry> getEnquiriesByProject(BTOProject project) {
+    public static List<Enquiry> getEnquiriesByProject(BTOProject project) {
         ArrayList<Enquiry> projectEnquiries = new ArrayList<>(); // List to store enquiries made for the project
         for (Enquiry enquiry : enquiryList) {
             if (enquiry.getProjectName().equals(project.getName())) { // Check if the enquiry is made for the specified project

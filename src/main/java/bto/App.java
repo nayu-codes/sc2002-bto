@@ -46,7 +46,6 @@ public final class App {
                 case 1:
                     // Login option
                     LoginScreen.start();
-                    // Call the login method (not implemented yet)
                     break;
                 case 2:
                     // Register option
@@ -59,6 +58,6 @@ public final class App {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        } while(option != 1 || option != 2);        
+        } while(option != 0);        
     }
 }

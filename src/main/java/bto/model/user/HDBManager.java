@@ -13,6 +13,7 @@ import bto.model.registration.OfficerRegistration;
 import bto.model.registration.RegistrationStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HDBManager extends User{
     /**
@@ -78,7 +79,7 @@ public class HDBManager extends User{
      * 
      * @return A list of BTOProject objects managed by all managers.
      */
-    public ArrayList<BTOProject> getAllProjects() {
+    public List<BTOProject> getAllProjects() {
         return BTOProjectDB.getBTOProjectList();
     }
 
@@ -199,7 +200,7 @@ public class HDBManager extends User{
      */
     public void generateReport() {
         // Get the list of all applicants
-        ArrayList<BTOApplication> applications = ApplicationDB.getAllApplications();
+        List<BTOApplication> applications = ApplicationDB.getAllApplications();
         // Print the details of all applications
         for (BTOApplication application : applications) {
             System.out.println("Applicant Name: " + application.getApplicant().getName());
@@ -225,7 +226,7 @@ public class HDBManager extends User{
      */
     public void generateReport(Integer minAge, Integer maxAge, MaritalStatus maritalStatus, String projectName, FlatType flatType) {
         // Get the list of all applicants
-        ArrayList<BTOApplication> applications = ApplicationDB.getAllApplications();
+        List<BTOApplication> applications = ApplicationDB.getAllApplications();
         // Filter the applications based on the provided criteria
         for (BTOApplication application : applications) {
             if ((minAge == null || application.getApplicant().getAge() >= minAge) &&
@@ -249,7 +250,7 @@ public class HDBManager extends User{
      * 
      * @return A list of Enquiry objects for all projects.
      */
-    public ArrayList<Enquiry> viewEnquiries() {
+    public List<Enquiry> viewEnquiries() {
         return EnquiryDB.getEnquiryList();
     }
 
