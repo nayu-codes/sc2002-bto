@@ -302,4 +302,27 @@ public class BTOProjectDB implements CsvDatabase {
                     ", Assigned Officers: " + String.join(", ", project.getAssignedOfficers()));
         }
     }
+
+    /**
+     * Print the details of a specific BTO project.
+     * 
+     * @param project The BTO project to print details for.
+     */
+    public static void printBTOProjectDetails(BTOProject project) {
+        if (project != null) {
+            System.out.println("Project Name: " + project.getName() + "\n" +
+                    "Neighbourhood: " + project.getNeighbourhood() + "\n" +
+                    "Available Flats: " + "\n");
+            for (FlatType flatType : project.getFlatType()) {
+                if (project.getFlatCount(flatType) == 0) {
+                    continue; // Skip if flat count is 0
+                }
+                System.out.println(flatType.getDisplayName() + ": $" +
+                        project.getFlatPrice(flatType) + " (" +
+                        project.getFlatCountRemaining(flatType) + " units available)");
+            }
+        } else {
+            System.out.println("BTO Project not found.");
+        }
+    }
 }
