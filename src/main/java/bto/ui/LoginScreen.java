@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import bto.controller.AuthenticationController;
 import bto.model.user.User;
+import bto.ui.Project.ProjectDashboard;
 
 public class LoginScreen {
     public LoginScreen() {

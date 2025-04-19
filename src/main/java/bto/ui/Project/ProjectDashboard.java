@@ -1,8 +1,9 @@
-package bto.ui;
+package bto.ui.Project;
 
 import java.util.List;
 import java.text.SimpleDateFormat;
 
+import bto.controller.ProjectFilter;
 import bto.model.project.BTOProject;
 import bto.model.user.User;
 
