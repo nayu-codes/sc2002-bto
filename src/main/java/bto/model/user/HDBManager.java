@@ -174,7 +174,7 @@ public class HDBManager extends User{
     public void approveApplication(BTOApplication application) throws IllegalStateException {
         // Check if the application is pending
         if (application.getStatus() == ApplicationStatus.PENDING) {
-            // Check if the project is managed by this officer
+            // Check if the project is managed by this manager
             boolean isManaged = false;
             for (BTOProject project : getManagedProjects()) {
                 if (project.getProjectId() == application.getProject().getProjectId()) {

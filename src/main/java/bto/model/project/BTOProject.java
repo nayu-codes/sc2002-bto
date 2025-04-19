@@ -375,4 +375,38 @@ public class BTOProject {
         }
         return flatCountRemaining.get(flatType);
     }
+
+    /**
+     * Decrease the remaining flat count for the specified flat type by 1. Called when a flat is booked.
+     * 
+     * @param flatType The flat type to decrease the remaining count for.
+     * 
+     * @throws IllegalArgumentException if the flat type is not found in the project.
+     */
+    public void decreaseFlatCountRemaining(FlatType flatType) throws IllegalArgumentException {
+        if (!flatCountRemaining.containsKey(flatType)) {
+            throw new IllegalArgumentException("Flat type not found in the project.");
+        }
+        int currentCount = flatCountRemaining.get(flatType);
+        if (currentCount > 0) {
+            flatCountRemaining.put(flatType, currentCount - 1);
+        } else {
+            System.out.println("No more flats of type " + flatType.getDisplayName() + " available for booking.");
+        }
+    }
+
+    /**
+     * Increase the remaining flat count for the specified flat type by 1. Called when a flat is unbooked.
+     * 
+     * @param flatType The flat type to increase the remaining count for.
+     * 
+     * @throws IllegalArgumentException if the flat type is not found in the project.
+     */
+    public void increaseFlatCountRemaining(FlatType flatType) throws IllegalArgumentException {
+        if (!flatCountRemaining.containsKey(flatType)) {
+            throw new IllegalArgumentException("Flat type not found in the project.");
+        }
+        int currentCount = flatCountRemaining.get(flatType);
+        flatCountRemaining.put(flatType, currentCount + 1);
+    }
 }
