@@ -188,10 +188,42 @@ public class HDBManager extends User{
                 // Update the application in the database
                 ApplicationDB.updateApplication(application);
             } else {
-                throw new IllegalStateException("Cannot approve application as it is not managed by this officer.");
+                throw new IllegalStateException("Cannot approve application as it is not managed by this manager.");
             }
         } else {
             throw new IllegalStateException("Cannot approve application as it is not pending.");
+        }
+    }
+
+    /**
+     * Reject a BTOApplication for a project managed by this manager.
+     * 
+     * @param application The BTOApplication object to be rejected.
+     * 
+     * @throws IllegalStateException if the application is not pending or if the
+     *                               project is not managed by this manager.
+     */
+    public void rejectApplication(BTOApplication application) throws IllegalStateException {
+        // Check if the application is pending
+        if (application.getStatus() == ApplicationStatus.PENDING) {
+            // Check if the project is managed by this manager
+            boolean isManaged = false;
+            for (BTOProject project : getManagedProjects()) {
+                if (project.getProjectId() == application.getProject().getProjectId()) {
+                    isManaged = true;
+                    break;
+                }
+            }
+            if (isManaged) {
+                // Update the application status to unsuccessful
+                application.setStatus(ApplicationStatus.UNSUCCESSFUL);
+                // Update the application in the database
+                ApplicationDB.updateApplication(application);
+            } else {
+                throw new IllegalStateException("Cannot reject application as it is not managed by this manager.");
+            }
+        } else {
+            throw new IllegalStateException("Cannot reject application as it is not pending.");
         }
     }
 

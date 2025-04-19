@@ -2,6 +2,9 @@ package bto.controller;
 
 import bto.model.application.ApplicationStatus;
 import bto.model.application.BTOApplication;
+import bto.model.project.BTOProject;
+import bto.model.project.FlatType;
+import bto.model.user.Applicant;
 import bto.model.user.HDBManager;
 import bto.model.user.User;
 import bto.model.user.UserType;
@@ -9,6 +12,68 @@ import bto.model.user.UserType;
 public class ApplicationController {
     public ApplicationController() {
         // Constructor for the ApplicationController class
+    }
+
+    /**
+     * Submit an application to the system for a given user.
+     * @param user the user who wants to submit the application
+     * @param project the project to which the application is submitted
+     * @param flatType the type of flat being applied for
+     */
+    public static void submitApplication(User user, BTOProject project, FlatType flatType) {
+        // Check if the project is null
+        if (project == null) {
+            System.out.println("Project not found.");
+            return;
+        }
+        // Check if the user is an applicant
+        if (user.getUserType() == UserType.HDB_MANAGER) {
+            System.out.println("Only applicants can submit applications.");
+            return;
+        }
+
+        // If is officer, check if application is for a project that officer is managing
+        if (user.getUserType() == UserType.HDB_OFFICER) {
+            if (project.getAssignedOfficers().contains(user.getName())) {
+                System.out.println("Cannot submit application for a project you are managing.");
+                return;
+            }
+        }
+
+        Applicant applicant = (Applicant) user;
+        // Check if the user has already submitted an application for the project
+        for (BTOApplication application : applicant.appliedProjects()) {
+            if (application.getProject().getName().equals(project.getName())) {
+                if (application.getStatus() == ApplicationStatus.PENDING) {
+                    System.out.println("You have already submitted an application for this project.");
+                    return;
+                }
+                if (application.getStatus() == ApplicationStatus.SUCCESSFUL) {
+                    System.out.println("You have already been successful in this project. You cannot apply again.");
+                    return;
+                }
+                if (application.getStatus() == ApplicationStatus.BOOKED) {
+                    System.out.println("You have already booked a flat in this project. You cannot apply again.");
+                    return;
+                }
+                if (application.getStatus() == ApplicationStatus.UNSUCCESSFUL) {
+                    System.out.println("You have already been unsuccessful in this project. You cannot apply again. Please apply for another project.");
+                    return;
+                }
+            }
+        }
+
+        // Check if project still has flats available for the given flat type
+        if (project.getFlatCountRemaining(flatType) > 0) {
+            try {
+                applicant.submitApplication(project, flatType);
+                System.out.println("Application submitted successfully.");
+            } catch (IllegalStateException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("No more " + flatType.getDisplayName() + " flats available for this project.");
+        }
     }
 
     /**
@@ -140,6 +205,34 @@ public class ApplicationController {
             }
         } else {
             System.out.println("Application not found / cannot be approved at this stage.");
+        }
+    }
+
+    /**
+     * Reject an application for a given user.
+     * 
+     * @param user the manager who wants to reject the application
+     * @param application the BTOApplication to be rejected
+     */
+    public static void rejectApplication(User user, BTOApplication application) {
+        // Check if the user is a manager
+        if (user.getUserType() != UserType.HDB_MANAGER) {
+            System.out.println("Only HDB Managers can reject applications.");
+            return;
+        }
+
+        // Check if the application is not null and is in a state that allows rejection
+        if (application != null && application.getStatus() == ApplicationStatus.PENDING) {
+            // Reject the application
+            HDBManager manager = (HDBManager) user;
+            try {
+                manager.rejectApplication(application);
+                System.out.println("Application rejected successfully.");
+            } catch (IllegalStateException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Application not found / cannot be rejected at this stage.");
         }
     }
 }
