@@ -1,13 +1,11 @@
 package bto.ui;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import bto.model.user.MaritalStatus;
 import bto.model.project.BTOProject;
+import bto.model.user.*;
 
-import bto.database.BTOProjectDB;
-
-public class ProjectDashboard {
+public class ProjectDashboard{
     public ProjectDashboard() {
         // Constructor for the ProjectDashboard class
     }
@@ -19,13 +17,10 @@ public class ProjectDashboard {
      * @param age The age of the user.
      * @param maritalStatus The marital status of the user.
      */
-    public static void start(int age, MaritalStatus maritalStatus) {
-        ProjectFilter filter = (age, maritalStatus) -> {
-            ArrayList<BTOProject> visibleProjects = new ArrayList<>();
-            visibleProjects = BTOProjectDB.getVisibleProjects();
-            for(BTOProject project:visibleProjects){
-                //TODO: implement the filter of age and marital status
-            }
-        };
-    }
+    public static void start(User user) {
+        List<BTOProject> filteredProjects = ProjectFilter.applyUserFilters(user.getAge(), user.getMaritalStatus());
+        System.out.println("Here are the available projects: ");
+        filteredProjects.stream()
+        .forEach(System.out::println);
+    };
 }

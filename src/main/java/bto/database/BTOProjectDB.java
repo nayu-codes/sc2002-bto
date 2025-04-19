@@ -224,8 +224,8 @@ public class BTOProjectDB implements CsvDatabase {
      * 
      * @return The BTO projects with the visibility 'on', or null if not found.
      */
-    public static ArrayList<BTOProject> getVisibleProjects() {
-        ArrayList<BTOProject> visibleProjects = new ArrayList<>();
+    public static List<BTOProject> getVisibleProjects() {
+        List<BTOProject> visibleProjects = new ArrayList<>();
         for (BTOProject project : btoProjectList.values()) {
             if (project.getVisibility()) {
                 visibleProjects.add(project);

@@ -25,9 +25,9 @@ public final class App {
         do{
             // Menu for the user to select an option
             System.out.println("Welcome to the BTO Application System!");
+            System.out.println("======================================");
             System.out.println("  1. Login");
             System.out.println("  2. Register");
-            System.out.println("  ------------------------------------");
             System.out.println("  0. Exit\n");
             System.out.print("Please select an option: ");
             
@@ -59,6 +59,6 @@ public final class App {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        } while(option != 0);        
+        } while(option != 1 || option != 2);        
     }
 }
