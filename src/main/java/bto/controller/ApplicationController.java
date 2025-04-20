@@ -1,5 +1,7 @@
 package bto.controller;
 
+import java.util.Scanner;
+
 import bto.model.application.ApplicationStatus;
 import bto.model.application.BTOApplication;
 import bto.model.project.BTOProject;
@@ -8,6 +10,7 @@ import bto.model.user.Applicant;
 import bto.model.user.HDBManager;
 import bto.model.user.User;
 import bto.model.user.UserType;
+import bto.ui.TerminalUtils;
 
 public class ApplicationController {
     private ApplicationController(){} // Prevents Instantiation
@@ -58,6 +61,43 @@ public class ApplicationController {
             }
         }
         return true;
+    }
+
+    public static void selectFlatType(User user, BTOProject project){
+        int option = -1;
+        Scanner scanner = new Scanner(System.in);
+
+        do{
+            System.out.println("\n--- Project Application ---");
+            System.out.println("Please enter the flat of choice - '2' for 2-room flat, '3' for 3-room flat, '0' to go back");
+            System.out.print("Enter your choice: ");
+            
+            try {
+                option = scanner.nextInt(); // Read the user's choice
+                scanner.nextLine(); // Consume the newline character
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input
+                continue; // Skip to the next iteration of the loop
+            }
+
+            switch (option) {
+                case 2:
+                    // Submit application for 2-room flat
+                    submitApplication(user, project, FlatType.TWO_ROOM);
+                    return;
+                case 3:
+                    // Submit application for 3-room flat
+                    submitApplication(user, project, FlatType.THREE_ROOM);
+                    return;
+                case 0:
+                    // Goes back to ProjectDetails
+                    TerminalUtils.clearScreen();
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        } while(option != 0);  
     }
 
     /**

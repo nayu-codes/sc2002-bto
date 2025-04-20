@@ -9,12 +9,11 @@ import bto.model.user.User;
 import bto.model.user.UserType;
 import bto.model.project.BTOProject;
 import bto.ui.TerminalUtils;
-import bto.ui.application.ApplicationDashboard;
 
 public class ProjectDetails {
     private ProjectDetails(){} // Prevents Instantiation
 
-    public static void showProjectDetails(User user, BTOProject project){
+    public static void start(User user, BTOProject project){
         int option = -1;
         Scanner scanner = new Scanner(System.in);
 
@@ -53,9 +52,9 @@ public class ProjectDetails {
             
             switch (option) {
                 case 1:
-                    // Calls ApplicationDashboard to submit an application with the right conditions
+                    // Calls ApplicationController to submit an application with the right conditions
                     if(ApplicationController.checkStatus(user, project)){
-                        ApplicationDashboard.selectFlatType(user, project);
+                        ApplicationController.selectFlatType(user, project);
                     }
                     break;
                 case 2:

@@ -4,6 +4,7 @@ import bto.model.user.User;
 
 import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
+import bto.ui.enquiry.EnquiryDashboard;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.application.ApplicationDashboard;
 
@@ -54,12 +55,12 @@ public class ApplicantProfileScreen {
                     ProjectDashboard.start(user);
                     break;
                 case 3:
-                    // Calls ApplicationDashboard
-                    //ApplicationDashboard.start(user);
+                    // Calls ApplicationDashboard to view applications
+                    ApplicationDashboard.start(user);
                     break;
                 case 4:
-                    // Calls EnquiryDashboard
-                    //EnquiryDashboard.start(user);
+                    // Calls EnquiryDashboard to view enquiries
+                    EnquiryDashboard.viewEnquiries();
                     break;
                 case 0:
                     // Log Out - goes back to Main Screen

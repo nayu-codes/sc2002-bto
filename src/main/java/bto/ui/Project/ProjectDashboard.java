@@ -27,7 +27,7 @@ public class ProjectDashboard{
         Scanner scanner = new Scanner(System.in);
         TerminalUtils.clearScreen();
         do {
-            System.out.println(" \nAvailable Projects for: " + user.getName());
+            System.out.println(" \n Available Projects for: " + user.getName());
             System.out.println(" " + "-".repeat(68));
             System.out.printf(" %5s | %15s | %15s | %20s\n", "Index", "Project Name", "Neighbourhood", "Application Period");
             System.out.println(" " + "-".repeat(68));
@@ -58,7 +58,7 @@ public class ProjectDashboard{
                 System.out.println(" " + "-".repeat(68));
                 System.out.println("  Please enter the index of the project you want to view more information about, or '0' to go back to the main menu.");
                 System.out.print("  Enter your choice: ");
-                choice = -1; // Reset choice to an invalid value
+
                 try {
                     choice = scanner.nextInt(); // Read the user's choice
                     scanner.nextLine();
@@ -66,6 +66,7 @@ public class ProjectDashboard{
                     System.out.println("  Invalid input. Please enter a number.");
                     continue; // Skip to the next iteration of the loop
                 }
+
                 if (choice < 0 || choice > filteredProjects.size()) {
                     System.out.println("  Invalid choice. Please try again.");
                 } else if (choice == 0) {
@@ -75,8 +76,8 @@ public class ProjectDashboard{
                     // Get project details for the selected project
                     BTOProject selectedProject = filteredProjects.get(choice - 1);
 
-                    // Pass the selected project to the ProjectDetailsScreen
-                    ProjectDetails.showProjectDetails(user, selectedProject);
+                    // Pass the selected project to ProjectDetails
+                    ProjectDetails.start(user, selectedProject);
                 }
             }
         } while (choice != 0); // Continue until the user chooses to go back to the main menu
