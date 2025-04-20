@@ -66,9 +66,15 @@ public class EnquiryDB implements CsvDatabase {
                     // Default to current date if parsing fails
                     applicantMessageDate = new Date();
                 }
+
+                // Parse applicant message into EnquiryMessage object
+                EnquiryMessage applicantMessageObj = new EnquiryMessage(applicantName, applicantMessage, applicantMessageDate);
+
                 String replyName = values[5].trim().replace("\"", "");
                 String replyMessage = values[6].trim().replace("\"", "");
                 Date replyMessageDate;
+
+                EnquiryMessage replyMessageObj = null;
                 if (replyMessage.equals("")) {
                     replyMessage = null; // Set to null if empty
                     replyMessageDate = null; // Set to null if empty
@@ -79,11 +85,9 @@ public class EnquiryDB implements CsvDatabase {
                         // Default to current date if parsing fails
                         replyMessageDate = new Date();
                     }
+                    // Parse reply message into EnquiryMessage object
+                    replyMessageObj = new EnquiryMessage(replyName, replyMessage, replyMessageDate);
                 }
-
-                // Parse messages into EnquiryMessage objects
-                EnquiryMessage applicantMessageObj = new EnquiryMessage(applicantName, applicantMessage, applicantMessageDate);
-                EnquiryMessage replyMessageObj = new EnquiryMessage(replyName, replyMessage, replyMessageDate);
 
                 // Create an Enquiry object with the parsed values
                 Enquiry project = new Enquiry(enquiryId, applicantName, projectName, applicantMessageObj, replyMessageObj);

@@ -37,7 +37,7 @@ public class EnquiryController {
         System.out.println("Enter Enquiry Message: ");
         String message = scanner.nextLine();
         
-        Applicant applicant = (Applicant) user; // Assuming applicant is of type Applicant
+        Applicant applicant = (Applicant) user; // Assuming user is of type Applicant
         if (applicant.submitEnquiry(project, message)){
             System.out.println("Enquiry submitted successfully!");
         } else {
