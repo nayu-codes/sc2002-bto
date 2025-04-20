@@ -31,9 +31,6 @@ public class BTOApplication {
         this.flatType = flatType;
         this.applicationDate = new Date(); // Setting the application date to the current date
         this.bookingDate = null; // Initialising bookingDate to null as it may not be set at the time of application
-
-        // Add the application to the database
-        ApplicationDB.addApplication(this);
     }
 
     /**

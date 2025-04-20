@@ -191,19 +191,19 @@ public class ApplicationDB implements CsvDatabase {
     /**
      * Adds a new Application to the database.
      * 
-     * @param Application The Application to be added.
+     * @param application The Application to be added.
      * 
      * @return true if the Application was added successfully, false otherwise.
      */
-    public static boolean addApplication(BTOApplication Application) {
+    public static boolean addApplication(BTOApplication application) {
         // Check if the Application already exists in the list
         for (BTOApplication existingApplication : applicationList) {
-            if (existingApplication.getApplicationId() == Application.getApplicationId()) {
+            if (existingApplication.getApplicationId() == application.getApplicationId()) {
                 return false; // Application already exists, do not add
             }
         }
         // Add the new Application to the list
-        applicationList.add(Application);
+        applicationList.add(application);
         // Export the updated list to CSV
         exportToCSV();
         return true; // Application added successfully

@@ -72,7 +72,6 @@ public class ApplicationController {
         if (project.getFlatCountRemaining(flatType) > 0) {
             try {
                 applicant.submitApplication(project, flatType);
-                System.out.println("Application submitted successfully.");
             } catch (IllegalStateException e) {
                 System.out.println("Error: " + e.getMessage());
             }
