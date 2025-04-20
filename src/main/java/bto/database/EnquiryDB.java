@@ -58,7 +58,13 @@ public class EnquiryDB implements CsvDatabase {
                 int enquiryId = Integer.parseInt(values[0].trim());
                 String applicantName = values[1].trim().replace("\"", ""); // Remove quotes
                 String projectName = values[2].trim().replace("\"", "");
-                String applicantMessage = values[3].trim().replace("\"", "");
+                String applicantMessage = values[3].trim();
+                // Remove first and last quotes from the message
+                if (applicantMessage.startsWith("\"") && applicantMessage.endsWith("\"")) {
+                    applicantMessage = applicantMessage.substring(1, applicantMessage.length() - 1);
+                }
+                // Unescape quotes in the message
+                applicantMessage = applicantMessage.replace("\\\"", "\"").replace("\\'", "'");
                 Date applicantMessageDate;
                 try {
                     applicantMessageDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(values[4].trim().replace("\"", ""));
@@ -71,7 +77,13 @@ public class EnquiryDB implements CsvDatabase {
                 EnquiryMessage applicantMessageObj = new EnquiryMessage(applicantName, applicantMessage, applicantMessageDate);
 
                 String replyName = values[5].trim().replace("\"", "");
-                String replyMessage = values[6].trim().replace("\"", "");
+                String replyMessage = values[6].trim();
+                // Remove first and last quotes from the message
+                if (replyMessage.startsWith("\"") && replyMessage.endsWith("\"")) {
+                    replyMessage = replyMessage.substring(1, replyMessage.length() - 1);
+                }
+                // Unescape quotes in the message
+                replyMessage = replyMessage.replace("\\\"", "\"").replace("\\'", "'");
                 Date replyMessageDate;
 
                 EnquiryMessage replyMessageObj = null;
@@ -118,11 +130,11 @@ public class EnquiryDB implements CsvDatabase {
                 sb.append(enquiry.getEnquiryId()).append(", ");
                 sb.append("\"").append(enquiry.getApplicantName()).append("\", ");
                 sb.append("\"").append(enquiry.getProjectName()).append("\", ");
-                sb.append("\"").append(enquiry.getApplicantMessage().getMessage()).append("\", ");
+                sb.append("\"").append(enquiry.getApplicantMessage().getMessage().replace("\"", "\\\"").replace("'", "\\'")).append("\", ");
                 sb.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(enquiry.getApplicantMessage().getDateTime())).append(", ");
                 if (enquiry.getReplyMessage() != null) {
                     sb.append("\"").append(enquiry.getReplyMessage().getAuthorName()).append("\", ");
-                    sb.append("\"").append(enquiry.getReplyMessage().getMessage()).append("\", ");
+                    sb.append("\"").append(enquiry.getReplyMessage().getMessage().replace("\"", "\\\"").replace("'", "\\'")).append("\", ");
                     sb.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(enquiry.getReplyMessage().getDateTime())).append("\n");
                 } else {
                     sb.append(", , , \n"); // Empty reply fields

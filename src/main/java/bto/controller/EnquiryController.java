@@ -34,8 +34,20 @@ public class EnquiryController {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Submit New Enquiry ---");
-        System.out.println("Enter Enquiry Message: ");
-        String message = scanner.nextLine();
+        System.out.println("Enter Enquiry Message (or enter -1 to exit without submitting enquiry): ");
+        String message = scanner.nextLine().trim(); // Remove leading and trailing whitespace
+
+        // Check if message is -1 to exit without submitting enquiry
+        if (message.equals("-1")) {
+            System.out.println("Exiting without submitting enquiry.");
+            return;
+        }
+
+        // Check if message is empty or not
+        if (message.isEmpty()) {
+            System.out.println("Enquiry message cannot be empty.");
+            return;
+        }
         
         Applicant applicant = (Applicant) user; // Assuming user is of type Applicant
         if (applicant.submitEnquiry(project, message)){
