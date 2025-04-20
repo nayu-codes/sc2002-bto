@@ -30,9 +30,16 @@ public class HDBOfficer extends Applicant {
         super(name, userId, password, age, maritalStatus, userType);
     }
 
-    public void registerForProject(int projectId) throws IllegalStateException {
+    /**
+     * Registers the officer for a project.
+     * 
+     * @param project The {@link BTOProject} to register for.
+     * 
+     * @throws IllegalStateException if the officer is already registered for another project that overlaps with the given project,
+     *                                or if the officer has a pending application for the same project, or if there are no available slots for officers in the project.
+     */
+    public void registerForProject(BTOProject project) throws IllegalStateException {
         // Check that the project is not within another project's timeframe
-        BTOProject project = BTOProjectDB.getBTOProjectById(projectId);
         for (OfficerRegistration registration : RegistrationDB.getRegistrationsByOfficer(this)) {
             if (registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) { // If Officer is assigned to this project
                 BTOProject registeredProject = registration.getProject();
@@ -47,7 +54,7 @@ public class HDBOfficer extends Applicant {
 
         // Check that officer has no pending BTOApplications for the project
         for (BTOApplication application : ApplicationDB.getApplicationsByApplicant(getUserId())){
-            if (application.getProject().getProjectId() == projectId) {
+            if (application.getProject().getProjectId() == project.getProjectId()) {
                 if (application.getStatus() != ApplicationStatus.UNSUCCESSFUL) {
                     throw new IllegalStateException("Cannot register for this project as there is a pending/completed application for the same project.");
                 }
@@ -68,9 +75,9 @@ public class HDBOfficer extends Applicant {
     /**
      * Retrieves the list of projects registered by this officer. TODO: is there a point? Compared to getting from RegistrationDB directly?
      * 
-     * @return An ArrayList of OfficerRegistration objects associated with this officer.
+     * @return An List of OfficerRegistration objects associated with this officer.
      */
-    public ArrayList<OfficerRegistration> getRegisteredProjects() {
+    public List<OfficerRegistration> getRegisteredProjects() {
         return RegistrationDB.getRegistrationsByOfficer(this);
     }
 

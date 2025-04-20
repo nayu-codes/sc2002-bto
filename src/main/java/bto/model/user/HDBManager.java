@@ -120,7 +120,8 @@ public class HDBManager extends User{
      * 
      * @param registration The OfficerRegistration object to be approved.
      * 
-     * @throws IllegalStateException if the registration is not pending.
+     * @throws IllegalStateException if the registration is not pending, or if the
+     *                               project does not have available slots for officers.
      */
     public void approveRegistration(OfficerRegistration registration) throws IllegalStateException {
         // Check if project still has available slots for officers
