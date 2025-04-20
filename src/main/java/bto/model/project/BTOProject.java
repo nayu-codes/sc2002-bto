@@ -1,9 +1,6 @@
 package bto.model.project;
 
 import bto.database.UserDB;
-import bto.database.ApplicationDB;
-import bto.model.application.ApplicationStatus;
-import bto.model.application.BTOApplication;
 import bto.model.user.HDBManager;
 import bto.model.user.UserType;
 

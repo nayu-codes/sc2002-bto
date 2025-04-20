@@ -2,7 +2,6 @@ package bto.controller;
 
 import bto.database.BTOProjectDB;
 import bto.database.EnquiryDB;
-import bto.database.RegistrationDB;
 import bto.model.enquiry.Enquiry;
 import bto.model.user.*;
 import bto.model.project.BTOProject;

@@ -6,7 +6,6 @@ import bto.model.user.UserType;
 import bto.model.user.MaritalStatus;
 import bto.model.user.Applicant;
 
-import java.util.Scanner;
 
 public class AuthenticationController {
     public AuthenticationController() {
