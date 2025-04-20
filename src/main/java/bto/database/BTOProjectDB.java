@@ -303,6 +303,9 @@ public class BTOProjectDB implements CsvDatabase {
         int newId = nextProjectId;
         btoProjectList.put(newId, project);
         nextProjectId++;
+
+        // Export the updated list to CSV
+        exportToCsv();
         return newId;
     }
 
@@ -331,6 +334,9 @@ public class BTOProjectDB implements CsvDatabase {
 
         if (btoProjectList.containsKey(projectId)) {
             btoProjectList.put(projectId, project);
+
+            // Export the updated list to CSV
+            exportToCsv();
             return true;
         }
         // Should not reach here
@@ -354,6 +360,9 @@ public class BTOProjectDB implements CsvDatabase {
         }
         if (btoProjectList.containsKey(projectId)) {
             btoProjectList.remove(projectId);
+
+            // Export the updated list to CSV
+            exportToCsv();
             return true;
         }
         return false;

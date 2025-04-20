@@ -206,15 +206,13 @@ public class ApplicationController {
             return;
         }
 
-        // Check if the application is not null and is in a state that allows cancellation
+        // Check if the application is in a state that allows cancellation
         if (application.getStatus() == ApplicationStatus.BOOKED) {
             // Cancel the booking
-            try {
-                application.getProject().increaseFlatCountRemaining(application.getFlatType());
-                application.setStatus(ApplicationStatus.UNSUCCESSFUL);
+            if (application.unbook()){
                 System.out.println("Booking cancelled successfully.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+            } else {
+                System.out.println("There was an error cancelling the booking. Please try again.");
             }
         } else if (application.getStatus() == ApplicationStatus.SUCCESSFUL || application.getStatus() == ApplicationStatus.PENDING) {
             System.out.println("There is no booking to cancel. Please withdraw the application instead.");

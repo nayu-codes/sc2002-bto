@@ -27,8 +27,12 @@ public class ApplicationDetails {
             // Menu for the user to select an option
             System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +
-                               "+---+----------------------------+\n" +
-                               "| 1 | Withdraw Application       |\n" +
+                               "+---+----------------------------+");
+            if (application.getStatus().getStatus() != "Unsuccessful") {
+                System.out.print(
+                             "| 1 | Withdraw Application       |\n");
+            }
+            System.out.print(
                                "| 0 | Go Back                    |\n" +
                                "+---+----------------------------+\n");
 
@@ -46,12 +50,25 @@ public class ApplicationDetails {
             switch (option) {
                 case 1:
                     do{
+                        // If original status is not "Unsuccessful", treat as invalid input
+                        if (application.getStatus().getStatus() == "Unsuccessful") {
+                            System.out.println("Invalid option. Please try again.");
+                            break;
+                        }
                         System.out.println("Do you really want to withdraw your application? This step is irreversible. (Y for Yes, N for No)");
                         System.out.print("Enter your choice: ");
                         withdraw = scanner.nextLine();
                         if(withdraw.toLowerCase().contains("y")){
                             // Calls ApplicationController to withdraw application
-                            ApplicationController.withdrawApplication(user, application);
+                            switch (application.getStatus().getStatus()) {
+                                case "Pending":
+                                case "Successful":
+                                    ApplicationController.withdrawApplication(user, application);
+                                    break;
+                                case "Booked":
+                                    ApplicationController.withdrawBooking(user, application);
+                                    break;
+                            }
                             break;
                         }
                         else if(withdraw.toLowerCase().contains("n")){

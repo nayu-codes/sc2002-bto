@@ -3,6 +3,7 @@ package bto.model.application;
 import java.util.Date;
 
 import bto.database.ApplicationDB;
+import bto.database.BTOProjectDB;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.Applicant;
@@ -170,5 +171,36 @@ public class BTOApplication {
         this.status = ApplicationStatus.BOOKED; // Set the status to BOOKED
         this.bookingDate = bookingDate; // Set the booking date
         return ApplicationDB.updateApplication(this); // Update the application in the database
+    }
+
+    /**
+     * Un-book the application by updating its status to UNCESSFUL, and incrementing the flatCountRemaining of the project.
+     */
+    public boolean unbook() {
+        this.status = ApplicationStatus.UNSUCCESSFUL; // Set the status to UNSUCCESSFUL
+        // Update the application in the database
+        if(ApplicationDB.updateApplication(this)) {
+            // Increment the flatCountRemaining of the project
+            try {
+                getProject().increaseFlatCountRemaining(getFlatType());
+                // Update the project in the database
+                try {
+                    BTOProjectDB.updateBTOProject(getProject().getName(), getProject()); // Update the project in the database
+                } catch (IllegalAccessException e) {
+                    System.out.println("Failed to update project in the database: " + e.getMessage());
+                    return false; // Return false if the project could not be updated in the database
+                }
+                return true; // Return true if the application was unbooked successfully
+            } catch (IllegalStateException e) {
+                System.out.println("Failed to increase flat count remaining: " + e.getMessage());
+
+                // Undo the status change if flat count could not be increased
+                this.status = ApplicationStatus.BOOKED; // Revert the status to BOOKED
+                ApplicationDB.updateApplication(this); // Update the application in the database
+                return false; // Return false if the flat count could not be increased
+            }
+        } else {
+            return false; // Return false if the application was not unbooked successfully
+        }
     }
 }
