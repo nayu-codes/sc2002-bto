@@ -296,14 +296,36 @@ public class HDBManager extends User{
     public void generateReport() {
         // Get the list of all applicants
         List<BTOApplication> applications = ApplicationDB.getAllApplications();
+
+        // Filter the applications to include only those with booked status
+        applications.removeIf(application -> application.getStatus() != ApplicationStatus.BOOKED);
+
+        // Sort applications by project name alphabetically, then by applicant name
+        applications.sort((a, b) -> {
+            int projectComparison = a.getProject().getName().compareTo(b.getProject().getName());
+            if (projectComparison != 0) {
+                return projectComparison;
+            } else {
+                return a.getApplicant().getName().compareTo(b.getApplicant().getName());
+            }
+        });
+
+        // Print the header
+        System.out.println(" " + "-".repeat(65));
+        System.out.println("  Flat Booking Report: ");
+        System.out.printf(" %15s | %15s | %3s | %7s | %6s \n", "Project Name", "Applicant Name", "Age", "Marital Status", "Flat Type");
+        System.out.println(" " + "-".repeat(65));
+
         // Print the details of all applications
         for (BTOApplication application : applications) {
-            System.out.println("Applicant Name: " + application.getApplicant().getName());
-            System.out.println("Age: " + application.getApplicant().getAge());
-            System.out.println("Marital Status: " + application.getApplicant().getMaritalStatus());
-            System.out.println("Project Name: " + application.getProject().getName());
-            System.out.println("Flat Type: " + application.getFlatType());
-            System.out.println("------------------------------");
+            System.out.printf(" %15s | %15s | %3d | %7s | %6s \n",
+                    application.getProject().getName(),
+                    application.getApplicant().getName(),
+                    application.getApplicant().getAge(),
+                    application.getApplicant().getMaritalStatus(),
+                    application.getFlatType().getDisplayName()
+            );
+            System.out.println(" " + "-".repeat(65));
         }
     }
 
@@ -322,6 +344,27 @@ public class HDBManager extends User{
     public void generateReport(Integer minAge, Integer maxAge, MaritalStatus maritalStatus, String projectName, FlatType flatType) {
         // Get the list of all applicants
         List<BTOApplication> applications = ApplicationDB.getAllApplications();
+
+        // Filter the applications to include only those with booked status
+        applications.removeIf(application -> application.getStatus() != ApplicationStatus.BOOKED);
+
+        // Sort applications by project name alphabetically, then by applicant name
+        applications.sort((a, b) -> {
+            int projectComparison = a.getProject().getName().compareTo(b.getProject().getName());
+            if (projectComparison != 0) {
+                return projectComparison;
+            } else {
+                return a.getApplicant().getName().compareTo(b.getApplicant().getName());
+            }
+        });
+
+        // Print the header
+        System.out.println(" " + "-".repeat(65));
+        System.out.println("  Flat Booking Report: ");
+        System.out.printf(" %15s | %15s | %3s | %7s | %6s \n", "Project Name", "Applicant Name", "Age",
+                "Marital Status", "Flat Type");
+        System.out.println(" " + "-".repeat(65));
+
         // Filter the applications based on the provided criteria
         for (BTOApplication application : applications) {
             if ((minAge == null || application.getApplicant().getAge() >= minAge) &&
@@ -330,12 +373,13 @@ public class HDBManager extends User{
                 (projectName == null || application.getProject().getName().equalsIgnoreCase(projectName)) &&
                 (flatType == null || application.getFlatType() == flatType)) {
                 // Print the details of the filtered applications
-                System.out.println("Applicant Name: " + application.getApplicant().getName());
-                System.out.println("Age: " + application.getApplicant().getAge());
-                System.out.println("Marital Status: " + application.getApplicant().getMaritalStatus());
-                System.out.println("Project Name: " + application.getProject().getName());
-                System.out.println("Flat Type: " + application.getFlatType());
-                System.out.println("------------------------------");
+                System.out.printf(" %15s | %15s | %3d | %7s | %6s \n",
+                        application.getProject().getName(),
+                        application.getApplicant().getName(),
+                        application.getApplicant().getAge(),
+                        application.getApplicant().getMaritalStatus(),
+                        application.getFlatType().getDisplayName());
+                System.out.println(" " + "-".repeat(65));
             }
         }
     }
