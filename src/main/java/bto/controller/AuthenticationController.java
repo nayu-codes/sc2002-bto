@@ -75,13 +75,9 @@ public class AuthenticationController {
      * Prompts the user for a new password and update the password in the database.
      * 
      * @param User the user whose password is to be updated
+     * @param newPassword the new password entered by the user
      */
-    public static void updatePassword(User user) {
-        // Prompt the user for a new password
-        System.out.print("Enter new password: ");
-        Scanner scanner = new Scanner(System.in);
-        String newPassword = scanner.nextLine();
-
+    public static void updatePassword(User user, String newPassword) {
         // Set new password for the user
         user.setPassword(newPassword);
 
