@@ -2,13 +2,13 @@ package bto;
 
 import bto.ui.LoginScreen;
 import bto.ui.RegisterUserScreen;
+import bto.ui.TerminalUtils;
 import bto.database.Database;
 
 import java.util.Scanner;
 
 public final class App {
-    private App() {
-    }
+    private App(){} // Prevents instantiation
     /**
      * Main class for the BTO application system.
      * This class contains the main method to run the application.
@@ -16,19 +16,23 @@ public final class App {
      * @param args Command line arguments (not used)
      */
     public static void main(String[] args) { 
-        int option = 999;
+        int option = -1;
         Scanner scanner = new Scanner(System.in);
 
         // Initialise the database
         Database.init();
-
+        TerminalUtils.clearScreen();
         do{
             // Menu for the user to select an option
-            System.out.println("Welcome to the BTO Application System!");
-            System.out.println("======================================");
-            System.out.println("  1. Login");
-            System.out.println("  2. Register");
-            System.out.println("  0. Exit\n");
+            System.out.println("\nWelcome to the BTO Application System!\n" +
+                               "+---+---------------------+\n" +
+                               "| # | Option              |\n" +
+                               "+---+---------------------+\n" +
+                               "| 1 | Login as a User     |\n" +
+                               "| 2 | Register as a User  |\n" +
+                               "| 0 | Exit Application    |\n" +
+                               "+---+---------------------+\n");
+
             System.out.print("Please select an option: ");
             
             try {

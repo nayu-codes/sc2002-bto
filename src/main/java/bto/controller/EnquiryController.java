@@ -11,11 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnquiryController {
-    /**
-     * Constructor for EnquiryController.
-     */
-    public EnquiryController() {
-    }
+    private EnquiryController(){} // Prevents Instantiation
 
     /**
      * Creates a new enquiry submitted by an applicant.

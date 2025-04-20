@@ -6,9 +6,7 @@ import bto.model.user.User;
 import bto.model.user.UserType;
 
 public class ProjectController {
-    public ProjectController() {
-        // Constructor for ProjectController
-    }
+    private ProjectController(){} // Prevents Instantiation
 
     /**
      * Creates a new project submitted by an HDB Manager.

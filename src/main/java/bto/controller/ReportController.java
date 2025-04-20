@@ -11,6 +11,7 @@ import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 
 public class ReportController {
+    private ReportController(){} // Prevents Instantiation
     /**
      * Generate a receipt for a flat booking.
      * 

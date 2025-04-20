@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import bto.database.BTOProjectDB;
-
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.MaritalStatus;
 
 public class ProjectFilter {
+    private ProjectFilter(){} // Prevents Instantiation
     /**
      * Getting available projects based on the age and marital status filter
      * 

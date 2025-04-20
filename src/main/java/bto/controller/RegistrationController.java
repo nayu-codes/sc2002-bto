@@ -11,9 +11,7 @@ import bto.model.registration.OfficerRegistration;
 import java.util.List;
 
 public class RegistrationController {
-    public RegistrationController() {
-        // Constructor for RegistrationController
-    }
+    private RegistrationController(){} // Prevents Instantiation
 
     /**
      * Creates a new registration request for a project submitted by an officer.

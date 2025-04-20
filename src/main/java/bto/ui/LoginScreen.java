@@ -1,17 +1,15 @@
 package bto.ui;
 
-import java.util.Scanner;
-
 import bto.controller.AuthenticationController;
 import bto.model.user.User;
 import bto.ui.profile.ApplicantProfileScreen;
 import bto.ui.profile.OfficerProfileScreen;
 import bto.ui.profile.ManagerProfileScreen;
 
+import java.util.Scanner;
+
 public class LoginScreen {
-    public LoginScreen() {
-        // Constructor for the LoginScreen class
-    }
+    private LoginScreen(){} // Prevents instantiation
 
     /**
      * Starts the login screen for the user to enter their credentials.
@@ -33,9 +31,6 @@ public class LoginScreen {
         // Authenticate the user
         User user = AuthenticationController.loginAsUser(userId, password);
         if (user != null) {
-            // If authentication is successful, retrieve the user object
-            System.out.println("Login successful! Welcome, " + user.getName() + ".");
-
             switch(user.getUserType().getDisplayName()) {
                 case "Applicant":
                     // Applicant dashboard

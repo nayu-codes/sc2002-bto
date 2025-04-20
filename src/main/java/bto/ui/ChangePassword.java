@@ -6,9 +6,7 @@ import bto.model.user.User;
 import java.util.Scanner;
 
 public class ChangePassword {
-    public ChangePassword() {
-        // Constructor logic if needed
-    }
+    private ChangePassword(){} // Prevents instantiation
 
     public static void start(User user) {
         System.out.println("  ------------------------------------");

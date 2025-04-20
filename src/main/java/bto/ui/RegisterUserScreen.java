@@ -6,9 +6,7 @@ import bto.controller.AuthenticationController;
 import bto.model.user.MaritalStatus;
 
 public class RegisterUserScreen {
-    public RegisterUserScreen() {
-        // Constructor for the RegisterUserScreen class
-    }
+    private RegisterUserScreen(){} // Prevents instantiation
 
     /**
      * Starts the registration screen for the user to enter their details.

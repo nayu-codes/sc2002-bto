@@ -8,9 +8,7 @@ import bto.model.user.Applicant;
 
 
 public class AuthenticationController {
-    public AuthenticationController() {
-        // Constructor for the AuthenticationController class
-    }
+    private AuthenticationController(){} // Prevents Instantiation
 
     /**
      * Login method to authenticate the user.
@@ -37,7 +35,7 @@ public class AuthenticationController {
      * @return true if the credentials are valid, false otherwise
      */
     public static boolean validateCredentials(String userId, String password) {
-        System.out.println("User count: " + UserDB.getUserCount()); // Debugging line to check user count
+        //System.out.println("User count: " + UserDB.getUserCount()); // Debugging line to check user count
         // Validate the user credentials
         if (userId == null || password == null) {
             return false;

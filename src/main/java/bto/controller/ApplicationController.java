@@ -10,9 +10,7 @@ import bto.model.user.User;
 import bto.model.user.UserType;
 
 public class ApplicationController {
-    public ApplicationController() {
-        // Constructor for the ApplicationController class
-    }
+    private ApplicationController(){} // Prevents Instantiation
 
     /**
      * Submit an application to the system for a given user.
