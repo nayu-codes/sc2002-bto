@@ -27,7 +27,7 @@ public class ProjectDashboard{
         Scanner scanner = new Scanner(System.in);
         TerminalUtils.clearScreen();
         do {
-            System.out.println(" Available Projects for: " + user.getName());
+            System.out.println(" \nAvailable Projects for: " + user.getName());
             System.out.println(" " + "-".repeat(68));
             System.out.printf(" %5s | %15s | %15s | %20s\n", "Index", "Project Name", "Neighbourhood", "Application Period");
             System.out.println(" " + "-".repeat(68));

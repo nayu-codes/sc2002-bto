@@ -13,28 +13,28 @@ public class ApplicationController {
     private ApplicationController(){} // Prevents Instantiation
 
     /**
-     * Submit an application to the system for a given user.
+     * Check if the user is an applicant and if he/she has already applied for the project.
      * @param user the user who wants to submit the application
      * @param project the project to which the application is submitted
      * @param flatType the type of flat being applied for
      */
-    public static void submitApplication(User user, BTOProject project, FlatType flatType) {
+    public static boolean checkStatus(User user, BTOProject project){
         // Check if the project is null
         if (project == null) {
             System.out.println("Project not found.");
-            return;
+            return false;
         }
         // Check if the user is an applicant
         if (user.getUserType() == UserType.HDB_MANAGER) {
             System.out.println("Only applicants can submit applications.");
-            return;
+            return false;
         }
 
         // If is officer, check if application is for a project that officer is managing
         if (user.getUserType() == UserType.HDB_OFFICER) {
             if (project.getAssignedOfficers().contains(user.getName())) {
                 System.out.println("Cannot submit application for a project you are managing.");
-                return;
+                return false;
             }
         }
 
@@ -44,23 +44,30 @@ public class ApplicationController {
             if (application.getProject().getName().equals(project.getName())) {
                 if (application.getStatus() == ApplicationStatus.PENDING) {
                     System.out.println("You have already submitted an application for this project.");
-                    return;
                 }
                 if (application.getStatus() == ApplicationStatus.SUCCESSFUL) {
                     System.out.println("You have already been successful in this project. You cannot apply again.");
-                    return;
                 }
                 if (application.getStatus() == ApplicationStatus.BOOKED) {
                     System.out.println("You have already booked a flat in this project. You cannot apply again.");
-                    return;
                 }
                 if (application.getStatus() == ApplicationStatus.UNSUCCESSFUL) {
                     System.out.println("You have already been unsuccessful in this project. You cannot apply again. Please apply for another project.");
-                    return;
                 }
+            return false;
             }
         }
+        return true;
+    }
 
+    /**
+     * Submit an application to the system for a given user.
+     * @param user the user who wants to submit the application
+     * @param project the project to which the application is submitted
+     * @param flatType the type of flat being applied for
+     */
+    public static void submitApplication(User user, BTOProject project, FlatType flatType) {
+        Applicant applicant = (Applicant) user;
         // Check if project still has flats available for the given flat type
         if (project.getFlatCountRemaining(flatType) > 0) {
             try {
