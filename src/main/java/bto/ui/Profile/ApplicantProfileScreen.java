@@ -7,6 +7,7 @@ import bto.ui.TerminalUtils;
 import bto.ui.enquiry.EnquiryDashboard;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.application.ApplicationDashboard;
+import bto.ui.project.UserFilter;
 
 import java.util.Scanner;
 
@@ -16,6 +17,9 @@ public class ApplicantProfileScreen {
     public static void start(User user){
         int option = -1;
         Scanner scanner = new Scanner(System.in);
+
+        // Initialise a blank UserFilter here so that it persists across the session
+        UserFilter userFilter = new UserFilter(null, null, null, null, null);
 
         TerminalUtils.clearScreen();
         do{
@@ -52,7 +56,7 @@ public class ApplicantProfileScreen {
                     break;
                 case 2:
                     // Calls ProjectDashboard
-                    ProjectDashboard.start(user);
+                    userFilter = ProjectDashboard.start(user, userFilter);
                     break;
                 case 3:
                     // Calls ApplicationDashboard to view applications

@@ -15,71 +15,77 @@ public class ProjectDashboard{
 
     /**
      * Starts the project dashboard for the user to see available projects.
-     * The method only shows the projects available for a user depending on their age and maritalStatus
+     * For applicants, the method only shows the projects available for a user depending on their age and maritalStatus
      * 
-     * @param age The age of the user.
-     * @param maritalStatus The marital status of the user.
+     * @param user The user object representing the logged-in user.
+     * @param userFilter The UserFilter object containing the selected filters.
+     * 
+     * @return UserFilter object containing the selected filters.
      */
-    public static void start(User user) {
-        List<BTOProject> filteredProjects = ProjectFilter.applyUserFilters(user.getAge(), user.getMaritalStatus());
-        int choice = -1; // Initialize choice to an invalid value
+    public static UserFilter start(User user, UserFilter userFilter) {
+        String choice = "-1"; // Initialize choice to an invalid value
+        int choiceIndex = -1; // Initialize choiceIndex to an invalid value
 
         Scanner scanner = new Scanner(System.in);
         TerminalUtils.clearScreen();
         do {
+            List<BTOProject> filteredProjects = ProjectFilter.applyUserFilters(user.getAge(), user.getMaritalStatus());
+            // Apply additional filters based on UserFilter object
+            filteredProjects = ProjectFilter.applyAdditionalFilters(filteredProjects, userFilter);
+
             System.out.println(" \n Available Projects for: " + user.getName());
             System.out.println(" " + "-".repeat(68));
             System.out.printf(" %5s | %15s | %15s | %20s\n", "Index", "Project Name", "Neighbourhood", "Application Period");
             System.out.println(" " + "-".repeat(68));
-
+            
             // Display the filtered projects to the user
             if (filteredProjects.isEmpty()) {
                 System.out.println("  No available projects for you at the moment.");
-                System.out.print("  Enter any key to go back to the main menu.");
-                scanner.nextLine();
-                TerminalUtils.clearScreen();
-                return;
             }
-            else{
-                // Count for list indexing
-                int i = 1;
+            // Count for list indexing
+            int i = 1;
 
-                // Print each project in the filtered list
-                for (BTOProject project : filteredProjects) {
-                    // Print in table format, with consistent spacing
-                    // i, Project Name (Neighbourhood: Location) | Application Opening - Closing Date
-                    System.out.printf("  %3d. | %15s | %15s | %10s - %10s\n", 
-                        i, project.getName(), project.getNeighbourhood(),
-                        new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationOpeningDate()),
-                        new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationClosingDate())
-                    );
-                    i++;
-                };
-                System.out.println(" " + "-".repeat(68));
-                System.out.println("  Please enter the index of the project you want to view more information about, or '0' to go back to the main menu.");
-                System.out.print("  Enter your choice: ");
-
-                try {
-                    choice = scanner.nextInt(); // Read the user's choice
-                    scanner.nextLine();
-                } catch (NumberFormatException e) {
-                    System.out.println("  Invalid input. Please enter a number.");
-                    continue; // Skip to the next iteration of the loop
+            // Print each project in the filtered list
+            for (BTOProject project : filteredProjects) {
+                // Print in table format, with consistent spacing
+                // i, Project Name (Neighbourhood: Location) | Application Opening - Closing Date
+                System.out.printf("  %3d. | %15s | %15s | %10s - %10s\n", 
+                    i, project.getName(), project.getNeighbourhood(),
+                    new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationOpeningDate()),
+                    new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationClosingDate())
+                );
+                i++;
+            };
+            System.out.println(" " + "-".repeat(68));
+            System.out.println("  Please enter the index of the project you want to view more information about, 'filter' to select filters, or '0' to go back to the main menu.");
+            System.out.print("  Enter your choice: ");
+            choice = scanner.nextLine().trim(); // Read the user's choice and remove leading/trailing whitespace
+            try {
+                // Parse the choice as an integer
+                choiceIndex = Integer.parseInt(choice);
+            } catch (NumberFormatException e) {
+                // if input is 'filter', go to filter menu
+                if (choice.equalsIgnoreCase("filter")) {
+                    userFilter = ProjectFilterMenu.updateFilter(userFilter);
                 }
-
-                if (choice < 0 || choice > filteredProjects.size()) {
-                    System.out.println("  Invalid choice. Please try again.");
-                } else if (choice == 0) {
-                    System.out.println("  Returning to the main menu...");
-                    return; // Exit the loop and return to the main menu
-                } else {
-                    // Get project details for the selected project
-                    BTOProject selectedProject = filteredProjects.get(choice - 1);
-
-                    // Pass the selected project to ProjectDetails
-                    ProjectDetails.start(user, selectedProject);
-                }
+                System.out.println("  Invalid input. Please enter a number.");
+                continue; // Skip to the next iteration of the loop
             }
-        } while (choice != 0); // Continue until the user chooses to go back to the main menu
+
+            if (choiceIndex < 0 || choiceIndex > filteredProjects.size()) {
+                System.out.println("  Invalid choice. Please try again.");
+            } else if (choiceIndex == 0) {
+                System.out.println("  Returning to the main menu...");
+                return userFilter; // Exit the loop and return to the main menu
+            } else {
+                // Get project details for the selected project
+                BTOProject selectedProject = filteredProjects.get(choiceIndex - 1);
+
+                // Pass the selected project to ProjectDetails
+                ProjectDetails.start(user, selectedProject);
+            }
+        } while (choice != "0"); // Continue until the user chooses to go back to the main menu
+
+        return userFilter;
     };
 }
