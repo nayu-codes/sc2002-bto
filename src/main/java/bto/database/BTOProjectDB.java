@@ -384,7 +384,7 @@ public class BTOProjectDB implements CsvDatabase {
      */
     public static void printBTOProjectDetails(BTOProject project) {
         if (project != null) {
-            System.out.println("Project Name: " + project.getName() + "\n" +
+            System.out.println("\nProject Name: " + project.getName() + "\n" +
                     "Neighbourhood: " + project.getNeighbourhood() + "\n" +
                     "Available Flats: " + "\n");
             for (FlatType flatType : project.getFlatType()) {

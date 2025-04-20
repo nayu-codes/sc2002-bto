@@ -106,7 +106,6 @@ public class Applicant extends User {
         Enquiry newEnquiry = new Enquiry(getName(), project.getName()); // Create a new enquiry object
         try {
             newEnquiry.addApplicantMessage(this, enquiry);
-            System.out.println("Enquiry (ID:" + newEnquiry.getEnquiryId() + ") submitted successfully."); // Print success message
             return true;
         } catch (IllegalStateException e) {
             System.out.println("Enquiry already solved. Cannot add message.");

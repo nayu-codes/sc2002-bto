@@ -75,9 +75,6 @@ public class ProjectDashboard{
                     // Get project details for the selected project
                     BTOProject selectedProject = filteredProjects.get(choice - 1);
 
-                    // temp to debug
-                    System.out.println("User selected project: " + selectedProject.getName());
-
                     // Pass the selected project to the ProjectDetailsScreen
                     ProjectDetails.showProjectDetails(user, selectedProject);
                 }

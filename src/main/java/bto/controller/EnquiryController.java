@@ -34,9 +34,9 @@ public class EnquiryController {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Submit New Enquiry ---");
-        System.out.print("Enter Enquiry Message: ");
+        System.out.println("Enter Enquiry Message: ");
         String message = scanner.nextLine();
-
+        
         Applicant applicant = (Applicant) user; // Assuming applicant is of type Applicant
         if (applicant.submitEnquiry(project, message)){
             System.out.println("Enquiry submitted successfully!");
@@ -44,8 +44,6 @@ public class EnquiryController {
             System.out.println("Failed to submit enquiry. Please try again.");
             return;
         };
-
-        System.out.println("Enquiry submitted successfully!");
     }
 
     /**

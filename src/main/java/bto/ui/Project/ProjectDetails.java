@@ -2,11 +2,11 @@ package bto.ui.project;
 
 import java.util.Scanner;
 
+import bto.controller.EnquiryController;
 import bto.database.BTOProjectDB;
 import bto.model.user.User;
 import bto.model.user.UserType;
 import bto.model.project.BTOProject;
-import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
 
 public class ProjectDetails {
@@ -16,22 +16,23 @@ public class ProjectDetails {
         int option = -1;
         Scanner scanner = new Scanner(System.in);
 
-        BTOProjectDB.printBTOProjectDetails(project);
+        TerminalUtils.clearScreen();
         do{
+            BTOProjectDB.printBTOProjectDetails(project);
             // Menu for the user to select an option
-            System.out.println("+---+----------------------------+\n" +
+            System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +
                                "+---+----------------------------+\n" +
                                "| 1 | Enquire about Project      |\n" +
-                               "| 2 | Apply for Project          |\n");
+                               "| 2 | Apply for Project          |");
 
 
             if (user.getUserType() == UserType.HDB_OFFICER) {
-                System.out.println("| 3 | Register for Project       |\n");
+                System.out.println("| 3 | Register for Project       |");
             }
 
             if (user.getUserType() == UserType.HDB_MANAGER) {
-                System.out.println("| 3 | Set Visibility             |\n");
+                System.out.println("| 3 | Set Visibility             |");
             }
 
             System.out.println("| 0 | Go Back                    |\n" +
@@ -51,8 +52,8 @@ public class ProjectDetails {
             
             switch (option) {
                 case 1:
-                    // Calls ChangePassword
-                    ChangePassword.start(user);
+                    // Creates an enquiry
+                    EnquiryController.createEnquiry(user, project);
                     break;
                 case 2:
                     // Calls ProjectDashboard
@@ -62,13 +63,8 @@ public class ProjectDetails {
                     // Calls ApplicationDashboard
                     //ApplicationDashboard.start(user);
                     break;
-                case 4:
-                    // Calls EnquiryDashboard
-                    //EnquiryDashboard.start(user);
-                    break;
                 case 0:
-                    // Log Out - goes back to Main Screen
-                    System.out.println("Logging out. Goodbye!");
+                    // Goes back to ProjectDashboard
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");

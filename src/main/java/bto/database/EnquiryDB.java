@@ -40,8 +40,6 @@ public class EnquiryDB implements CsvDatabase {
         for (Enquiry enquiry : enquiryList) {
             System.out.println("Enquiry ID: " + enquiry.getEnquiryId() + ", Applicant Name: " + enquiry.getApplicantName() + ", Project Name: " + enquiry.getProjectName() + ", Applicant Message: " + enquiry.getApplicantMessage().getMessage() + ", Reply Message: " + (enquiry.getReplyMessage() != null ? enquiry.getReplyMessage().getMessage() : "No reply yet")); // TODO: Remove in production
         }
-        // Export the enquiryList HashMap to a CSV file
-        exportToCSV();
     }
 
     /**

@@ -6,7 +6,6 @@ import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.application.ApplicationDashboard;
-import bto.ui.enquiry.EnquiryDashboard;
 
 import java.util.Scanner;
 

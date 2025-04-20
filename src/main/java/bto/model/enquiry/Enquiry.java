@@ -26,11 +26,6 @@ public class Enquiry {
         this.applicantMessage = null; // Initialise applicantMessage to null
         this.replyMessage = null; // Initialise replyMessage to null
         this.isSolved = false; // Set the enquiry as not solved
-        
-        // Add the enquiry to the database
-        if (!EnquiryDB.addEnquiry(this)) {
-            throw new IllegalStateException("Failed to add enquiry to the database.");
-        }
     }
 
     /**
@@ -128,9 +123,9 @@ public class Enquiry {
         }
         this.applicantMessage = new EnquiryMessage(applicant.getName(), message, new Date());
 
-        // Update the enquiry in the database
-        if (!EnquiryDB.updateEnquiry(this)) {
-            throw new IllegalStateException("Failed to update enquiry in the database.");
+        // Add the enquiry to the database
+        if (!EnquiryDB.addEnquiry(this)) {
+            throw new IllegalStateException("Failed to add enquiry to the database.");
         }
     }
 
