@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import bto.model.project.BTOProject;
 import bto.model.registration.OfficerRegistration;
@@ -100,7 +101,7 @@ public class RegistrationDB implements CsvDatabase {
      * 
      * @return A list of OfficerRegistration objects associated with the specified officer.
      */
-    public static ArrayList<OfficerRegistration> getRegistrationsByOfficer(HDBOfficer officer) {
+    public static List<OfficerRegistration> getRegistrationsByOfficer(HDBOfficer officer) {
         ArrayList<OfficerRegistration> officerRegistrations = new ArrayList<>();
         for (OfficerRegistration registration : registrationList) {
             if (registration.getOfficer().getUserId().equals(officer.getUserId())) {

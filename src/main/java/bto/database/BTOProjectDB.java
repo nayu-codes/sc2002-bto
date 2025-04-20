@@ -3,6 +3,7 @@ package bto.database;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.HDBManager;
+import bto.model.user.HDBOfficer;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -226,6 +227,42 @@ public class BTOProjectDB implements CsvDatabase {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns a List of BTO projects managed by the specified HDB Officer.
+     * 
+     * @param officer The HDB Officer managing the projects.
+     * 
+     * @return A List of BTO projects managed by the specified HDB Officer, or null if not found.
+     */
+    public static List<BTOProject> getBTOProjectsByOfficer(HDBOfficer officer) {
+        List<BTOProject> officerProjects = new ArrayList<>();
+
+        for (BTOProject project : btoProjectList.values()) {
+            if (project.getAssignedOfficers().contains(officer.getName())) {
+                officerProjects.add(project);
+            }
+        }
+        return officerProjects;
+    }
+
+    /**
+     * Returns a List of BTO projects managed by the specified HDB Manager.
+     * 
+     * @param manager The HDB Manager managing the projects.
+     * 
+     * @return A List of BTO projects managed by the specified HDB Manager, or null if not found.
+     */
+    public static List<BTOProject> getBTOProjectsByManager(HDBManager manager) {
+        List<BTOProject> managerProjects = new ArrayList<>();
+
+        for (BTOProject project : btoProjectList.values()) {
+            if (project.getProjectManager().getName().equalsIgnoreCase(manager.getName())) {
+                managerProjects.add(project);
+            }
+        }
+        return managerProjects;
     }
 
     /**

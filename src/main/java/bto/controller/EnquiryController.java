@@ -1,10 +1,15 @@
 package bto.controller;
 
+import bto.database.BTOProjectDB;
+import bto.database.EnquiryDB;
+import bto.database.RegistrationDB;
 import bto.model.enquiry.Enquiry;
 import bto.model.user.*;
 import bto.model.project.BTOProject;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnquiryController {
     /**
@@ -19,7 +24,7 @@ public class EnquiryController {
      * @param user The applicant submitting the enquiry.
      * @param project The BTOProject related to the enquiry.
      */
-    public void createEnquiry(User user, BTOProject project) {
+    public static void createEnquiry(User user, BTOProject project) {
         // Check if user is an applicant
         if (user.getUserType() == UserType.HDB_MANAGER) {
             System.out.println("Only applicants can submit enquiries.");
@@ -54,7 +59,7 @@ public class EnquiryController {
      * @param user
      * @param enquiry
      */
-    public void editEnquiry(User user, Enquiry enquiry) {
+    public static void editEnquiry(User user, Enquiry enquiry) {
         // Check if enquiry is null or not
         if (enquiry == null) {
             System.out.println("Enquiry cannot be null.");
@@ -100,7 +105,7 @@ public class EnquiryController {
      * @param user The user replying to the enquiry.
      * @param enquiry The enquiry to be replied to.
      */
-    public void replyToEnquiry(User user, Enquiry enquiry) {        
+    public static void replyToEnquiry(User user, Enquiry enquiry) {        
         // Check if enquiry is null or not
         if (enquiry == null) {
             System.out.println("Enquiry cannot be null.");
@@ -144,5 +149,80 @@ public class EnquiryController {
             System.out.println("Invalid user type. Cannot reply to enquiry.");
             return;
         }
+    }
+
+    /**
+     * Get enquiries that belong to a specific user.
+     * 
+     * @param user The user whose enquiries are to be retrieved.
+     * 
+     * @return List of enquiries belonging to the user. 
+     *         Returns null if the user is an HDB Manager.
+     */
+    public static List<Enquiry> getEnquiriesByUser(User user) {
+        // Check if user is an applicant
+        if (user.getUserType() == UserType.HDB_MANAGER) {
+            System.out.println("Only applicants can view their own enquiries.");
+            return null;
+        }
+
+        // Get the list of enquiries for the user
+        return EnquiryDB.getEnquiriesByApplicant(user);
+    }
+
+    /**
+     * Get enquiries from projects that a officer is managing. Sorted by project application opening date, latest first. Then, enquiry date, latest first.
+     * 
+     * @param user The HDB officer/HDB Manager whose enquiries are to be retrieved.
+     * 
+     * @return List of enquiries belonging to the HDB Officer / HDB Manager's managed projects.
+     */
+    public static List<Enquiry> getEnquiriesByOfficerOrManager(User user) {
+        // Check if user is an officer or manager
+        if (user.getUserType() != UserType.APPLICANT) {
+            System.out.println("Only officers/managers can view enquiries by other applicants.");
+            return null;
+        }
+
+        List<BTOProject> managedProjects = new ArrayList<>();
+
+        if (user.getUserType() == UserType.HDB_MANAGER) {
+            // Get a list of projects that the manager is managing
+            HDBManager manager = (HDBManager) user; // Assuming user is of type HDBManager
+            managedProjects = BTOProjectDB.getBTOProjectsByManager(manager);
+        } else if (user.getUserType() == UserType.HDB_OFFICER) {
+            // Get a list of projects that the officer is managing
+            HDBOfficer officer = (HDBOfficer) user; // Assuming user is of type HDBOfficer
+            managedProjects = BTOProjectDB.getBTOProjectsByOfficer(officer);
+        }
+
+        // Sort by project opening date. Index 0 is the latest project.
+        managedProjects.sort((project1, project2) -> project2.getApplicationOpeningDate().compareTo(project1.getApplicationOpeningDate()));
+
+        // Get the list of enquiries for the officer's managed projects
+        List<Enquiry> managedEnquiries = new ArrayList<>();
+        for (BTOProject project : managedProjects) {
+            List<Enquiry> projectEnquiries = EnquiryDB.getEnquiriesByProject(project);
+            if (projectEnquiries != null) {
+                // Sort by enquiry date. Index 0 is the latest enquiry.
+                projectEnquiries.sort((enquiry1, enquiry2) -> enquiry2.getApplicantMessage().getDateTime().compareTo(enquiry1.getApplicantMessage().getDateTime()));
+                managedEnquiries.addAll(projectEnquiries);
+            }
+        }
+
+        return managedEnquiries;
+    }
+
+    /**
+     * Get all enquiries in the system.
+     * 
+     * @return List of all enquiries in the system.
+     */
+    public static List<Enquiry> getAllEnquiries() {
+        List<Enquiry> enquiryList = EnquiryDB.getEnquiryList();
+
+        // Sort by enquiry date. Index 0 is the latest enquiry.
+        enquiryList.sort((enquiry1, enquiry2) -> enquiry2.getApplicantMessage().getDateTime().compareTo(enquiry1.getApplicantMessage().getDateTime()));
+        return enquiryList;
     }
 }
