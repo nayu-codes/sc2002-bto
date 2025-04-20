@@ -76,6 +76,9 @@ public class RegistrationController {
         } catch (IllegalStateException e) {
             System.out.println("Failed to approve registration request: " + e.getMessage());
             return;
+        } catch (IllegalAccessException e) {
+            System.out.println("Failed to approve registration request: " + e.getMessage());
+            return;
         }
     }
 

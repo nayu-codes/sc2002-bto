@@ -20,7 +20,7 @@ import java.io.IOException;
 public class BTOProjectDB implements CsvDatabase {
     private static final String CSV_FILE_PATH = "resources/BTOProjectList.csv"; // Path to the CSV file
     public static HashMap<Integer, BTOProject> btoProjectList = new HashMap<>();
-    public static Integer totalProjects = 0;
+    public static Integer nextProjectId = 0;
 
     public BTOProjectDB() {
     }
@@ -34,7 +34,7 @@ public class BTOProjectDB implements CsvDatabase {
             readFromDefaultCsv();
         }
         exportToCsv();
-        System.out.println("Total BTO projects loaded: " + totalProjects); // TODO: Remove in production
+        System.out.println("Total BTO projects loaded: " + btoProjectList.size()); // TODO: Remove in production
     }
 
     public static void readFromDefaultCsv() {
@@ -65,11 +65,12 @@ public class BTOProjectDB implements CsvDatabase {
                     boolean visibility = true; // Default visibility
 
                     // Create a new BTOProject object and add it to the list
-                    BTOProject project = new BTOProject(totalProjects, name, neighbourhood, flatType, flatCount, flatPrice,
+                    BTOProject project = new BTOProject(
+                            nextProjectId, name, neighbourhood, flatType, flatCount, flatPrice,
                             applicationOpeningDate, applicationClosingDate, projectManager, assignedOfficers,
                             availableOfficerSlots, visibility);
-                    btoProjectList.put(totalProjects, project);
-                    totalProjects++;
+                    btoProjectList.put(nextProjectId, project);
+                    nextProjectId++;
                 }
             }
         } catch (IOException e) {
@@ -127,11 +128,12 @@ public class BTOProjectDB implements CsvDatabase {
                     boolean visibility = Boolean.parseBoolean(values[15].trim());
 
                     // Create a new BTOProject object and add it to the list
-                    BTOProject project = new BTOProject(totalProjects, name, neighbourhood, flatType, flatCount, flatCountRemaining, 
+                    BTOProject project = new BTOProject(
+                            nextProjectId, name, neighbourhood, flatType, flatCount, flatCountRemaining, 
                             flatPrice, applicationOpeningDate, applicationClosingDate, projectManager,
                             assignedOfficers, availableOfficerSlots, visibility);
-                    btoProjectList.put(totalProjects, project);
-                    totalProjects++;
+                    btoProjectList.put(nextProjectId, project);
+                    nextProjectId++;
                 }
             }
         } catch (IOException e) {
@@ -201,7 +203,7 @@ public class BTOProjectDB implements CsvDatabase {
      * @return The total number of BTO projects.
      */
     public static int getTotalProjects() {
-        return totalProjects;
+        return btoProjectList.size();
     }
 
     /**
@@ -283,40 +285,75 @@ public class BTOProjectDB implements CsvDatabase {
 
     /**
      * Adds a new BTO project to the list.
+     * 
      * @param project The BTO project to add.
      * 
      * @return The ID of the newly added BTO project.
+     * 
+     * @throws IllegalArgumentException If the project name already exists.
      */
-    public static int addBTOProject(BTOProject project) {
-        int newId = totalProjects++;
+    public static int addBTOProject(BTOProject project) throws IllegalArgumentException {
+        // Check if the project name already exists
+        for (BTOProject existingProject : btoProjectList.values()) {
+            if (existingProject.getName().equalsIgnoreCase(project.getName())) {
+                System.out.println("Project name already exists. Please choose a different name.");
+                throw new IllegalArgumentException("Project name already exists.");
+            }
+        }
+        int newId = nextProjectId;
         btoProjectList.put(newId, project);
+        nextProjectId++;
         return newId;
     }
 
     /**
      * Updates the BTO project with the specified ID.
      * 
-     * @param id      The ID of the BTO project to update.
-     * @param project The updated BTO project.
+     * @param projectName   The name of the BTO project to update.
+     * @param project       The updated BTO project.
+     * 
      * @return True if the update was successful, false otherwise.
+     * 
+     * @throws IllegalAccessException If the project name is not found.
      */
-    public static boolean updateBTOProject(int id, BTOProject project) {
-        if (btoProjectList.containsKey(id)) {
-            btoProjectList.put(id, project);
+    public static boolean updateBTOProject(String projectName, BTOProject project) throws IllegalAccessException {
+        int projectId = -1;
+        for (BTOProject existingProject : btoProjectList.values()) {
+            if (existingProject.getName().equalsIgnoreCase(projectName)) {
+                projectId = existingProject.getProjectId();
+                break; // Found the project ID
+            }
+        }
+        // If project ID is not found, throw an exception
+        if (projectId == -1) {
+            throw new IllegalAccessException("Project name not found.");
+        }
+
+        if (btoProjectList.containsKey(projectId)) {
+            btoProjectList.put(projectId, project);
             return true;
         }
+        // Should not reach here
         return false;
     }
 
     /**
      * Deletes the BTO project with the specified ID.
      * 
-     * @param id The ID of the BTO project to delete.
+     * @param project The BTO project to delete.
+     * 
      * @return True if the deletion was successful, false otherwise.
      */
-    public static boolean deleteBTOProject(int id) {
-        if (btoProjectList.containsKey(id)) {
-            btoProjectList.remove(id);
+    public static boolean deleteBTOProject(BTOProject project) {
+        int projectId = -1;
+        for (BTOProject existingProject : btoProjectList.values()) {
+            if (existingProject.getName().equalsIgnoreCase(project.getName())) {
+                projectId = existingProject.getProjectId();
+                break; // Found the project ID
+            }
+        }
+        if (btoProjectList.containsKey(projectId)) {
+            btoProjectList.remove(projectId);
             return true;
         }
         return false;

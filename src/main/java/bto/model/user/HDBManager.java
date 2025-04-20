@@ -60,18 +60,77 @@ public class HDBManager extends User{
     }
 
     /**
+     * Edits an existing BTO project listing. Project information is provided from ProjectController.editProject()
+     * 
+     * @param project The BTOProject object containing the updated project information.
+     * 
+     * @return The ID of the updated project.
+     * 
+     * @throws IllegalAccessException if the project cannot be edited due to an error (e.g. Project not found, not managed by this manager).
+     * @throws IllegalStateException if the project cannot be edited due to an error (e.g. Overlapping application periods).
+     */
+    public int editProject(BTOProject project) throws IllegalAccessException, IllegalStateException {
+        // Check if new project opening and closing dates overlap with currently managed projects
+        for (BTOProject existingProject : BTOProjectDB.getBTOProjectsByManager(this)) {
+            if (existingProject.getName() != project.getName()) {
+                // Check if the project opening and closing dates overlap with existing projects, inclusive
+                if (existingProject.getApplicationOpeningDate().before(project.getApplicationClosingDate()) ||
+                    existingProject.getApplicationOpeningDate() == project.getApplicationClosingDate() ||
+                    existingProject.getApplicationClosingDate().after(project.getApplicationOpeningDate()) ||
+                    existingProject.getApplicationClosingDate() == project.getApplicationOpeningDate()) {
+                    throw new IllegalStateException("Cannot edit project as it will overlaps with another project you are handling.");
+                }
+            }
+        }
+
+        // Check if the project is managed by this manager
+        for (BTOProject existingProject : BTOProjectDB.getBTOProjectsByManager(this)) {
+            if (existingProject.getName().equals(project.getName())) {
+                // Update the project in the database
+                BTOProjectDB.updateBTOProject(project.getName(), project);
+                return project.getProjectId();
+            }
+        }
+        throw new IllegalStateException("Cannot edit project as it is not managed by this officer.");
+    }
+
+    /**
+     * Delete a BTO project listing. Project information is provided from ProjectController.deleteProject()
+     * @param project The BTOProject object to be deleted.
+     * 
+     * @return true if the project was successfully deleted, false otherwise.
+     * 
+     * @throws IllegalAccessException if the project cannot be deleted due to an error (e.g. Project not found, not managed by this manager).
+     */
+    public boolean deleteProject(BTOProject project) throws IllegalAccessException {
+        // Check if the project is managed by this manager
+        for (BTOProject existingProject : BTOProjectDB.getBTOProjectsByManager(this)) {
+            if (existingProject.getName().equals(project.getName())) {
+                // Delete the project from the database
+                return BTOProjectDB.deleteBTOProject(project);
+            }
+        }
+        throw new IllegalAccessException("Cannot delete project as it is not managed by this officer.");
+    }
+
+    /**
      * Toggle project visibility between visible and hidden by toggling the {@link BTOProject#getVisibility()}.
      * 
      * @param project The BTOProject object to be toggled.
      * 
      * @return The updated visibility status of the project.
+     * 
+     * @throws IllegalAccessException if the project cannot be toggled due to an error.
      */
-    public boolean toggleProjectVisibility(BTOProject project) {
+    public boolean toggleProjectVisibility(BTOProject project) throws IllegalAccessException {
         // Toggle the visibility status of the project
         project.setVisibility(!project.getVisibility());
         // Update the project in the database
-        BTOProjectDB.updateBTOProject(project.getProjectId(), project);
-        return project.getVisibility();
+        if(BTOProjectDB.updateBTOProject(project.getName(), project)) {
+            return project.getVisibility();
+        } else {
+            throw new IllegalAccessException("Unknown error occured. Please try again.");
+        }
     }
 
     /**
@@ -122,8 +181,11 @@ public class HDBManager extends User{
      * 
      * @throws IllegalStateException if the registration is not pending, or if the
      *                               project does not have available slots for officers.
+     * 
+     * @throws IllegalAccessException if the registration cannot be approved due to not
+     *                                being able to find the project in the database.
      */
-    public void approveRegistration(OfficerRegistration registration) throws IllegalStateException {
+    public void approveRegistration(OfficerRegistration registration) throws IllegalStateException, IllegalAccessException {
         // Check if project still has available slots for officers
         if (registration.getProject().getAvailableOfficerSlots() - registration.getProject().getAssignedOfficers().size() <= 0) {
             throw new IllegalStateException("Cannot approve registration as there are no available slots.");
@@ -139,7 +201,7 @@ public class HDBManager extends User{
             BTOProject project = registration.getProject();
             project.addAssignedOfficer(registration.getOfficer().getName());
             // Update the project in the database
-            BTOProjectDB.updateBTOProject(project.getProjectId(), project);
+            BTOProjectDB.updateBTOProject(project.getName(), project);
         } else {
             throw new IllegalStateException("Cannot approve registration as it is not pending.");
         }
