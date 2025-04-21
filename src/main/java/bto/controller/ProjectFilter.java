@@ -53,7 +53,8 @@ public class ProjectFilter {
         }
         if (UserFilter.getFlatType() != null) {
             filteredProjects = filteredProjects.stream()
-                .filter(project -> project.getFlatType().contains(UserFilter.getFlatType()))
+                .filter(project -> project.getFlatType().contains(UserFilter.getFlatType())) // Check if the project has the specified flat type
+                .filter(project -> project.getFlatCountRemaining(UserFilter.getFlatType()) > 0) // Check if the project has remaining flats of the specified type
                 .collect(Collectors.toList());
         }
         if (UserFilter.getMinPrice() != null) {
