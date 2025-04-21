@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import bto.controller.ProjectFilter;
 import bto.model.project.BTOProject;
 import bto.model.user.User;
+import bto.model.user.UserFilter;
 import bto.ui.TerminalUtils;
 
 import java.util.Scanner;
@@ -18,11 +19,10 @@ public class ProjectDashboard{
      * For applicants, the method only shows the projects available for a user depending on their age and maritalStatus
      * 
      * @param user The user object representing the logged-in user.
-     * @param userFilter The UserFilter object containing the selected filters.
      * 
      * @return UserFilter object containing the selected filters.
      */
-    public static UserFilter start(User user, UserFilter userFilter) {
+    public static void start(User user) {
         String choice = "-1"; // Initialize choice to an invalid value
         int choiceIndex = -1; // Initialize choiceIndex to an invalid value
 
@@ -31,9 +31,13 @@ public class ProjectDashboard{
         do {
             List<BTOProject> filteredProjects = ProjectFilter.applyUserFilters(user.getAge(), user.getMaritalStatus());
             // Apply additional filters based on UserFilter object
-            filteredProjects = ProjectFilter.applyAdditionalFilters(filteredProjects, userFilter);
+            filteredProjects = ProjectFilter.applyAdditionalFilters(filteredProjects);
 
             System.out.println(" \n Available Projects for: " + user.getName());
+            
+            // Print user filters applied, if any
+            UserFilter.printFiltersApplied();
+
             System.out.println(" " + "-".repeat(68));
             System.out.printf(" %5s | %15s | %15s | %20s\n", "Index", "Project Name", "Neighbourhood", "Application Period");
             System.out.println(" " + "-".repeat(68));
@@ -66,7 +70,7 @@ public class ProjectDashboard{
             } catch (NumberFormatException e) {
                 // if input is 'filter', go to filter menu
                 if (choice.equalsIgnoreCase("filter")) {
-                    userFilter = ProjectFilterMenu.updateFilter(userFilter);
+                    ProjectFilterMenu.updateFilter();
                 }
                 System.out.println("  Invalid input. Please enter a number.");
                 continue; // Skip to the next iteration of the loop
@@ -76,7 +80,7 @@ public class ProjectDashboard{
                 System.out.println("  Invalid choice. Please try again.");
             } else if (choiceIndex == 0) {
                 System.out.println("  Returning to the main menu...");
-                return userFilter; // Exit the loop and return to the main menu
+                return; // Exit the loop and return to the main menu
             } else {
                 // Get project details for the selected project
                 BTOProject selectedProject = filteredProjects.get(choiceIndex - 1);
@@ -86,6 +90,6 @@ public class ProjectDashboard{
             }
         } while (choice != "0"); // Continue until the user chooses to go back to the main menu
 
-        return userFilter;
+        return;
     };
 }
