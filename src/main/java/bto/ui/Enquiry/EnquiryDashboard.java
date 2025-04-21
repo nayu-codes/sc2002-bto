@@ -2,6 +2,7 @@ package bto.ui.enquiry;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 import bto.database.EnquiryDB;
 import bto.model.enquiry.Enquiry;
@@ -39,10 +40,14 @@ public class EnquiryDashboard {
                 // Print each applied project
                 for (Enquiry enquiry : applicantEnquiries) {
                     String reply = "No";
-                    
+
                     // Check if there is a reply
-                    if(enquiry.isSolved()){
+                    if((enquiry.getReplyMessage() != null) && (enquiry.isSolved())){
                         reply = "Yes";
+                    }
+                    // Shows "Deleted" if the user deletes the enquiry
+                    else if ((enquiry.getReplyMessage() == null) && (enquiry.isSolved())){
+                        reply = "Deleted";
                     }
 
                     // Print in table format, with consistent spacing
@@ -58,7 +63,7 @@ public class EnquiryDashboard {
                 try {
                     choice = scanner.nextInt(); // Read the user's choice
                     scanner.nextLine();
-                } catch (Exception e) {
+                } catch (InputMismatchException e) {
                     System.out.println("  Invalid input. Please enter a number.");
                     scanner.nextLine(); // Clear the invalid input
                     continue; // Skip to the next iteration of the loop

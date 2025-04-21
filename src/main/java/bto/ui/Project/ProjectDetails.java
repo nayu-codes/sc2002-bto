@@ -1,6 +1,7 @@
 package bto.ui.project;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 import bto.controller.ApplicationController;
 import bto.controller.EnquiryController;
@@ -45,7 +46,7 @@ public class ProjectDetails {
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 continue; // Skip to the next iteration of the loop

@@ -1,9 +1,8 @@
 package bto.ui.enquiry;
 
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
-import bto.controller.ApplicationController;
 import bto.controller.EnquiryController;
 import bto.model.enquiry.Enquiry;
 import bto.model.user.User;
@@ -21,14 +20,19 @@ public class EnquiryDetails {
         TerminalUtils.clearScreen();
         do{
             System.out.print("\nProject Name: " + enquiry.getProjectName() + "\n" +
-            "Enquiry: " + enquiry.getApplicantMessage().getMessage() + "\n\n" +
-            "Reply: ");
+            "Enquiry: " + enquiry.getApplicantMessage().getMessage() + "\n\n");
 
+            // If there is a reply message, display it
             if(enquiry.getReplyMessage() != null){
-                System.out.println(enquiry.getReplyMessage().getMessage());
+                System.out.println("Reply: " + enquiry.getReplyMessage().getMessage());
             }
+            // If the user deletes the message
+            else if((enquiry.getReplyMessage() == null) && (enquiry.isSolved())){
+                System.out.println("Enquiry is deleted.");
+            }
+            // If there is no reply message
             else{
-                System.out.println("No reply yet.");
+                System.out.println("Reply: No reply yet.");
             }
 
             // Menu for the user to select an option
@@ -55,7 +59,7 @@ public class EnquiryDetails {
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 continue; // Skip to the next iteration of the loop
@@ -75,6 +79,7 @@ public class EnquiryDetails {
                 case 2:
                     // Sets the enquiry to solved
                     enquiry.deleteEnquiry();
+                    System.out.println("Enquiry Deleted!");
                     break;
                 case 0:
                     // Goes back to ProjectDashboard

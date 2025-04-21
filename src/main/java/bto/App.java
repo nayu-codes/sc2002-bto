@@ -1,11 +1,12 @@
 package bto;
 
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
 import bto.ui.LoginScreen;
 import bto.ui.RegisterUserScreen;
 import bto.ui.TerminalUtils;
 import bto.database.Database;
-
-import java.util.Scanner;
 
 public final class App {
     private App(){} // Prevents instantiation
@@ -38,7 +39,7 @@ public final class App {
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 continue; // Skip to the next iteration of the loop

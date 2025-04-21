@@ -1,13 +1,14 @@
 package bto.ui.profile;
 
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
 import bto.model.user.User;
 import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
 import bto.ui.enquiry.EnquiryDashboard;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.application.ApplicationDashboard;
-
-import java.util.Scanner;
 
 public class ApplicantProfileScreen {
     private ApplicantProfileScreen() {} // Prevents instantiation
@@ -37,7 +38,7 @@ public class ApplicantProfileScreen {
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 continue; // Skip to the next iteration of the loop
