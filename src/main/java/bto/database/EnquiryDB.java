@@ -97,15 +97,16 @@ public class EnquiryDB implements CsvDatabase {
                         // Default to current date if parsing fails
                         replyMessageDate = new Date();
                     }
+
                     // Parse reply message into EnquiryMessage object
                     replyMessageObj = new EnquiryMessage(replyName, replyMessage, replyMessageDate);
                 }
 
                 // Create an Enquiry object with the parsed values
-                Enquiry project = new Enquiry(enquiryId, applicantName, projectName, applicantMessageObj, replyMessageObj);
+                Enquiry enquiry = new Enquiry(enquiryId, applicantName, projectName, applicantMessageObj, replyMessageObj);
 
                 // Add the Enquiry object to the enquiryList HashMap               
-                enquiryList.add(project);
+                enquiryList.add(enquiry);
             }
         } catch (IOException e) {
             System.err.println("Error reading CSV file: " + e.getMessage()); // TODO: Remove in production

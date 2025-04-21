@@ -125,7 +125,10 @@ public class Enquiry {
 
         // Add the enquiry to the database
         if (!EnquiryDB.addEnquiry(this)) {
-            throw new IllegalStateException("Failed to add enquiry to the database.");
+            // If is to update the enquiry, then update the enquiry in the database instead of adding it
+            if (!EnquiryDB.updateEnquiry(this)) {
+                throw new IllegalStateException("Failed to update enquiry in the database.");
+            }
         }
     }
 
@@ -157,6 +160,9 @@ public class Enquiry {
      */
     public void deleteEnquiry() throws IllegalStateException {
         this.isSolved = true; // Mark the enquiry as solved
+
+        // Since there is no status info when exporting to CSV, workaround by setting the replyMessage date to current date, but set replyMessage to "Enquiry Deleted"
+        this.replyMessage = new EnquiryMessage("", "Enquiry Deleted", new Date());
 
         // Update the enquiry in the database
         if (!EnquiryDB.updateEnquiry(this)) {
