@@ -9,11 +9,8 @@ public class ProjectFilterMenu {
     private ProjectFilterMenu(){} // Prevents Instantiation
 
     /**
-     * Starts the project filter menu for the user to select filters.
-     * The method only shows the projects available for a user depending on their age and maritalStatus
-     * 
-     * @param age The age of the user.
-     * @param maritalStatus The marital status of the user.
+     * Displays the filter menu and allows the user to update their filters.
+     * The user can filter by project name, neighbourhood, flat type, minimum price, and maximum price.
      */
     public static void updateFilter() {
         int option = -1;

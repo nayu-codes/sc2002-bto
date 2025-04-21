@@ -61,8 +61,8 @@ public class EnquiryController {
     /**
      * Edit an existing enquiry submitted by an applicant.
      * 
-     * @param user
-     * @param enquiry
+     * @param user The applicant editing the enquiry.
+     * @param enquiry The enquiry to be edited.
      */
     public static void editEnquiry(User user, Enquiry enquiry) {
         // Check if enquiry is null or not

@@ -71,7 +71,7 @@ public class AuthenticationController {
     /**
      * Prompts the user for a new password and update the password in the database.
      * 
-     * @param User the user whose password is to be updated
+     * @param user the user whose password is to be updated
      * @param newPassword the new password entered by the user
      */
     public static void updatePassword(User user, String newPassword) {

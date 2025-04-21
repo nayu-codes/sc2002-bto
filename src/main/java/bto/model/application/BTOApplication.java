@@ -175,6 +175,8 @@ public class BTOApplication {
 
     /**
      * Un-book the application by updating its status to UNCESSFUL, and incrementing the flatCountRemaining of the project.
+     * 
+     * @return true if the application is successfully un-booked, false otherwise.
      */
     public boolean unbook() {
         this.status = ApplicationStatus.UNSUCCESSFUL; // Set the status to UNSUCCESSFUL

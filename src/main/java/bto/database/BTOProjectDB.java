@@ -391,6 +391,7 @@ public class BTOProjectDB implements CsvDatabase {
     /**
      * Print the details of a specific BTO project.
      * 
+     * @param user The user requesting the project details.
      * @param project The BTO project to print details for.
      */
     public static void printBTOProjectDetails(User user, BTOProject project) {

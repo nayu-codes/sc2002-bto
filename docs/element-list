@@ -7,3 +7,7 @@ bto.model.project
 bto.model.registration
 bto.model.user
 bto.ui
+bto.ui.application
+bto.ui.enquiry
+bto.ui.profile
+bto.ui.project

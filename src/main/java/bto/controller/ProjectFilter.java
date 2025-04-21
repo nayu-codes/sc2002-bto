@@ -16,6 +16,8 @@ public class ProjectFilter {
      * 
      * @param age The age of the user.
      * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
+     * 
+     * @return A list of BTOProject objects that are eligible for the user based on the filters.
      */
     public static List<BTOProject> applyUserFilters(int age, MaritalStatus maritalStatus){
         List<BTOProject> eligibleProjects = BTOProjectDB.getVisibleProjects();

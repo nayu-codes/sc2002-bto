@@ -18,8 +18,6 @@ public class ProjectDashboard{
      * For applicants, the method only shows the projects available for a user depending on their age and maritalStatus
      * 
      * @param user The user object representing the logged-in user.
-     * 
-     * @return UserFilter object containing the selected filters.
      */
     public static void start(User user) {
         String choice = "-1"; // Initialize choice to an invalid value

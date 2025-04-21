@@ -19,7 +19,8 @@ public class ApplicationController {
      * Check if the user is an applicant and if he/she has already applied for the project.
      * @param user the user who wants to submit the application
      * @param project the project to which the application is submitted
-     * @param flatType the type of flat being applied for
+     * 
+     * @return true if the user can submit the application, false otherwise
      */
     public static boolean checkStatus(User user, BTOProject project){
         // Check if the project is null
