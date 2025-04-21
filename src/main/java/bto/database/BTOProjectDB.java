@@ -1,5 +1,7 @@
 package bto.database;
 
+import bto.model.user.User;
+import bto.model.user.MaritalStatus;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.HDBManager;
@@ -391,14 +393,16 @@ public class BTOProjectDB implements CsvDatabase {
      * 
      * @param project The BTO project to print details for.
      */
-    public static void printBTOProjectDetails(BTOProject project) {
+    public static void printBTOProjectDetails(User user, BTOProject project) {
         if (project != null) {
             System.out.println("\nProject Name: " + project.getName() + "\n" +
                     "Neighbourhood: " + project.getNeighbourhood() + "\n" +
                     "Available Flats: " + "\n");
             for (FlatType flatType : project.getFlatType()) {
-                if (project.getFlatCount(flatType) == 0) {
-                    continue; // Skip if flat count is 0
+                if(flatType == FlatType.THREE_ROOM){
+                    if (user.getMaritalStatus() == MaritalStatus.SINGLE){
+                    continue; // Skip printing 3-room flats if user is Single
+                    }
                 }
                 System.out.println(flatType.getDisplayName() + ": $" +
                         project.getFlatPrice(flatType) + " (" +

@@ -1,11 +1,12 @@
 package bto.ui.application;
 
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 
 import bto.model.application.BTOApplication;
 import bto.model.user.User;
 import bto.model.user.Applicant;
+
 import bto.ui.TerminalUtils;
 
 public class ApplicationDashboard {
@@ -13,20 +14,20 @@ public class ApplicationDashboard {
 
     public static void start(User user){
         int choice = -1; // Initialize choice to an invalid value
-
         Scanner scanner = new Scanner(System.in);
+        
         TerminalUtils.clearScreen();
         do {
-            System.out.println(" \n Applied Projects for: " + user.getName());
-            System.out.println(" " + "-".repeat(83));
+            System.out.println(" \nApplied Projects for: " + user.getName());
+            System.out.println("-".repeat(83));
             System.out.printf(" %5s | %15s | %15s | %20s | %15s\n", "Index", "Project Name", "Neighbourhood", "Application Date", "Status");
-            System.out.println(" " + "-".repeat(83));
+            System.out.println("-".repeat(83));
 
             Applicant applicant = (Applicant) user;
             // Check if the user has any applications
             if (applicant.appliedProjects().isEmpty()) {
-                System.out.println("  You have not applied for any projects.");
-                System.out.print("  Enter any key to go back to the main menu.");
+                System.out.println("You have not applied for any projects.");
+                System.out.println("Enter any key to go back to the main menu.");
                 scanner.nextLine();
                 TerminalUtils.clearScreen();
                 return;
@@ -38,7 +39,7 @@ public class ApplicationDashboard {
                 // Print each applied project
                 for (BTOApplication application : applicant.appliedProjects()) {
                     // Print in table format, with consistent spacing
-                    // i, Project Name (Neighbourhood: Location) | Application Opening - Closing Date
+                    // i | Project Name | Neighbourhood: Location | Application Date | Status
                     System.out.printf("  %3d. | %15s | %15s | %20s | %15s\n", 
                         i, application.getProject().getName(), application.getProject().getNeighbourhood(),
                         new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()),
@@ -46,22 +47,23 @@ public class ApplicationDashboard {
                     );
                     i++;
                 };
-                System.out.println(" " + "-".repeat(83));
+                System.out.println("-".repeat(83));
                 System.out.println("  Please enter the index of the applied project you want to view more information about, or '0' to go back to the main menu.");
                 System.out.print("  Enter your choice: ");
 
                 try {
                     choice = scanner.nextInt(); // Read the user's choice
                     scanner.nextLine();
-                } catch (NumberFormatException e) {
+                } catch (Exception e) {
                     System.out.println("  Invalid input. Please enter a number.");
+                    scanner.nextLine(); // Clear the invalid input
                     continue; // Skip to the next iteration of the loop
                 }
 
                 if (choice < 0 || choice > applicant.appliedProjects().size()) {
                     System.out.println("  Invalid choice. Please try again.");
                 } else if (choice == 0) {
-                    System.out.println("  Returning to the main menu...");
+                    TerminalUtils.clearScreen();
                     return; // Exit the loop and return to the main menu
                 } else {
                     // Get project details for the selected project
@@ -71,6 +73,6 @@ public class ApplicationDashboard {
                     ApplicationDetails.start(user, selectedApplication);
                 }
             }
-        }while(choice != 0);
+        }while(choice != 0); // Continue until the user chooses to go back to the main menu
     }
 }

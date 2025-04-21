@@ -1,7 +1,6 @@
 package bto.model.user;
 
 import bto.database.ApplicationDB;
-import bto.database.BTOProjectDB;
 import bto.database.EnquiryDB;
 import bto.database.RegistrationDB;
 import bto.model.application.ApplicationStatus;

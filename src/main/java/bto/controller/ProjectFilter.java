@@ -22,7 +22,7 @@ public class ProjectFilter {
 
         if (maritalStatus == MaritalStatus.SINGLE && age >= 35) {    
             return eligibleProjects.stream()
-            .filter(project -> project.getFlatType().contains(FlatType.TWO_ROOM))
+            .filter(project -> project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) != 0)
             .collect(Collectors.toList());
         }
 

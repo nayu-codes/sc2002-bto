@@ -8,6 +8,7 @@ import bto.database.BTOProjectDB;
 import bto.model.user.User;
 import bto.model.user.UserType;
 import bto.model.project.BTOProject;
+
 import bto.ui.TerminalUtils;
 
 public class ProjectDetails {
@@ -19,7 +20,7 @@ public class ProjectDetails {
 
         TerminalUtils.clearScreen();
         do{
-            BTOProjectDB.printBTOProjectDetails(project);
+            BTOProjectDB.printBTOProjectDetails(user, project);
             // Menu for the user to select an option
             System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +
@@ -63,12 +64,12 @@ public class ProjectDetails {
                     break;
                 case 3:
                     // Check if the user is an Officer
-                    if (user.getUserType() == UserType.HDB_MANAGER) {
+                    if (user.getUserType() == UserType.HDB_OFFICER) {
                         //TODO: register for officer
                     }
 
                     // Check if the user is a Manager
-                    if (user.getUserType() == UserType.HDB_OFFICER) {
+                    if (user.getUserType() == UserType.HDB_MANAGER) {
                         //TODO: set visibility
                     }
                     break;

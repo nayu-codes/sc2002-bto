@@ -46,20 +46,20 @@ public class ApplicantProfileScreen {
             
             switch (option) {
                 case 1:
-                    // Calls ChangePassword
+                    // Calls ChangePassword to change user password
                     ChangePassword.start(user);
                     break;
                 case 2:
-                    // Calls ProjectDashboard
+                    // Calls ProjectDashboard to view available projects
                     ProjectDashboard.start(user);
                     break;
                 case 3:
-                    // Calls ApplicationDashboard to view applications
+                    // Calls ApplicationDashboard to view applied projects
                     ApplicationDashboard.start(user);
                     break;
                 case 4:
-                    // Calls EnquiryDashboard to view enquiries
-                    EnquiryDashboard.viewEnquiries();
+                    // Calls EnquiryDashboard to view user enquiries
+                    EnquiryDashboard.start(user);
                     break;
                 case 0:
                     // Log Out - goes back to Main Screen

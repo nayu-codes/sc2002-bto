@@ -34,11 +34,11 @@ public class EnquiryController {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Submit New Enquiry ---");
-        System.out.println("Enter Enquiry Message (or enter -1 to exit without submitting enquiry): ");
+        System.out.println("Enter Enquiry Message (or enter 0 to exit without submitting enquiry): ");
         String message = scanner.nextLine().trim(); // Remove leading and trailing whitespace
 
         // Check if message is -1 to exit without submitting enquiry
-        if (message.equals("-1")) {
+        if (message.equals("0")) {
             System.out.println("Exiting without submitting enquiry.");
             return;
         }
@@ -92,7 +92,7 @@ public class EnquiryController {
         // Get the new message from the user
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Edit Enquiry ---");
-        System.out.print("Enter New Message: ");
+        System.out.println("Enter New Message: ");
         String message = scanner.nextLine();
 
         try {
@@ -132,7 +132,7 @@ public class EnquiryController {
         // Get the reply message from the user
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Reply to Enquiry ---");
-        System.out.print("Enter Reply Message: ");
+        System.out.println("Enter Reply Message: ");
         String message = scanner.nextLine();
 
         if (user.getUserType() == UserType.HDB_MANAGER) {

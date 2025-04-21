@@ -21,7 +21,7 @@ public class ApplicationDetails {
             System.out.println("\nProject Name: " + application.getProject().getName() + "\n" +
             "Neighbourhood: " + application.getProject().getNeighbourhood() + "\n" +
             "Applied Flat: " + application.getFlatType() + "\n" +
-            "Application Data: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()) + "\n\n" + 
+            "Application Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()) + "\n\n" + 
             "Status: " + application.getStatus());
 
             // Menu for the user to select an option
@@ -55,7 +55,7 @@ public class ApplicationDetails {
                             System.out.println("Invalid option. Please try again.");
                             break;
                         }
-                        System.out.println("Do you really want to withdraw your application? This step is irreversible. (Y for Yes, N for No)");
+                        System.out.println("Do you really want to withdraw your application? This step is IRREVERSIBLE. (Y for Yes, N for No)");
                         System.out.print("Enter your choice: ");
                         withdraw = scanner.nextLine();
                         if(withdraw.toLowerCase().contains("y")){

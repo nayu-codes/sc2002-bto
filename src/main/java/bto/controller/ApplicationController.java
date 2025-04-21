@@ -69,7 +69,7 @@ public class ApplicationController {
 
         do{
             System.out.println("\n--- Project Application ---");
-            System.out.println("Please enter the flat of choice - '2' for 2-room flat, '3' for 3-room flat, '0' to go back");
+            System.out.println("Please enter the flat of choice - '2' for 2-room flat, '3' for 3-room flat or '0' to go back");
             System.out.print("Enter your choice: ");
             
             try {
