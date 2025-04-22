@@ -126,7 +126,11 @@ public class BTOProjectDB implements CsvDatabase {
                     Date applicationOpeningDate = new SimpleDateFormat("MM/dd/yyyy").parse(values[10].trim());
                     Date applicationClosingDate = new SimpleDateFormat("MM/dd/yyyy").parse(values[11].trim());
                     HDBManager projectManager = (HDBManager) UserDB.getUserByName(values[12].trim());
-                    List<String> assignedOfficers = List.of(values[14].trim().split(","));
+                    ArrayList<String> assignedOfficers = new ArrayList<>();
+                    String[] officers = values[14].replace("\"", "").trim().split(",");
+                    for (String officer : officers) {
+                        assignedOfficers.add(officer.trim());
+                    }
                     int availableOfficerSlots = Integer.parseInt(values[13].trim());
                     boolean visibility = Boolean.parseBoolean(values[15].trim());
 
@@ -176,9 +180,15 @@ public class BTOProjectDB implements CsvDatabase {
                         .append(new SimpleDateFormat("MM/dd/yyyy").format(project.getApplicationOpeningDate())).append(",")
                         .append(new SimpleDateFormat("MM/dd/yyyy").format(project.getApplicationClosingDate())).append(",")
                         .append(project.getProjectManager().getName()).append(",")
-                        .append(project.getAvailableOfficerSlots()).append(",")
-                        .append(String.join(",", project.getAssignedOfficers())).append(",")
-                        .append(project.getVisibility());
+                        .append(project.getAvailableOfficerSlots()).append(",");
+                // Join the assigned officers with commas
+                if (!project.getAssignedOfficers().isEmpty()) {
+                    String assignedOfficers = String.join(",", project.getAssignedOfficers());
+                    sb.append("\"").append(assignedOfficers).append("\"").append(",");
+                } else {
+                    sb.append(",");
+                }
+                sb.append(project.getVisibility());
                 bw.write(sb.toString());
                 bw.newLine();
             }
@@ -305,7 +315,7 @@ public class BTOProjectDB implements CsvDatabase {
         }
         // Change the project ID to the next available ID
         project.setProjectId(nextProjectId);
-        
+
         int newId = nextProjectId;
         btoProjectList.put(newId, project);
         nextProjectId++;
