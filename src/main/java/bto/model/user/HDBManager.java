@@ -370,7 +370,7 @@ public class HDBManager extends User{
             if ((minAge == null || application.getApplicant().getAge() >= minAge) &&
                 (maxAge == null || application.getApplicant().getAge() <= maxAge) &&
                 (maritalStatus == null || application.getApplicant().getMaritalStatus() == maritalStatus) &&
-                (projectName == null || application.getProject().getName().equalsIgnoreCase(projectName)) &&
+                (projectName == null || application.getProject().getName().toLowerCase().contains(projectName.toLowerCase())) &&
                 (flatType == null || application.getFlatType() == flatType)) {
                 // Print the details of the filtered applications
                 System.out.printf(" %15s | %15s | %3d | %7s | %6s \n",

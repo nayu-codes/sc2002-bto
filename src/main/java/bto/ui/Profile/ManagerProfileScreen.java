@@ -20,6 +20,7 @@ import bto.ui.project.ProjectDashboard;
 import bto.ui.project.ProjectCreatorWizard;
 import bto.ui.project.ProjectManagement;
 import bto.ui.registration.RegistrationDashboard;
+import bto.ui.report.ReportDashboard;
 
 public class ManagerProfileScreen {
     private ManagerProfileScreen() {}
@@ -122,7 +123,7 @@ public class ManagerProfileScreen {
                     break;
                 case 11:
                     // Calls ReportDashboard to generate booking reports
-                    // ReportDashboard.start(user);
+                    ReportDashboard.start(manager);
                     break;
                 case 0:
                     // Log Out - goes back to Main Screen
