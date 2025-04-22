@@ -8,6 +8,7 @@ import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.Applicant;
 import bto.model.user.HDBManager;
+import bto.model.user.MaritalStatus;
 import bto.model.user.User;
 import bto.model.user.UserType;
 import bto.ui.TerminalUtils;
@@ -70,7 +71,12 @@ public class ApplicationController {
 
         do{
             System.out.println("\n--- Project Application ---");
-            System.out.println("Please enter the flat of choice - '2' for 2-room flat, '3' for 3-room flat or '0' to go back");
+            if(user.getMaritalStatus() != MaritalStatus.SINGLE){
+                System.out.println("Please enter the flat of choice - '2' for 2-room flat, '3' for 3-room flat or '0' to go back");
+            }
+            else{
+                System.out.println("Please enter the flat of choice - '2' for 2-room flat or '0' to go back");
+            }
             System.out.print("Enter your choice: ");
             
             try {

@@ -22,13 +22,16 @@ public class EnquiryDetails {
             System.out.print("\nProject Name: " + enquiry.getProjectName() + "\n" +
             "Enquiry: " + enquiry.getApplicantMessage().getMessage() + "\n\n");
 
-            // If there is a reply message, display it
             if(enquiry.getReplyMessage() != null){
-                System.out.println("Reply: " + enquiry.getReplyMessage().getMessage());
-            }
-            // If the user deletes the message
-            else if((enquiry.getReplyMessage() == null) && (enquiry.isSolved())){
-                System.out.println("Enquiry is deleted.");
+                // If there is a reply message, display it
+                if(!enquiry.getReplyMessage().getAuthorName().isEmpty()){
+                    System.out.println("Replied by: " + enquiry.getReplyMessage().getAuthorName() + "\n" +
+                                    "Reply: " + enquiry.getReplyMessage().getMessage());
+                }
+                // If the user deletes the message
+                else if((enquiry.getReplyMessage().getAuthorName().isEmpty()) && (enquiry.isSolved())){
+                    System.out.println("Enquiry is deleted.");
+                }
             }
             // If there is no reply message
             else{

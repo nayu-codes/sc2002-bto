@@ -40,15 +40,16 @@ public class EnquiryDashboard {
                 // Print each applied project
                 for (Enquiry enquiry : applicantEnquiries) {
                     String reply = "No";
-
-                    // Check if there is a reply
-                    if((enquiry.getReplyMessage() != null) && !(enquiry.getReplyMessage().getAuthorName().isEmpty()) && (enquiry.isSolved())){
-                        System.out.println("Reply Name: a" + enquiry.getReplyMessage().getAuthorName() + "a");
-                        reply = "Yes";
-                    }
-                    // Shows "Deleted" if the user deletes the enquiry
-                    else if ((enquiry.getReplyMessage() != null) && (enquiry.getReplyMessage().getAuthorName().isEmpty()) && (enquiry.isSolved())){
-                        reply = "Deleted";
+                    
+                    if(enquiry.getReplyMessage() != null){
+                        // Check if there is a reply
+                        if(!enquiry.getReplyMessage().getAuthorName().isEmpty()){
+                            reply = "Yes";
+                        }
+                        // Shows "Deleted" if the user deletes the enquiry
+                        else if ((enquiry.getReplyMessage().getAuthorName().isEmpty()) && (enquiry.isSolved())){
+                            reply = "Deleted";
+                        }
                     }
 
                     // Print in table format, with consistent spacing

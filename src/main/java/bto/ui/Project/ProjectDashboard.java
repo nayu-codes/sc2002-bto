@@ -26,7 +26,7 @@ public class ProjectDashboard{
 
         TerminalUtils.clearScreen();
         do {
-            List<BTOProject> filteredProjects = ProjectFilter.applyUserFilters(user.getAge(), user.getMaritalStatus());
+            List<BTOProject> filteredProjects = ProjectFilter.applyUserFilters(user);
             // Apply additional filters based on UserFilter object
             filteredProjects = ProjectFilter.applyAdditionalFilters(filteredProjects);
 

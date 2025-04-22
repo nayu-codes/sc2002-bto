@@ -1,11 +1,15 @@
 package bto.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import bto.database.BTOProjectDB;
+import bto.model.application.BTOApplication;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
+import bto.model.user.User;
+import bto.model.user.Applicant;
 import bto.model.user.MaritalStatus;
 import bto.model.user.UserFilter;
 
@@ -19,20 +23,34 @@ public class ProjectFilter {
      * 
      * @return A list of BTOProject objects that are eligible for the user based on the filters.
      */
-    public static List<BTOProject> applyUserFilters(int age, MaritalStatus maritalStatus){
+    public static List<BTOProject> applyUserFilters(User user){
         List<BTOProject> eligibleProjects = BTOProjectDB.getVisibleProjects();
+        List<BTOProject> availableprojects = new ArrayList<>();
 
-        if (maritalStatus == MaritalStatus.SINGLE && age >= 35) {    
-            return eligibleProjects.stream()
-            .filter(project -> project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) != 0)
-            .collect(Collectors.toList());
+        Applicant applicant = (Applicant) user; 
+
+        for(BTOProject project : eligibleProjects){
+            boolean hasApplied = false;
+
+            // Checks if the applicant has already applied for a project
+            for(BTOApplication application : applicant.appliedProjects()){
+                if(application.getProject().equals(project)){
+                    hasApplied = true;
+                }
+            }
+            
+            if(!hasApplied){
+                if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {    
+                    availableprojects = eligibleProjects.stream()
+                    .filter(singleproject -> singleproject.getFlatType().contains(FlatType.TWO_ROOM) && singleproject.getFlatCountRemaining(FlatType.TWO_ROOM) != 0)
+                    .collect(Collectors.toList());
+                }
+                if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
+                    availableprojects.add(project);
+                }
+            }
         }
-
-        if (maritalStatus == MaritalStatus.MARRIED && age >= 21) {
-            return eligibleProjects;
-        }
-
-        return List.of();
+        return availableprojects;
     }
 
     /**
