@@ -118,7 +118,7 @@ public class ManagerProfileScreen {
                     break;
                 case 10:
                     // Calls RegistrationDashboard to view all registrations
-                    RegistrationDashboard.start(user);
+                    RegistrationDashboard.viewRegistrationRequsts(manager);
                     break;
                 case 11:
                     // Calls ReportDashboard to generate booking reports
