@@ -35,7 +35,7 @@ public class ReportController {
         HDBOfficer officer = (HDBOfficer) user;
         boolean isManaged = false;
         for (BTOProject project : BTOProjectDB.getBTOProjectsByOfficer(officer)) {
-            if (project.getName().equals(application.getProject().getName()) && project.getAssignedOfficers().contains(officer.getName())) {
+            if ((project.getName().equals(application.getProject().getName())) && (project.getAssignedOfficers().contains(officer.getName()))){
                 isManaged = true;
                 break;
             }

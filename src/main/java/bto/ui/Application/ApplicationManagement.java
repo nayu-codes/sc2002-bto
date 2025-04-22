@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import bto.controller.ApplicationController;
+import bto.controller.ReportController;
 import bto.model.application.BTOApplication;
 
 public class ApplicationManagement {
@@ -16,6 +17,7 @@ public class ApplicationManagement {
     public static void start(User user, BTOApplication application){
         int option = -1;
         String book = "";
+        String receipt = "";
         Scanner scanner = new Scanner(System.in);
 
         TerminalUtils.clearScreen();
@@ -54,29 +56,49 @@ public class ApplicationManagement {
             }
             
             switch (option) {
-                case 1:
-                    do{
-                        // If original status is not "Successful", treat as invalid input
-                        if (application.getStatus().getStatus() != "Successful") {
-                            System.out.println("Invalid option. Please try again.");
-                            break;
-                        }
-                        System.out.println("Do you want to book applicant for this project? (Y for Yes, N for No)");
-                        System.out.print("Enter your choice: ");
-                        book = scanner.nextLine();
-                        if(book.toLowerCase().contains("y")){
-                            // Calls ApplicationController to change applicant status to "Booked"
-                            ApplicationController.bookFlat(user, application);
-                            break;
-                        }
-                        else if(book.toLowerCase().contains("n")){
-                            break;
-                        }
-                        else{
-                            System.out.println("Invalid input. Please enter either Y or N.\n");
-                            continue;
-                        }
-                    }while(!(book.toLowerCase().contains("y")) || !(book.toLowerCase().contains("n")));
+                case 1: 
+                    if(application.getStatus().getStatus() == "Successful"){
+                        do{
+                            System.out.println("Do you want to book applicant for this project? (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            book = scanner.nextLine();
+                            if(book.toLowerCase().contains("y")){
+                                // Calls ApplicationController to change applicant status to "Booked"
+                                ApplicationController.bookFlat(user, application);
+                                break;
+                            }
+                            else if(book.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        }while(!(book.toLowerCase().contains("y")) || !(book.toLowerCase().contains("n")));
+                    }
+                    else if(application.getStatus().getStatus() == "Booked") {
+                        do{
+                            System.out.println("Do you want to generate receipt for this applicant? (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            receipt = scanner.nextLine();
+                            if(receipt.toLowerCase().contains("y")){
+                                // Calls ApplicationController to change applicant status to "Booked"
+                                ReportController.generateReceipt(user, application);
+                                break;
+                            }
+                            else if(receipt.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        }while(!(receipt.toLowerCase().contains("y")) || !(receipt.toLowerCase().contains("n")));
+                    }   
+                    else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                    }
                     break;
                 case 0:
                     // Goes back to ProjectManagement
