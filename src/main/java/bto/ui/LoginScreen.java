@@ -18,6 +18,7 @@ public class LoginScreen {
      */
     public static void start() {
         // Start the login screen
+        System.out.println("--- Log In ---");
         System.out.println("Please enter your username and password to login.");
 
         // Add code here to handle user input for username and password

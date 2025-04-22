@@ -43,19 +43,24 @@ public class ProjectFilter {
                 }
             }
         }
-        else if(user.getUserType() == UserType.HDB_OFFICER){
+        else{
             List<BTOProject> allprojects = BTOProjectDB.getBTOProjectList();
-            HDBOfficer officer = (HDBOfficer) user;
             
-            for(BTOProject project : allprojects){
-                // Check if officer is managing the project.
-                boolean isManaging = officer.getRegisteredProjects().stream()
-                .anyMatch(registration -> registration.getProject().getName().equals(project.getName()));
+            if(user.getUserType() == UserType.HDB_OFFICER){
+                HDBOfficer officer = (HDBOfficer) user;
                 
-                // Only show projects that he/she is not managing
-                if((!isManaging)){
-                    availableprojects.add(project);
+                for(BTOProject project : allprojects){
+                    // Check if officer is managing the project.
+                    boolean isManaging = officer.getRegisteredProjects().stream()
+                    .anyMatch(registration -> registration.getProject().getName().equals(project.getName()));
+                    
+                    // Only show projects that he/she is not managing
+                    if((!isManaging)){
+                        availableprojects.add(project);
+                    }
                 }
+            }else{
+                availableprojects = allprojects;
             }
         }
         return availableprojects;

@@ -9,14 +9,18 @@ public class ChangePassword {
     private ChangePassword(){} // Prevents instantiation
 
     public static void start(User user) {
-        System.out.println("  ------------------------------------");
-        System.out.println("           Change Password");
-        System.out.println("  ------------------------------------");
-        // Prompt the user for a new password
-        System.out.print("  Enter new password: ");
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Change Password ---");
+        // Prompt the user for a new password
+        System.out.println("Enter new password: (type 'exit' to go back)");
         String newPassword = scanner.nextLine();
         
+        if(newPassword.toLowerCase().contains("exit")){
+            TerminalUtils.clearScreen();
+            return;
+        }
+
         // Prompt the user to confirm the new password
         System.out.print("  Confirm new password: ");
         String confirmPassword = scanner.nextLine();

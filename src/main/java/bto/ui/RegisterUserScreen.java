@@ -14,9 +14,7 @@ public class RegisterUserScreen {
      */
     public static void start() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("  ------------------------------------");
-        System.out.println("  Registering a new user...");
-        System.out.println("  ------------------------------------");
+        System.out.println(" --- Registering a new user ---2");
         // UserID (NRIC) must start with S or T, followed by 7 digits and a letter, all uppercase.
         String newUserId;
         do {

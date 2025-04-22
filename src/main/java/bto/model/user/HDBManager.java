@@ -406,7 +406,7 @@ public class HDBManager extends User{
         // Check if the project is managed by this manager
         boolean isManaged = false;
         for (BTOProject project : getManagedProjects()) {
-            if (project.getName() == enquiry.getProjectName()) {
+            if (project.getName().equals(enquiry.getProjectName())) {
                 isManaged = true;
                 break;
             }

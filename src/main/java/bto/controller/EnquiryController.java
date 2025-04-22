@@ -37,7 +37,7 @@ public class EnquiryController {
         System.out.println("Enter Enquiry Message (or enter 0 to exit without submitting enquiry): ");
         String message = scanner.nextLine().trim(); // Remove leading and trailing whitespace
 
-        // Check if message is -1 to exit without submitting enquiry
+        // Check if message is 0 to exit without submitting enquiry
         if (message.equals("0")) {
             System.out.println("Exiting without submitting enquiry.");
             return;

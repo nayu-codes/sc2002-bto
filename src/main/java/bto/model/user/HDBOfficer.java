@@ -10,6 +10,7 @@ import bto.model.project.BTOProject;
 import bto.model.registration.OfficerRegistration;
 import bto.model.registration.RegistrationStatus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class HDBOfficer extends Applicant {
     }
 
     /**
-     * Retrieves the list of projects registered by this officer. TODO: is there a point? Compared to getting from RegistrationDB directly?
+     * Retrieves the list of projects registered by this officer.
      * 
      * @return An List of OfficerRegistration objects associated with this officer.
      */
@@ -127,17 +128,19 @@ public class HDBOfficer extends Applicant {
      * @param applicant The {@link Applicant} for whom the receipt is generated.
      */
     public void generateReceiptForApplicant(Applicant applicant) {
-        List<BTOApplication> applications = ApplicationDB.getApplicationsByApplicant(applicant.getUserId());
-        for (BTOApplication application : applications) {
+        for (BTOApplication application : ApplicationDB.getApplicationsByApplicant(applicant.getUserId())){
             if (application.getStatus() == ApplicationStatus.BOOKED) {
-                System.out.println("Receipt for " + applicant.getName() + ":");
-                System.out.println("NRIC: " + applicant.getUserId());
-                System.out.println("Age: " + applicant.getAge());
-                System.out.println("Marital Status: " + applicant.getMaritalStatus().getStatus());
-                System.out.println("Flat Type: " + application.getFlatType().getDisplayName());
-                System.out.println("Project Details:");
-                System.out.println("  Project Name: " + application.getProject().getName());
-                System.out.println("  Project Neighbourhood: " + application.getProject().getNeighbourhood());
+                System.out.println("\n+------- Receipt for " + applicant.getName() + " --------+" + "\n" +
+                                   " NRIC: " + applicant.getUserId() + "\n" +
+                                   " Age: " + applicant.getAge() + "\n" +
+                                   " Marital Status: " + applicant.getMaritalStatus().getStatus() + "\n\n" +
+                                   " Project Details:" + "\n" +
+                                   "   Project Name: " + application.getProject().getName() + "\n" +
+                                   "   Project Neighbourhood: " + application.getProject().getNeighbourhood() + "\n" +
+                                   "   Flat Type: " + application.getFlatType().getDisplayName() + "\n" +
+                                   "   Application Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()) + "\n" +
+                                   "   Booking Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getBookingDate()) +"\n" +
+                                   "+----------------------------------+");
             }
         }
     }

@@ -34,9 +34,9 @@ public class ApplicationDetails {
             System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +
                                "+---+----------------------------+");
-            if (user.getUserType() == UserType.APPLICANT && application.getStatus().getStatus() != "Unsuccessful") {
+            if ((user.getUserType() != UserType.HDB_MANAGER) && (application.getStatus().getStatus() != "Unsuccessful")){
                 System.out.println("| 1 | Withdraw Application       |");
-            } else if (user.getUserType() == UserType.HDB_MANAGER && application.getStatus().getStatus() == "Pending") {
+            } else if ((user.getUserType() == UserType.HDB_MANAGER) && (application.getStatus().getStatus() == "Pending")) {
                 System.out.println("| 1 | Approve Application        |\n" +
                                    "| 2 | Reject Application         |");
             }
@@ -57,24 +57,23 @@ public class ApplicationDetails {
             switch (option) {
                 case 1:
                     do{
-                        // If original status is "Unsuccessful", treat as invalid input
-                        if (user.getUserType() == UserType.APPLICANT && application.getStatus().getStatus() == "Unsuccessful") {
-                            System.out.println("Invalid option. Please try again.");
-                            break;
-                        }
-                        if (user.getUserType() == UserType.HDB_MANAGER && application.getStatus().getStatus() != "Pending") {
-                            System.out.println("Invalid option. Please try again.");
-                            break;
-                        }
-                        if (user.getUserType() == UserType.APPLICANT){
+                        if(user.getUserType() != UserType.HDB_MANAGER){
                             System.out.println("Do you really want to withdraw your application? This step is IRREVERSIBLE. (Y for Yes, N for No)");
-                        } else if (user.getUserType() == UserType.HDB_MANAGER) {
-                            System.out.println("Do you really want to approve this application? (Y for Yes, N for No)");
+                        }else if (user.getUserType() == UserType.HDB_MANAGER){
+                            if(application.getStatus().getStatus() == "Pending"){
+                                System.out.println("Do you really want to approve this application? (Y for Yes, N for No)");
+                            }else{
+                                System.out.println("Invalid option. Please try again.");
+                                break;
+                            }
+                        }else{
+                            System.out.println("Invalid option. Please try again.");
+                            break;
                         }
                         System.out.print("Enter your choice: ");
                         userOption = scanner.nextLine();
                         if(userOption.toLowerCase().contains("y")){
-                            if (user.getUserType() == UserType.APPLICANT) {
+                            if (user.getUserType() != UserType.HDB_MANAGER) {
                                 // Calls ApplicationController to withdraw application
                                 switch (application.getStatus().getStatus()) {
                                     case "Pending":
@@ -85,16 +84,14 @@ public class ApplicationDetails {
                                         ApplicationController.withdrawBooking(user, application);
                                         break;
                                 }
-                            } else if (user.getUserType() == UserType.HDB_MANAGER) {
+                            } else{
                                 // Calls ApplicationController to approve application
                                 ApplicationController.approveApplication(user, application);
                             }
                             break;
-                        }
-                        else if(userOption.toLowerCase().contains("n")){
+                        }else if(userOption.toLowerCase().contains("n")){
                             break;
-                        }
-                        else{
+                        }else{
                             System.out.println("Invalid input. Please enter either Y or N.\n");
                             continue;
                         }
@@ -102,18 +99,14 @@ public class ApplicationDetails {
                     break;
                 case 2:
                     do {
-                        // If original status is "Unsuccessful", treat as invalid input
-                        if (application.getStatus().getStatus() == "Unsuccessful") {
-                            System.out.println("Invalid option. Please try again.");
-                            break;
-                        }
-                        if (user.getUserType() == UserType.HDB_MANAGER && application.getStatus().getStatus() != "Pending") {
-                            System.out.println("Invalid option. Please try again.");
-                            break;
-                        }
                         if (user.getUserType() == UserType.HDB_MANAGER) {
-                            System.out.println("Do you really want to reject this application? (Y for Yes, N for No)");
-                        } else if (user.getUserType() == UserType.APPLICANT) {
+                            if(application.getStatus().getStatus() == "Pending"){
+                                System.out.println("Do you really want to reject this application? (Y for Yes, N for No)");
+                            }else{
+                                System.out.println("Invalid option. Please try again.");
+                                break;
+                            }
+                        }else{
                             // Treat as invalid input
                             System.out.println("Invalid option. Please try again.");
                             break;

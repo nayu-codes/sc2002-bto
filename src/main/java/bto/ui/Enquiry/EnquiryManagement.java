@@ -1,11 +1,11 @@
 package bto.ui.enquiry;
 
-import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import bto.controller.ProjectController;
 import bto.controller.RegistrationController;
+import bto.database.BTOProjectDB;
 import bto.database.EnquiryDB;
 import bto.model.enquiry.Enquiry;
 import bto.model.registration.OfficerRegistration;
@@ -25,17 +25,9 @@ public class EnquiryManagement {
             if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (ProjectController.getProjectStatus(registration.getProject()) == "Current")){
                 do{
                     // Printing the managed project details
-                    System.out.println("\nManaged project");
-                    System.out.println("-".repeat(61));
-                    System.out.printf(" %15s | %15s | %20s\n", "Project Name", "Neighbourhood", "Application Period");
-                    System.out.println("-".repeat(61));
-
-                    // Project Name | Neighbourhood: Location | Application Opening - Closing Date
-                    System.out.printf(" %15s | %15s | %10s - %10s\n", 
-                    registration.getProject().getName(), registration.getProject().getNeighbourhood(),
-                    new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()),
-                    new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()));
-                    System.out.println("-".repeat(61));
+                    System.out.print("\n---------- Managed project ----------");
+                    BTOProjectDB.printBTOProjectDetails(user, registration.getProject());
+                    System.out.println("-".repeat(37));
 
                     // Printing the project applicants
                     System.out.println("\nThese are the applicants' enquiries for this project.");

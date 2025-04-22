@@ -126,8 +126,8 @@ public class ProjectController {
         HDBManager manager = (HDBManager) user;
         try {
             boolean newVisibility = manager.toggleProjectVisibility(project);
-            System.out.println("Project visibility toggled successfully!");
-            System.out.println("New visibility for " + project.getName() + ": " + (newVisibility ? "Visible" : "Hidden"));
+            System.out.println("\nProject visibility toggled successfully!");
+            System.out.println("Visibility for " + project.getName() + ": " + (newVisibility ? "Visible" : "Hidden"));
         } catch (IllegalStateException e) {
             System.out.println("Failed to toggle project visibility: " + e.getMessage());
         } catch (IllegalAccessException e) {

@@ -33,9 +33,9 @@ public class RegistrationDetails {
             System.out.println("Project Name: " + registration.getProject().getName());
             System.out.println("Project Application Period: " + 
                 new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()) + " - " +
-                new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()));
+                new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()) + "\n");
             System.out.println("Registration Status: " + registration.getRegistrationStatus());
-            System.out.println("-".repeat(87)); 
+
             // Menu for the user to select an option
             System.out.println("\n+---+------------------------------+\n" +
                                  "| # | Option                       |\n" +
@@ -56,54 +56,59 @@ public class RegistrationDetails {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 continue; // Skip to the next iteration of the loop
-            } catch (Exception e) {
-                System.out.println("An error occurred: " + e.getMessage());
-                continue; // Skip to the next iteration of the loop
-            }
+            } 
             
             switch (option) {
                 case 1:
-                    // Asks for confirmation before approving the registration request
-                    do {
-                        System.out.println("Are you sure you want to approve this registration request? (Y for Yes, N for No)");
-                        System.out.print("Enter your choice: ");
-                        confirm = scanner.nextLine();
-                        if(confirm.toLowerCase().contains("y")){
-                            // Calls RegistrationController to approve the registration request
-                            RegistrationController.approveRegistration(manager, registration);
-                            break;
-                        }
-                        else if(confirm.toLowerCase().contains("n")){
-                            break;
-                        }
-                        else{
-                            System.out.println("Invalid input. Please enter either Y or N.\n");
-                            continue;
-                        }
-                    } while(!(confirm.toLowerCase().contains("y")) || !(confirm.toLowerCase().contains("n")));
+                    if (registration.getRegistrationStatus() == RegistrationStatus.PENDING){ 
+                        do {
+                            System.out.println("Are you sure you want to approve this registration request? (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            confirm = scanner.nextLine();
+                            if(confirm.toLowerCase().contains("y")){
+                                // Calls RegistrationController to approve the registration request
+                                RegistrationController.approveRegistration(manager, registration);
+                                break;
+                            }
+                            else if(confirm.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        } while(!(confirm.toLowerCase().contains("y")) || !(confirm.toLowerCase().contains("n")));
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                    }
                     break;
                 case 2:
-                    // Asks for confirmation before rejecting the registration request
-                    do {
-                        System.out.println("Are you sure you want to reject this registration request? (Y for Yes, N for No)");
-                        System.out.print("Enter your choice: ");
-                        confirm = scanner.nextLine();
-                        if(confirm.toLowerCase().contains("y")){
-                            // Calls RegistrationController to reject the registration request
-                            RegistrationController.rejectRegistration(manager, registration);
-                            break;
-                        }
-                        else if(confirm.toLowerCase().contains("n")){
-                            break;
-                        }
-                        else{
-                            System.out.println("Invalid input. Please enter either Y or N.\n");
-                            continue;
-                        }
-                    } while(!(confirm.toLowerCase().contains("y")) || !(confirm.toLowerCase().contains("n")));
+                    if (registration.getRegistrationStatus() == RegistrationStatus.PENDING){ 
+                        do {
+                            System.out.println("Are you sure you want to reject this registration request? (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            confirm = scanner.nextLine();
+                            if(confirm.toLowerCase().contains("y")){
+                                // Calls RegistrationController to reject the registration request
+                                RegistrationController.rejectRegistration(manager, registration);
+                                break;
+                            }
+                            else if(confirm.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        } while(!(confirm.toLowerCase().contains("y")) || !(confirm.toLowerCase().contains("n")));
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                    }
                     break;
                 case 0:
-                    // Goes back to ProjectDashboard
+                    // Goes back to RegistrationDashboard
                     TerminalUtils.clearScreen();
                     return;
                 default:

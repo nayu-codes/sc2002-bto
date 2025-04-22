@@ -2,9 +2,9 @@ package bto.controller;
 
 import java.util.Date;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 import bto.database.BTOProjectDB;
-import bto.database.ApplicationDB;
 import bto.model.application.ApplicationStatus;
 import bto.model.application.BTOApplication;
 import bto.model.project.BTOProject;
@@ -27,29 +27,16 @@ public class ApplicationController {
      * @return true if the user can submit the application, false otherwise
      */
     public static boolean checkStatus(User user, BTOProject project){
-        // Check if the project is null
-        if (project == null) {
-            System.out.println("Project not found.");
-            return false;
-        }
-        // Check if the user is an applicant
-        if (user.getUserType() == UserType.HDB_MANAGER) {
-            System.out.println("Only applicants can submit applications.");
-            return false;
-        }
-
-        // If is officer, check if application is for a project that officer is managing
-        if (user.getUserType() == UserType.HDB_OFFICER) {
-            if (project.getAssignedOfficers().contains(user.getName())) {
-                System.out.println("Cannot submit application for a project you are managing.");
-                return false;
-            }
-        }
 
         Applicant applicant = (Applicant) user;
-        // Check if the user has already submitted an application for the project
-        for (BTOApplication application : applicant.appliedProjects()) {
-            if (application.getProject().getName().equals(project.getName())) {
+        
+        // Obtain the applicant's applied projects
+        for (BTOApplication application : applicant.appliedProjects()){
+            // Checks if the user has already applied for any project and status is not unsuccessful
+            if((!applicant.appliedProjects().isEmpty()) && application.getStatus() != ApplicationStatus.UNSUCCESSFUL){
+                System.out.println("You have already submitted an application for a project. Cannot apply for multiple projects.");
+                return false;
+            }else if(application.getProject().getName().equals(project.getName())) {
                 if (application.getStatus() == ApplicationStatus.PENDING) {
                     System.out.println("You have already submitted an application for this project.");
                 }
@@ -62,11 +49,17 @@ public class ApplicationController {
                 if (application.getStatus() == ApplicationStatus.UNSUCCESSFUL) {
                     System.out.println("You have already been unsuccessful in this project. You cannot apply again. Please apply for another project.");
                 }
-            return false;
+                return false;
             }
         }
         return true;
     }
+
+    /**
+     * Let the user select the flat type (2-room, 3-room).
+     * @param user the user who wants to submit the application
+     * @param project the project to which the application is submitted
+     */
 
     public static void selectFlatType(User user, BTOProject project){
         int option = -1;
@@ -85,7 +78,7 @@ public class ApplicationController {
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 continue; // Skip to the next iteration of the loop
@@ -147,12 +140,6 @@ public class ApplicationController {
      * @param application the BTOApplication to be withdrawn
      */
     public static void withdrawApplication(User user, BTOApplication application) {
-        // Check if the user is an applicant
-        if (user.getUserType() != UserType.APPLICANT) {
-            System.out.println("Only applicants can withdraw applications.");
-            return;
-        }
-
         // Check if the application belongs to the user
         if (application.getApplicant().getUserId() != user.getUserId()) {
             System.out.println("You can only withdraw your own applications.");

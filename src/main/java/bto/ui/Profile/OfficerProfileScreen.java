@@ -34,7 +34,7 @@ public class OfficerProfileScreen {
             if(RegistrationController.getRegistrationsByOfficer(user) != null){
                 for (OfficerRegistration registration : RegistrationController.getRegistrationsByOfficer(user)){
                     if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (ProjectController.getProjectStatus(registration.getProject()) == "Current")){
-                        // - Project Name (openingDate - ClosingDate)
+                        // Project Name (openingDate - ClosingDate)
                         System.out.print(registration.getProject().getName() + " (" + 
                                            new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()) + " - " +
                                            new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()) + ")\n"

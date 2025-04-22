@@ -426,7 +426,7 @@ public class BTOProjectDB implements CsvDatabase {
         if (project != null) {
             System.out.println("\nProject Name: " + project.getName() + "\n" +
                     "Neighbourhood: " + project.getNeighbourhood() + "\n" +
-                    "Available Flats: " + "\n");
+                    "\nAvailable Flats: ");
             for (FlatType flatType : project.getFlatType()) {
                 if(flatType == FlatType.THREE_ROOM){
                     if ((user.getUserType() == UserType.APPLICANT) && (user.getMaritalStatus() == MaritalStatus.SINGLE)){
@@ -436,6 +436,18 @@ public class BTOProjectDB implements CsvDatabase {
                 System.out.println(flatType.getDisplayName() + ": $" +
                         project.getFlatPrice(flatType) + " (" +
                         project.getFlatCountRemaining(flatType) + " units available)");
+            }
+            if(user.getUserType() != UserType.APPLICANT)
+            {
+                System.out.println("\nOfficer slot(s) available: " + project.getAvailableOfficerSlots());
+                if(user.getUserType() == UserType.HDB_MANAGER){
+                    System.out.print("Current Visibility: ");
+                    if(project.getVisibility()){
+                        System.out.print("Visible\n");
+                    }else{
+                        System.out.print("Hidden\n");
+                    }
+                }
             }
         } else {
             System.out.println("BTO Project not found.");

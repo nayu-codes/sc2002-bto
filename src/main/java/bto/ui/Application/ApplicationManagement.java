@@ -82,7 +82,7 @@ public class ApplicationManagement {
                             System.out.print("Enter your choice: ");
                             receipt = scanner.nextLine();
                             if(receipt.toLowerCase().contains("y")){
-                                // Calls ApplicationController to change applicant status to "Booked"
+                                // Calls ApplicationController to generate receipt for applicant
                                 ReportController.generateReceipt(user, application);
                                 break;
                             }

@@ -4,8 +4,9 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 import bto.controller.ApplicationController;
-import bto.controller.EnquiryController;
+import bto.controller.ProjectController;
 import bto.controller.RegistrationController;
+import bto.controller.EnquiryController;
 import bto.database.BTOProjectDB;
 import bto.model.user.User;
 import bto.model.user.UserType;
@@ -19,6 +20,7 @@ public class ProjectDetails {
     public static void start(User user, BTOProject project){
         int option = -1;
         String register = "";
+        String visible = "";
         Scanner scanner = new Scanner(System.in);
 
         TerminalUtils.clearScreen();
@@ -27,17 +29,19 @@ public class ProjectDetails {
             // Menu for the user to select an option
             System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +
-                               "+---+----------------------------+\n" +
-                               "| 1 | Apply for Project          |\n" +
-                               "| 2 | Enquire about Project      |");
-
-            // Check if the user is an Officer
+                               "+---+----------------------------+");
+            // Check if the user is not a manager
+            if (user.getUserType() != UserType.HDB_MANAGER) {            
+                System.out.println("| 1 | Apply for Project          |\n" +
+                                   "| 2 | Enquire about Project      |");
+            }
+            // Check if the user is an officer
             if (user.getUserType() == UserType.HDB_OFFICER) {
                 System.out.println("| 3 | Register for Project       |");
             }
-            // Check if the user is a Manager
+            // Check if the user is a manager
             if (user.getUserType() == UserType.HDB_MANAGER) {
-                System.out.println("| 3 | Set Visibility             |");
+                System.out.println("| 1 | Set Visibility             |");
             }
 
             System.out.println("| 0 | Go Back                    |\n" +
@@ -56,18 +60,42 @@ public class ProjectDetails {
             
             switch (option) {
                 case 1:
-                    // Calls ApplicationController to submit an application with the right conditions
-                    if(ApplicationController.checkStatus(user, project)){
-                        ApplicationController.selectFlatType(user, project);
+                    if(user.getUserType() != UserType.HDB_MANAGER){
+                        // Calls ApplicationController to submit an application with the right conditions
+                        if(ApplicationController.checkStatus(user, project)){
+                            ApplicationController.selectFlatType(user, project);
+                        }
+                    }else{
+                        do{
+                            System.out.println("Do you want to toggle the visibility of this project? (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            visible = scanner.nextLine();
+                            if(visible.toLowerCase().contains("y")){
+                                // Calls ProjectController to toggle visibility
+                                ProjectController.toggleVisibility(user, project);
+                                break;
+                            }
+                            else if(visible.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        }while(!(visible.toLowerCase().contains("y")) || !(visible.toLowerCase().contains("n")));
                     }
                     break;
                 case 2:
-                    // Creates an enquiry
-                    EnquiryController.createEnquiry(user, project);
+                    if(user.getUserType() != UserType.HDB_MANAGER){
+                        // Creates an enquiry
+                        EnquiryController.createEnquiry(user, project);
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                    }
                     break;
                 case 3:
-                    // Check if the user is an Officer
-                    if (user.getUserType() == UserType.HDB_OFFICER) {
+                    if(user.getUserType() == UserType.HDB_OFFICER){
                         do{
                             System.out.println("Do you want to apply as an officer for this project?. (Y for Yes, N for No)");
                             System.out.print("Enter your choice: ");
@@ -85,11 +113,9 @@ public class ProjectDetails {
                                 continue;
                             }
                         }while(!(register.toLowerCase().contains("y")) || !(register.toLowerCase().contains("n")));
-                    }
-
-                    // Check if the user is a Manager
-                    if (user.getUserType() == UserType.HDB_MANAGER) {
-                        //TODO: set visibility
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
                     }
                     break;
                 case 0:

@@ -2,11 +2,15 @@ package bto.ui.enquiry;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.List;
 
 import bto.controller.EnquiryController;
+import bto.database.BTOProjectDB;
 import bto.model.enquiry.Enquiry;
+import bto.model.project.BTOProject;
+import bto.model.user.HDBManager;
 import bto.model.user.User;
-
+import bto.model.user.UserType;
 import bto.ui.TerminalUtils;
 
 public class EnquiryDetails {
@@ -15,6 +19,7 @@ public class EnquiryDetails {
     public static void start(User user, Enquiry enquiry){
         int option = -1;
         String delete = "";
+        boolean isManaged = false;
         Scanner scanner = new Scanner(System.in);
 
         TerminalUtils.clearScreen();
@@ -38,6 +43,18 @@ public class EnquiryDetails {
                 System.out.println("Reply: No reply yet.");
             }
 
+            if(user.getUserType() == UserType.HDB_MANAGER){
+                HDBManager manager = (HDBManager) user;
+
+                List<BTOProject> managedProjects = BTOProjectDB.getBTOProjectsByManager(manager);
+                for (BTOProject project : managedProjects){
+                    if(project.getName().equals(enquiry.getProjectName())){
+                        isManaged = true;
+                        break;
+                    }
+                }
+            }
+
             // Menu for the user to select an option
             System.out.println("\n+---+---------------------+\n" +
                                "| # | Option              |\n" +
@@ -51,7 +68,11 @@ public class EnquiryDetails {
             }
             // Check if the user is a Officer / Manager
             else if(enquiry.getReplyMessage() == null){
-                System.out.println("| 1 | Add Reply           |");
+                if(user.getUserType() == UserType.HDB_OFFICER){
+                    System.out.println("| 1 | Add Reply           |");
+                }else if((user.getUserType() == UserType.HDB_MANAGER) && isManaged){
+                    System.out.println("| 1 | Add Reply           |");
+                }
             }
 
             System.out.println("| 0 | Go Back             |\n" +
@@ -73,31 +94,48 @@ public class EnquiryDetails {
                     // Calls EnquiryController for applicants to edit their enquiry
                     if (user.getName().equals(enquiry.getApplicantName())) {
                         EnquiryController.editEnquiry(user, enquiry);
+                        break;
                     }
                     // Calls EnquiryController for officer/managers to reply to enquiry
                     else if(enquiry.getReplyMessage() == null){
-                        EnquiryController.replyToEnquiry(user, enquiry);
+                        if(user.getUserType() == UserType.HDB_OFFICER){
+                            EnquiryController.replyToEnquiry(user, enquiry);
+                        }else if((user.getUserType() == UserType.HDB_MANAGER) && isManaged){
+                            EnquiryController.replyToEnquiry(user, enquiry);
+                        }
+                        else{
+                            System.out.println("Invalid option. Please try again.");
+                            break;
+                        }
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
                     }
                     break;
                 case 2:
-                    do{
-                        System.out.println("Do you really want to delete your enquiry? This step is IRREVERSIBLE. (Y for Yes, N for No)");
-                        System.out.print("Enter your choice: ");
-                        delete = scanner.nextLine();
-                        if(delete.toLowerCase().contains("y")){
-                            // Deletes enquiry (set it to solved)
-                            enquiry.deleteEnquiry();
-                            System.out.println("Enquiry Deleted!");
-                            break;
-                        }
-                        else if(delete.toLowerCase().contains("n")){
-                            break;
-                        }
-                        else{
-                            System.out.println("Invalid input. Please enter either Y or N.\n");
-                            continue;
-                        }
-                    }while(!(delete.toLowerCase().contains("y")) || !(delete.toLowerCase().contains("n")));
+                    if (user.getName().equals(enquiry.getApplicantName())) {
+                        do{
+                            System.out.println("Do you really want to delete your enquiry? This step is IRREVERSIBLE. (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            delete = scanner.nextLine();
+                            if(delete.toLowerCase().contains("y")){
+                                // Deletes enquiry (set it to solved)
+                                enquiry.deleteEnquiry();
+                                System.out.println("Enquiry Deleted!");
+                                break;
+                            }
+                            else if(delete.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        }while(!(delete.toLowerCase().contains("y")) || !(delete.toLowerCase().contains("n")));
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                    }
                 case 0:
                     // Goes back to EnquiryDashboard
                     TerminalUtils.clearScreen();

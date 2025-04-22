@@ -23,7 +23,7 @@ public class RegistrationDashboard {
      * Displays the registration dashboard for the user.
      * This method is called when the user selects the option to view their registered projects.
      * 
-     * @param user the HDB Officer user whose registered projects are to be displayed
+     * @param user the HDB Officer whose registered projects are to be displayed
      */
     public static void start(User user){
         Scanner scanner = new Scanner(System.in);
@@ -62,51 +62,23 @@ public class RegistrationDashboard {
         System.out.println("Enter any key to go back to the main menu.");
         scanner.nextLine();
         TerminalUtils.clearScreen();
-        return;
     }
 
-    public static void viewAllRegistration(HDBManager manager) {
-        Scanner scanner = new Scanner(System.in);
-        
-        TerminalUtils.clearScreen();
-        System.out.println(" \nAll Officer Registrations");
-        System.out.println("-".repeat(110));
-        System.out.printf(" %5s | %15s | %15s | %23s | %10s | %20s\n", "Index", "Officer Name", "Project Name", "Application Period", "Time", "Registration Status");
-        System.out.println("-".repeat(110));
-        
-        // Count for list indexing
-        int i = 1;
-
-        // Print each applied project
-        for (OfficerRegistration registration: RegistrationDB.getAllRegistrations()) {
-            // Print in table format, with consistent spacing
-            // i | Project Name | Application Opening - Closing Date | Status
-            System.out.printf("  %3d. | %15s | %15s | %10s - %10s | %10s | %20s\n", 
-                i, registration.getOfficer().getName(), registration.getProject().getName(),
-                new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()),
-                new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()),
-                ProjectController.getProjectStatus(registration.getProject()),
-                registration.getRegistrationStatus()
-            );
-            i++;
-        };
-        System.out.println("-".repeat(110));
-
-        System.out.println("Enter any key to go back to the main menu.");
-        scanner.nextLine();
-        TerminalUtils.clearScreen();
-    }
-
-    public static void viewRegistrationRequsts(HDBManager manager) {
+    /**
+     * Displays the registration dashboard for a HDB manager.
+     * 
+     * @param manager the HDB Manager whose officer registrations are to be displayed
+     */
+    public static void managerView(HDBManager manager) {
         int option = -1;
         Scanner scanner = new Scanner(System.in);
+
         TerminalUtils.clearScreen();
-        
         do {
             System.out.println(" \nOfficer Registration Requests");
-            System.out.println("-".repeat(110));
+            System.out.println("-".repeat(105));
             System.out.printf(" %5s | %15s | %15s | %23s | %10s | %20s\n", "Index", "Officer Name", "Project Name", "Application Period", "Time", "Registration Status");
-            System.out.println("-".repeat(110));
+            System.out.println("-".repeat(105));
             
             // Count for list indexing
             int i = 1;
@@ -137,8 +109,7 @@ public class RegistrationDashboard {
                 );
                 i++;
             }
-            System.out.println("-".repeat(110));
-
+            System.out.println("-".repeat(105));
             System.out.println("These are the officer registration requests for your managed projects.");
             System.out.println("Please enter the index of the officer registration you want to view more information about, or '0' to go back to the main menu.");
             System.out.print("Enter your choice: ");
@@ -160,6 +131,8 @@ public class RegistrationDashboard {
             } else {
                 // Get registration details for the selected officer registration
                 OfficerRegistration selectedRegistration = officerRegistrations.get(option - 1);
+
+                // Pass the selected registration to RegistrationDetails
                 RegistrationDetails.start(manager, selectedRegistration);
             }
         } while (option != 0);

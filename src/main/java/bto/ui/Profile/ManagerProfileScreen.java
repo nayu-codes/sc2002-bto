@@ -5,11 +5,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import bto.controller.ProjectController;
-import bto.controller.RegistrationController;
 import bto.database.BTOProjectDB;
 import bto.model.project.BTOProject;
-import bto.model.registration.OfficerRegistration;
-import bto.model.registration.RegistrationStatus;
 import bto.model.user.HDBManager;
 import bto.model.user.User;
 import bto.ui.ChangePassword;
@@ -18,7 +15,6 @@ import bto.ui.application.ApplicationDashboard;
 import bto.ui.enquiry.EnquiryDashboard;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.project.ProjectCreatorWizard;
-import bto.ui.project.ProjectManagement;
 import bto.ui.registration.RegistrationDashboard;
 import bto.ui.report.ReportDashboard;
 
@@ -32,16 +28,16 @@ public class ManagerProfileScreen {
         TerminalUtils.clearScreen();
         do{
             // If login successful, welcome the user
-            System.out.println("\nLogin successful! Welcome, " + user.getName() + ".");
+            System.out.print("\nLogin successful! Welcome, " + user.getName() + ".\n"+
+                               "HDB Manager for: ");
 
             // Downcast user to Manager to access getBTOProjectsByManager method
             HDBManager manager = (HDBManager) user;
 
             if(BTOProjectDB.getBTOProjectsByManager(manager) != null){
-                System.out.println("HDB Manager for: ");
                 for (BTOProject project : BTOProjectDB.getBTOProjectsByManager(manager)){
-                    if ((ProjectController.getProjectStatus(project) == "Current")){
-                        // - Project Name (openingDate - ClosingDate)
+                    if (ProjectController.getProjectStatus(project) == "Current"){
+                        // Project Name (openingDate - ClosingDate)
                         System.out.print(project.getName() + " (" + 
                                            new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationOpeningDate()) + " - " +
                                            new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationClosingDate()) + ")\n"
@@ -55,22 +51,13 @@ public class ManagerProfileScreen {
                                "| # | Option                           |\n" +
                                "+---+----------------------------------+\n" +                       
                                "| 1 | Change Password                  |\n" +
-                               "+---+----------------------------------+\n" +
-                               "| As a HDB Manager                     |\n" +    
-                               "+---+----------------------------------+\n" +  
                                "| 2 | View All Projects                |\n" +
-                               "| 3 | View All Officer Registrations   |\n" +
-                               "| 4 | View All Enquiries               |\n" +
-                               "| 5 | View All BTO Applications        |\n" +
-                               "+---+----------------------------------+\n" +
-                               "| My Projects                          |\n" +    
-                               "+---+----------------------------------+\n" +
-                               "| 6 | Create New Project               |\n" +
-                               "| 7 | Edit / Delete A Project          |\n" +
-                               "| 8 | Enquiry Management               |\n" + 
-                               "| 9 | BTO Application Management       |\n" +
-                               "|10 | Registration Management          |\n" +
-                               "|11 | Generate Booking Reports         |\n" +
+                               "| 3 | Create New Project               |\n" +
+                               "| 4 | Edit / Delete A Project          |\n" +
+                               "| 5 | Officer Registration Management  |\n" + 
+                               "| 6 | BTO Application Management       |\n" +
+                               "| 7 | Enquiry Management               |\n" +
+                               "| 8 | Generate Booking Reports         |\n" +
                                "+---+----------------------------------+\n" +
                                "| 0 | Log Out                          |\n" +
                                "+---+----------------------------------+\n");
@@ -97,31 +84,26 @@ public class ManagerProfileScreen {
                     ProjectDashboard.start(user);
                     break;
                 case 3:
-                    // Calls RegistrationDashboard to view all registrations
-                    RegistrationDashboard.viewAllRegistration(manager);
-                    break;
-                case 4:
-                    // Calls EnquiryDashboard to view user enquiries
-                    // TODO: Implement EnquiryDashboard for Manager to view all enquiries
-                    // EnquiryDashboard.ManagerView(user);
-                    break;
-                case 6:
                     // Calls ProjectCreatorWizard to create a new project
                     ProjectCreatorWizard.start(user);
                     break;
-                case 8:
-                    // Calls EnquiryDashboard to view user enquiries
-                    EnquiryDashboard.start(user);
+                case 4:
+                    // Calls ProjectCreatorWizard to edit/delete a project
+                    //ProjectCreatorWizard.start(user);
                     break;
-                case 9:
-                    // Calls ApplicationDashboard to view all applications
+                case 5:
+                    // Calls RegistrationDashboard to view all registrations
+                    RegistrationDashboard.managerView(manager);
+                    break;
+                case 6:
+                    // Calls ApplicationDashboard as a manager
                     ApplicationDashboard.managerView(manager);                    
                     break;
-                case 10:
-                    // Calls RegistrationDashboard to view all registrations
-                    RegistrationDashboard.viewRegistrationRequsts(manager);
+                case 7:
+                    // Calls EnquiryDashboard to view all enquiries
+                    EnquiryDashboard.managerView(manager);
                     break;
-                case 11:
+                case 8:
                     // Calls ReportDashboard to generate booking reports
                     ReportDashboard.start(manager);
                     break;

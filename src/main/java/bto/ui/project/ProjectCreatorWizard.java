@@ -1,7 +1,6 @@
 package bto.ui.project;
 
 import bto.database.BTOProjectDB;
-import bto.controller.ProjectController;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.HDBManager;
@@ -13,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.InputMismatchException;
 import java.text.SimpleDateFormat;
 
 public class ProjectCreatorWizard {
@@ -30,13 +30,13 @@ public class ProjectCreatorWizard {
         HashMap<FlatType, Integer> flatPrice = new HashMap<>();
         Date applicationOpeningDate = null;
         Date applicationClosingDate = null;
-        HDBManager manager = (HDBManager) user;
         int availableOfficerSlots = 0;
         boolean visibility = true; // Default visibility to true
 
+        HDBManager manager = (HDBManager) user;
         // Clear the screen and display the welcome message
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
 
@@ -44,7 +44,7 @@ public class ProjectCreatorWizard {
 
         // Step 1: Get project name
         do {
-            System.out.print("Enter the project name: ");
+            System.out.println("Enter the project name: (type 'exit' to go back)");
             projectName = scanner.nextLine().trim();
             if (projectName.isEmpty()) {
                 System.out.println("Project name cannot be empty. Please try again.");
@@ -52,21 +52,24 @@ public class ProjectCreatorWizard {
             } else if (BTOProjectDB.getBTOProjectByName(projectName) != null) {
                 System.out.println("Project name already exists. Please choose a different name.");
                 projectName = null; // Reset project name to null for re-entry
+            }else if(projectName.toLowerCase().contains("exit")){
+                TerminalUtils.clearScreen();
+                return;
             }
         } while (projectName == null);
 
         // Print current creation status
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
         System.out.println("Current Project Details:");
         System.out.println("  Project Name: " + projectName);
-        System.out.println("+--------------------------------+\n");
+        System.out.println("+---------------------------------+\n");
 
         // Step 2: Get neighbourhood
         do {
-            System.out.print("Enter the neighbourhood: ");
+            System.out.println("Enter the neighbourhood: ");
             neighbourhood = scanner.nextLine().trim();
             if (neighbourhood.isEmpty()) {
                 System.out.println("Neighbourhood cannot be empty. Please try again.");
@@ -76,24 +79,24 @@ public class ProjectCreatorWizard {
 
         // Print current creation status
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
         System.out.println("Current Project Details:");
         System.out.println("  Project Name: " + projectName);
         System.out.println("  Neighbourhood: " + neighbourhood);
-        System.out.println("+--------------------------------+\n");
+        System.out.println("+---------------------------------+\n");
 
         // Step 3: Get flat types, prices and counts
         do {
             if (flatTypes.size() >= 2) {
                 break; // Exit the loop if 2 flat types are already added
             }
-            System.out.print("Select flat type to add to project ('2' for 2-room, '3' for 3-room, '0' when done): ");
+            System.out.println("Select flat type to add to project ('2' for 2-room, '3' for 3-room, '0' when done): ");
             try {
                 option = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the invalid input
                 option = -1; // Reset option to -1 for re-entry
@@ -177,7 +180,7 @@ public class ProjectCreatorWizard {
 
         // Print current creation status
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
         System.out.println("Current Project Details:");
@@ -187,12 +190,12 @@ public class ProjectCreatorWizard {
         for (FlatType flatType : flatTypes) {
             System.out.println("    - " + flatType.getDisplayName() + ": $" + flatPrice.get(flatType) + " (" + flatCount.get(flatType) + " units)");
         }
-        System.out.println("+--------------------------------+\n");
+        System.out.println("+---------------------------------+\n");
 
         // Step 4: Get application opening and closing dates
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         do {
-            System.out.print("Enter the application opening date (dd/MM/yyyy): ");
+            System.out.println("Enter the application opening date (dd/MM/yyyy): ");
             String openingDateInput = scanner.nextLine().trim();
             try {
                 applicationOpeningDate = dateFormat.parse(openingDateInput);
@@ -241,7 +244,7 @@ public class ProjectCreatorWizard {
 
         // Print current creation status
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
         System.out.println("Current Project Details:");
@@ -253,11 +256,11 @@ public class ProjectCreatorWizard {
         }
         System.out.println("  Application Opening Date: " + dateFormat.format(applicationOpeningDate));
         System.out.println("  Application Closing Date: " + dateFormat.format(applicationClosingDate));
-        System.out.println("+--------------------------------+\n");
+        System.out.println("+---------------------------------+\n");
 
         // Step 5: Get officer slots
         do {
-            System.out.print("Enter the number of officer slots available for this project: ");
+            System.out.println("Enter the number of officer slots available for this project: ");
             try {
                 numberInput = scanner.nextInt(); // Read the user's choice
                 scanner.nextLine(); // Consume the newline character
@@ -275,7 +278,7 @@ public class ProjectCreatorWizard {
 
         // Print current creation status
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
         System.out.println("Current Project Details:");
@@ -288,11 +291,11 @@ public class ProjectCreatorWizard {
         System.out.println("  Application Opening Date: " + dateFormat.format(applicationOpeningDate));
         System.out.println("  Application Closing Date: " + dateFormat.format(applicationClosingDate));
         System.out.println("  Officer Slots: " + availableOfficerSlots);
-        System.out.println("+--------------------------------+\n");
+        System.out.println("+---------------------------------+\n");
 
         // Last Step: Get project visibility
         do {
-            System.out.print("Is the project visible to the public? (Y for Yes, N for No): ");
+            System.out.println("Is the project visible to the public? (Y for Yes, N for No): ");
             visibilityInput = scanner.nextLine().trim();
             if (visibilityInput.equalsIgnoreCase("Y")) {
                 visibility = true;
@@ -305,7 +308,7 @@ public class ProjectCreatorWizard {
 
         // Print current creation status
         TerminalUtils.clearScreen();
-        System.out.println("\n+--------------------------------+\n" +
+        System.out.println("\n+---------------------------------+\n" +
                             "|   BTO Project Creation Wizard   |\n" +
                             "+---------------------------------+");
         System.out.println("Current Project Details:");
@@ -319,10 +322,10 @@ public class ProjectCreatorWizard {
         System.out.println("  Application Closing Date: " + dateFormat.format(applicationClosingDate));
         System.out.println("  Officer Slots: " + availableOfficerSlots);
         System.out.println("  Project Visibility: " + (visibility ? "Visible" : "Not Visible"));
-        System.out.println("+--------------------------------+\n");
+        System.out.println("+---------------------------------+\n");
 
         // Step 6: Confirm project creation
-        System.out.print("Are you sure you want to create this project? (Y for Yes, N for No): ");
+        System.out.println("Are you sure you want to create this project? (Y for Yes, N for No): ");
         String confirmInput = scanner.nextLine().trim();
         if (confirmInput.equalsIgnoreCase("Y")) {
             // Create the project

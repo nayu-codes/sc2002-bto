@@ -94,9 +94,9 @@ public class ApplicationDashboard {
         TerminalUtils.clearScreen();
         do {
             System.out.println(" \nBTO Application Portal");
-            System.out.println("-".repeat(110));
-            System.out.printf(" %5s | %15s | %15s | %15s | %11s | %10s | %15s\n", "Index", "Applicant Name", "Project Name", "Neighbourhood", "Application Date", "Room Type", "Status");
-            System.out.println("-".repeat(110));
+            System.out.println("-".repeat(111));
+            System.out.printf(" %5s | %15s | %15s | %15s | %15s | %10s | %15s\n", "Index", "Applicant Name", "Project Name", "Neighbourhood", "Application Date", "Room Type", "Status");
+            System.out.println("-".repeat(111));
 
             // Get the list of applications for the manager
             ArrayList<BTOApplication> applications = new ArrayList<>(); // Initialize an empty list to store applications
@@ -106,21 +106,18 @@ public class ApplicationDashboard {
                 }
             }
 
-            // Count for list indexing
             int i = 1;
-
             // Print each applied project
             for (BTOApplication application : applications) {
                 // Print in table format, with consistent spacing
                 // i | Applicant Name | Project Name | Neighbourhood | Application Date | Room Type | Status
-                System.out.printf("  %3d. | | %15s | %15s | %15s | %11s | %10s | %15s\n",
+                System.out.printf("  %3d. | %15s | %15s | %15s | %16s | %10s | %15s\n",
                         i, application.getApplicant().getName(), application.getProject().getName(), application.getProject().getNeighbourhood(),
                         new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()), application.getFlatType().getDisplayName(), application.getStatus());
                 i++;
             }
-            System.out.println("-".repeat(83));
-            System.out.println(
-                    "  Please enter the index of the applied project you want to view more information about, or '0' to go back to the main menu.");
+            System.out.println("-".repeat(111));
+            System.out.println("  Please enter the index of the application you want to view more information about, or '0' to go back to the main menu.");
             System.out.print("  Enter your choice: ");
 
             try {
