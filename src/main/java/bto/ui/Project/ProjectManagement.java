@@ -28,7 +28,7 @@ public class ProjectManagement {
                     // Printing the managed project details
                     System.out.println("\nManaged project");
                     System.out.println("-".repeat(61));
-                    System.out.printf(" %15s | %15s | %20s\n", "Project Name", "Neighbourhood", "Application Period");
+                    System.out.printf(" %15s | %15s | %22s\n", "Project Name", "Neighbourhood", "Application Period");
                     System.out.println("-".repeat(61));
 
                     // Project Name | Neighbourhood: Location | Application Opening - Closing Date
@@ -39,7 +39,7 @@ public class ProjectManagement {
                     System.out.println("-".repeat(61));
 
                     // Printing the project applicants
-                    System.out.println("\nThese are the applicants for this projects.");
+                    System.out.println("\nThese are the applicants for this project.");
                     System.out.println("-".repeat(61));
                     System.out.printf(" %5s | %15s | %15s | %15s\n", "Index", "Applicant Name", "Application Date", "Status");
                     System.out.println("-".repeat(61));
@@ -73,7 +73,7 @@ public class ProjectManagement {
                         TerminalUtils.clearScreen();
                         return; // Exit the loop and return to the main menu
                     } else {
-                        // Get details for the selected applicant
+                        // Get application details for the selected applicant
                         BTOApplication selectedApplication = ApplicationDB.getApplicationsByProjectName(registration.getProject().getName()).get(option - 1);
 
                         // Pass the selected applicant to the ProjectDetailsScreen

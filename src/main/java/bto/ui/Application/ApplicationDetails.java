@@ -25,6 +25,10 @@ public class ApplicationDetails {
             "Application Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()) + "\n\n" + 
             "Status: " + application.getStatus());
 
+            if(application.getBookingDate() != null){
+                System.out.println("Booking Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getBookingDate()));
+            }
+
             // Menu for the user to select an option
             System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +

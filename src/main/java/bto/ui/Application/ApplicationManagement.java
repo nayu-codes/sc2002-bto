@@ -25,6 +25,10 @@ public class ApplicationManagement {
             "Application Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getApplicationDate()) + "\n\n" + 
             "Status: " + application.getStatus());
 
+            if(application.getBookingDate() != null){
+                System.out.println("Booking Date: " + new SimpleDateFormat("dd/MM/yyyy").format(application.getBookingDate()));
+            }
+
             // Menu for the user to select an option
             System.out.println("\n+---+----------------------------+\n" +
                                "| # | Option                     |\n" +
@@ -61,7 +65,7 @@ public class ApplicationManagement {
                         System.out.print("Enter your choice: ");
                         book = scanner.nextLine();
                         if(book.toLowerCase().contains("y")){
-                            // Calls 
+                            // Calls ApplicationController to change applicant status to "Booked"
                             ApplicationController.bookFlat(user, application);
                             break;
                         }
@@ -75,7 +79,7 @@ public class ApplicationManagement {
                     }while(!(book.toLowerCase().contains("y")) || !(book.toLowerCase().contains("n")));
                     break;
                 case 0:
-                    // Goes back to ApplicationDashboard
+                    // Goes back to ProjectManagement
                     TerminalUtils.clearScreen();
                     return;
                 default:

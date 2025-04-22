@@ -92,7 +92,7 @@ public class HDBOfficer extends Applicant {
         // Check if the enquiry is a project that this officer is assigned to
         boolean isAssigned = false;
         for (OfficerRegistration registration : RegistrationDB.getRegistrationsByOfficer(this)) {
-            if (registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL && registration.getProject().getName() == enquiry.getProjectName()) {
+            if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (registration.getProject().getName().equals(enquiry.getProjectName()))){
                 isAssigned = true;
                 break;
             }

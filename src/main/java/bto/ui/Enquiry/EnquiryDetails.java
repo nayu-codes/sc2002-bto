@@ -6,7 +6,6 @@ import java.util.InputMismatchException;
 import bto.controller.EnquiryController;
 import bto.model.enquiry.Enquiry;
 import bto.model.user.User;
-import bto.model.user.UserType;
 
 import bto.ui.TerminalUtils;
 
@@ -15,6 +14,7 @@ public class EnquiryDetails {
 
     public static void start(User user, Enquiry enquiry){
         int option = -1;
+        String delete = "";
         Scanner scanner = new Scanner(System.in);
 
         TerminalUtils.clearScreen();
@@ -43,14 +43,14 @@ public class EnquiryDetails {
                                "| # | Option              |\n" +
                                "+---+---------------------+");
             // Check if the user is a Applicant
-            if (user.getUserType() == UserType.APPLICANT) {
+            if (user.getName().equals(enquiry.getApplicantName())) {
                 if (!enquiry.isSolved()){
                 System.out.println("| 1 | Edit Enquiry        |");
                 System.out.println("| 2 | Delete Enquiry      |");
                 }
             }
             // Check if the user is a Officer / Manager
-            else{
+            else if(enquiry.getReplyMessage() == null){
                 System.out.println("| 1 | Add Reply           |");
             }
 
@@ -71,21 +71,35 @@ public class EnquiryDetails {
             switch (option) {
                 case 1:
                     // Calls EnquiryController for applicants to edit their enquiry
-                    if (user.getUserType() == UserType.APPLICANT) {
+                    if (user.getName().equals(enquiry.getApplicantName())) {
                         EnquiryController.editEnquiry(user, enquiry);
                     }
                     // Calls EnquiryController for officer/managers to reply to enquiry
-                    else{
+                    else if(enquiry.getReplyMessage() == null){
                         EnquiryController.replyToEnquiry(user, enquiry);
                     }
                     break;
                 case 2:
-                    // Sets the enquiry to solved
-                    enquiry.deleteEnquiry();
-                    System.out.println("Enquiry Deleted!");
-                    break;
+                    do{
+                        System.out.println("Do you really want to delete your enquiry? This step is IRREVERSIBLE. (Y for Yes, N for No)");
+                        System.out.print("Enter your choice: ");
+                        delete = scanner.nextLine();
+                        if(delete.toLowerCase().contains("y")){
+                            // Deletes enquiry (set it to solved)
+                            enquiry.deleteEnquiry();
+                            System.out.println("Enquiry Deleted!");
+                            break;
+                        }
+                        else if(delete.toLowerCase().contains("n")){
+                            break;
+                        }
+                        else{
+                            System.out.println("Invalid input. Please enter either Y or N.\n");
+                            continue;
+                        }
+                    }while(!(delete.toLowerCase().contains("y")) || !(delete.toLowerCase().contains("n")));
                 case 0:
-                    // Goes back to ProjectDashboard
+                    // Goes back to EnquiryDashboard
                     TerminalUtils.clearScreen();
                     return;
                 default:

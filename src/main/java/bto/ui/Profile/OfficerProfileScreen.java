@@ -12,6 +12,7 @@ import bto.model.registration.RegistrationStatus;
 import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
 import bto.ui.enquiry.EnquiryDashboard;
+import bto.ui.enquiry.EnquiryManagement;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.project.ProjectManagement;
 import bto.ui.registration.RegistrationDashboard;
@@ -101,7 +102,8 @@ public class OfficerProfileScreen {
                     ProjectManagement.start(user);
                     break;
                 case 7:
-                    
+                    // Calls ProjectManagement to view managed project
+                    EnquiryManagement.start(user);
                     break;
                 case 0:
                     // Log Out - goes back to Main Screen

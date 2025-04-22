@@ -33,18 +33,13 @@ public class ProjectFilter {
             Applicant applicant = (Applicant) user; 
 
             for(BTOProject project : eligibleProjects){
-                boolean hasApplied = applicant.appliedProjects().stream()
-                    .anyMatch(application -> application.getProject().getName().equals(project.getName()));
-                
-                if(!hasApplied){
-                    if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {   
-                        if(project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) > 0){
-                            availableprojects.add(project);
-                        }
-                    }
-                    else if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
+                if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {   
+                    if(project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) > 0){
                         availableprojects.add(project);
                     }
+                }
+                else if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
+                    availableprojects.add(project);
                 }
             }
         }
@@ -53,15 +48,12 @@ public class ProjectFilter {
             HDBOfficer officer = (HDBOfficer) user;
             
             for(BTOProject project : allprojects){
-                // Check if officer is managing the project
+                // Check if officer is managing the project.
                 boolean isManaging = officer.getRegisteredProjects().stream()
                 .anyMatch(registration -> registration.getProject().getName().equals(project.getName()));
-        
-                // Check if officer has applied for the project
-                boolean hasApplied = officer.appliedProjects().stream()
-                .anyMatch(application -> application.getProject().getName().equals(project.getName()));
                 
-                if((!isManaging) && (!hasApplied)){
+                // Only show projects that he/she is not managing
+                if((!isManaging)){
                     availableprojects.add(project);
                 }
             }

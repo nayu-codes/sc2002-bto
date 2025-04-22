@@ -67,10 +67,10 @@ public class ApplicationDashboard {
                     TerminalUtils.clearScreen();
                     return; // Exit the loop and return to the main menu
                 } else {
-                    // Get project details for the selected project
+                    // Get application details for the selected project
                     BTOApplication selectedApplication = applicant.appliedProjects().get(choice - 1);
 
-                    // Pass the selected project to the ProjectDetailsScreen
+                    // Pass the selected application to ApplicationDetails
                     ApplicationDetails.start(user, selectedApplication);
                 }
             }

@@ -77,10 +77,10 @@ public class EnquiryDashboard {
                     TerminalUtils.clearScreen();
                     return; // Exit the loop and return to the main menu
                 } else {
-                    // Get project details for the selected project
+                    // Get enquiry details for the selected enquiry
                     Enquiry selectedEnquiry = applicantEnquiries.get(choice - 1);
 
-                    // Pass the selected project to the ProjectDetailsScreen
+                    // Pass the selected enquiry to EnquiryDetails
                     EnquiryDetails.start(user, selectedEnquiry);
                 }
             }
