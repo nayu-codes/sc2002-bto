@@ -303,6 +303,9 @@ public class BTOProjectDB implements CsvDatabase {
                 throw new IllegalArgumentException("Project name already exists.");
             }
         }
+        // Change the project ID to the next available ID
+        project.setProjectId(nextProjectId);
+        
         int newId = nextProjectId;
         btoProjectList.put(newId, project);
         nextProjectId++;
