@@ -8,10 +8,13 @@ import bto.controller.ProjectController;
 import bto.controller.RegistrationController;
 import bto.model.user.User;
 import bto.model.registration.OfficerRegistration;
+import bto.model.registration.RegistrationStatus;
 import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
 import bto.ui.enquiry.EnquiryDashboard;
 import bto.ui.project.ProjectDashboard;
+import bto.ui.project.ProjectManagement;
+import bto.ui.registration.RegistrationDashboard;
 import bto.ui.application.ApplicationDashboard;
 
 public class OfficerProfileScreen {
@@ -24,16 +27,16 @@ public class OfficerProfileScreen {
         TerminalUtils.clearScreen();
         do{
             // If login successful, welcome the user
-            System.out.println("\nLogin successful! Welcome, " + user.getName() + ".\n" +
+            System.out.print("\nLogin successful! Welcome, " + user.getName() + ".\n" +
                                "HDB Officer for: ");
 
             if(RegistrationController.getRegistrationsByOfficer(user) != null){
                 for (OfficerRegistration registration : RegistrationController.getRegistrationsByOfficer(user)){
-                    if (ProjectController.getProjectStatus(registration.getProject()) == "Current"){
+                    if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (ProjectController.getProjectStatus(registration.getProject()) == "Current")){
                         // - Project Name (openingDate - ClosingDate)
-                        System.out.println(" - " + registration.getProject().getName() + " (" + 
+                        System.out.print(registration.getProject().getName() + " (" + 
                                            new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()) + " - " +
-                                           new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()) + ")"
+                                           new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()) + ")\n"
                                            );
                     }
                 }
@@ -90,10 +93,12 @@ public class OfficerProfileScreen {
                     EnquiryDashboard.start(user);
                     break;
                 case 5:
-
+                    // Calls RegistrationDashboard to view registered projects
+                    RegistrationDashboard.start(user);
                     break;
                 case 6:
-                    
+                    // Calls ProjectManagement to view managed project
+                    ProjectManagement.start(user);
                     break;
                 case 7:
                     

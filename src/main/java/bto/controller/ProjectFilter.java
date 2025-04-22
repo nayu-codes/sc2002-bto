@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import bto.database.BTOProjectDB;
-import bto.model.application.BTOApplication;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
 import bto.model.user.User;
 import bto.model.user.Applicant;
+import bto.model.user.HDBOfficer;
 import bto.model.user.MaritalStatus;
 import bto.model.user.UserFilter;
+import bto.model.user.UserType;
 
 public class ProjectFilter {
     private ProjectFilter(){} // Prevents Instantiation
@@ -24,28 +25,43 @@ public class ProjectFilter {
      * @return A list of BTOProject objects that are eligible for the user based on the filters.
      */
     public static List<BTOProject> applyUserFilters(User user){
-        List<BTOProject> eligibleProjects = BTOProjectDB.getVisibleProjects();
         List<BTOProject> availableprojects = new ArrayList<>();
 
-        Applicant applicant = (Applicant) user; 
+        if(user.getUserType() == UserType.APPLICANT){
+            List<BTOProject> eligibleProjects = BTOProjectDB.getVisibleProjects();
 
-        for(BTOProject project : eligibleProjects){
-            boolean hasApplied = false;
+            Applicant applicant = (Applicant) user; 
 
-            // Checks if the applicant has already applied for a project
-            for(BTOApplication application : applicant.appliedProjects()){
-                if(application.getProject().getName().equals(project.getName())){
-                    hasApplied = true;
-                }
-            }
-            
-            if(!hasApplied){
-                if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {   
-                    if(project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) > 0){
+            for(BTOProject project : eligibleProjects){
+                boolean hasApplied = applicant.appliedProjects().stream()
+                    .anyMatch(application -> application.getProject().getName().equals(project.getName()));
+                
+                if(!hasApplied){
+                    if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {   
+                        if(project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) > 0){
+                            availableprojects.add(project);
+                        }
+                    }
+                    else if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
                         availableprojects.add(project);
                     }
                 }
-                else if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
+            }
+        }
+        else if(user.getUserType() == UserType.HDB_OFFICER){
+            List<BTOProject> allprojects = BTOProjectDB.getBTOProjectList();
+            HDBOfficer officer = (HDBOfficer) user;
+            
+            for(BTOProject project : allprojects){
+                // Check if officer is managing the project
+                boolean isManaging = officer.getRegisteredProjects().stream()
+                .anyMatch(registration -> registration.getProject().getName().equals(project.getName()));
+        
+                // Check if officer has applied for the project
+                boolean hasApplied = officer.appliedProjects().stream()
+                .anyMatch(application -> application.getProject().getName().equals(project.getName()));
+                
+                if((!isManaging) && (!hasApplied)){
                     availableprojects.add(project);
                 }
             }

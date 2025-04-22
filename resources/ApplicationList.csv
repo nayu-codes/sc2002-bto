@@ -1,4 +1,4 @@
 applicationId, applicant, projectName, flatType, applicationDate, bookingDate, status
-1, "Grace", "Acacia Breeze", "2-Room", "03/25/2025", , "Pending"
+1, "Grace", "Acacia Breeze", "3-Room", "03/25/2025", , "Successful"
 2, "Emily", "Benzene Freeze", "3-Room", "04/25/2025", , "Successful"
 3, "David", "Croatia Rizz", "3-Room", "05/25/2025", "06/20/2025", "Booked"

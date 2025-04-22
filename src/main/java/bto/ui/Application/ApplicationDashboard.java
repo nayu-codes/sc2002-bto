@@ -19,7 +19,7 @@ public class ApplicationDashboard {
         
         TerminalUtils.clearScreen();
         do {
-            System.out.println(" \nApplied Projects for: " + user.getName());
+            System.out.println(" \nApplied projects for: " + user.getName());
             System.out.println("-".repeat(83));
             System.out.printf(" %5s | %15s | %15s | %20s | %15s\n", "Index", "Project Name", "Neighbourhood", "Application Date", "Status");
             System.out.println("-".repeat(83));
@@ -68,7 +68,7 @@ public class ApplicationDashboard {
                     return; // Exit the loop and return to the main menu
                 } else {
                     // Get project details for the selected project
-                    BTOApplication selectedApplication= applicant.appliedProjects().get(choice - 1);
+                    BTOApplication selectedApplication = applicant.appliedProjects().get(choice - 1);
 
                     // Pass the selected project to the ProjectDetailsScreen
                     ApplicationDetails.start(user, selectedApplication);

@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 
 import bto.controller.ApplicationController;
 import bto.controller.EnquiryController;
+import bto.controller.RegistrationController;
 import bto.database.BTOProjectDB;
 import bto.model.user.User;
 import bto.model.user.UserType;
@@ -17,6 +18,7 @@ public class ProjectDetails {
 
     public static void start(User user, BTOProject project){
         int option = -1;
+        String register = "";
         Scanner scanner = new Scanner(System.in);
 
         TerminalUtils.clearScreen();
@@ -66,7 +68,23 @@ public class ProjectDetails {
                 case 3:
                     // Check if the user is an Officer
                     if (user.getUserType() == UserType.HDB_OFFICER) {
-                        //TODO: register for officer
+                        do{
+                            System.out.println("Do you want to apply as an officer for this project?. (Y for Yes, N for No)");
+                            System.out.print("Enter your choice: ");
+                            register = scanner.nextLine();
+                            if(register.toLowerCase().contains("y")){
+                                // Calls RegistrationController to submit officer registration for project
+                                RegistrationController.registerForProject(user, project);
+                                break;
+                            }
+                            else if(register.toLowerCase().contains("n")){
+                                break;
+                            }
+                            else{
+                                System.out.println("Invalid input. Please enter either Y or N.\n");
+                                continue;
+                            }
+                        }while(!(register.toLowerCase().contains("y")) || !(register.toLowerCase().contains("n")));
                     }
 
                     // Check if the user is a Manager

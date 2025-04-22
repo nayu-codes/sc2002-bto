@@ -1,6 +1,7 @@
 package bto.database;
 
 import bto.model.user.User;
+import bto.model.user.UserType;
 import bto.model.user.MaritalStatus;
 import bto.model.project.BTOProject;
 import bto.model.project.FlatType;
@@ -401,7 +402,7 @@ public class BTOProjectDB implements CsvDatabase {
                     "Available Flats: " + "\n");
             for (FlatType flatType : project.getFlatType()) {
                 if(flatType == FlatType.THREE_ROOM){
-                    if (user.getMaritalStatus() == MaritalStatus.SINGLE){
+                    if ((user.getUserType() == UserType.APPLICANT) && (user.getMaritalStatus() == MaritalStatus.SINGLE)){
                     continue; // Skip printing 3-room flats if user is Single
                     }
                 }

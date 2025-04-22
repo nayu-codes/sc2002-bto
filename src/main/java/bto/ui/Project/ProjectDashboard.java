@@ -30,14 +30,14 @@ public class ProjectDashboard{
             // Apply additional filters based on UserFilter object
             filteredProjects = ProjectFilter.applyAdditionalFilters(filteredProjects);
 
-            System.out.println(" \nAvailable Projects for: " + user.getName());
+            System.out.println(" \nAvailable projects for: " + user.getName());
             
             // Print user filters applied, if any
             UserFilter.printFiltersApplied();
 
-            System.out.println("-".repeat(68));
+            System.out.println("-".repeat(69));
             System.out.printf(" %5s | %15s | %15s | %20s\n", "Index", "Project Name", "Neighbourhood", "Application Period");
-            System.out.println("-".repeat(68));
+            System.out.println("-".repeat(69));
             
             // Check if there are available projects
             if (filteredProjects.isEmpty()) {
@@ -63,7 +63,7 @@ public class ProjectDashboard{
                     );
                     i++;
                 };
-                System.out.println("-".repeat(68));
+                System.out.println("-".repeat(69));
                 System.out.println("  Please enter the index of the project you want to view more information about, 'filter' to select filters, or '0' to go back to the main menu.");
                 System.out.print("  Enter your choice: ");
                 choice = scanner.nextLine().trim(); // Read the user's choice and remove leading/trailing whitespace
