@@ -2,9 +2,12 @@ package bto.ui.profile;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.text.SimpleDateFormat;
 
+import bto.controller.ProjectController;
 import bto.controller.RegistrationController;
 import bto.model.user.User;
+import bto.model.registration.OfficerRegistration;
 import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
 import bto.ui.enquiry.EnquiryDashboard;
@@ -25,7 +28,15 @@ public class OfficerProfileScreen {
                                "HDB Officer for: ");
 
             if(RegistrationController.getRegistrationsByOfficer(user) != null){
-                System.out.print(" ");
+                for (OfficerRegistration registration : RegistrationController.getRegistrationsByOfficer(user)){
+                    if (ProjectController.getProjectStatus(registration.getProject()) == "Current"){
+                        // - Project Name (openingDate - ClosingDate)
+                        System.out.println(" - " + registration.getProject().getName() + " (" + 
+                                           new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()) + " - " +
+                                           new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()) + ")"
+                                           );
+                    }
+                }
             }
 
             // Menu for the user to select an option

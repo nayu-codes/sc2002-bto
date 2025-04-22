@@ -34,7 +34,7 @@ public class ProjectFilter {
 
             // Checks if the applicant has already applied for a project
             for(BTOApplication application : applicant.appliedProjects()){
-                if(application.getProject().equals(project)){
+                if(application.getProject().getName().equals(project.getName())){
                     hasApplied = true;
                 }
             }

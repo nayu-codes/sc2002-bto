@@ -5,6 +5,8 @@ import bto.model.user.HDBManager;
 import bto.model.user.User;
 import bto.model.user.UserType;
 
+import java.util.Date;
+
 public class ProjectController {
     private ProjectController(){} // Prevents Instantiation
 
@@ -131,5 +133,32 @@ public class ProjectController {
         } catch (IllegalAccessException e) {
             System.out.println("Failed to toggle project visibility: " + e.getMessage());
         }
+    }
+
+    /**
+     * Gets the current "status" of a project.
+     * 
+     * @param project The BTOProject whose status is to be retrieved.
+     * 
+     * @return The current status of the project as a String. ("Past", "Current", "Upcoming")
+     *         Returns null if status cannot be retrieved.
+     */
+    public static String getProjectStatus(BTOProject project) {
+        if (project == null) {
+            System.out.println("Project cannot be null.");
+            return null;
+        }
+
+        String currentStatus = null;
+
+        if (project.getApplicationClosingDate().before(new Date())) {
+            currentStatus = "Past";
+        } else if (project.getApplicationOpeningDate().after(new Date())) {
+            currentStatus = "Upcoming";
+        } else {
+            currentStatus = "Current";
+        }
+
+        return currentStatus;
     }
 }
