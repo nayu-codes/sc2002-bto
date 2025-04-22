@@ -1,7 +1,10 @@
 package bto.controller;
 
+import java.util.Date;
 import java.util.Scanner;
 
+import bto.database.BTOProjectDB;
+import bto.database.ApplicationDB;
 import bto.model.application.ApplicationStatus;
 import bto.model.application.BTOApplication;
 import bto.model.project.BTOProject;
@@ -177,8 +180,18 @@ public class ApplicationController {
             if(application.getProject().getFlatCountRemaining(application.getFlatType()) > 0){
                 try{
                     application.getProject().decreaseFlatCountRemaining(application.getFlatType());
-                    application.setStatus(ApplicationStatus.BOOKED);
-                } catch (IllegalArgumentException e){
+                    // Update BTOProject's flatCountRemaining
+                    BTOProjectDB.updateBTOProject(application.getProject().getName(), application.getProject());
+
+                    // Book the application
+                    if (application.book(new Date())) {
+                        System.out.println("Flat booked successfully.");
+                    } else {
+                        System.out.println("There was an error booking the flat. Please try again.");
+                    }
+                } catch (IllegalArgumentException e){ // If the flat type is not found in the project
+                    System.out.println("Error: " + e.getMessage());
+                } catch (IllegalAccessException e) { // If the project cannot be updated in the database
                     System.out.println("Error: " + e.getMessage());
                 }
             } else {
