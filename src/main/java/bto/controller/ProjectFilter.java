@@ -40,12 +40,12 @@ public class ProjectFilter {
             }
             
             if(!hasApplied){
-                if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {    
-                    availableprojects = eligibleProjects.stream()
-                    .filter(singleproject -> singleproject.getFlatType().contains(FlatType.TWO_ROOM) && singleproject.getFlatCountRemaining(FlatType.TWO_ROOM) != 0)
-                    .collect(Collectors.toList());
+                if (applicant.getMaritalStatus() == MaritalStatus.SINGLE && applicant.getAge() >= 35) {   
+                    if(project.getFlatType().contains(FlatType.TWO_ROOM) && project.getFlatCountRemaining(FlatType.TWO_ROOM) > 0){
+                        availableprojects.add(project);
+                    }
                 }
-                if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
+                else if (applicant.getMaritalStatus() == MaritalStatus.MARRIED && applicant.getAge() >= 21) {
                     availableprojects.add(project);
                 }
             }
