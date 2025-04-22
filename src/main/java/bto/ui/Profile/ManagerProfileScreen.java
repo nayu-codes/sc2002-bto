@@ -97,7 +97,7 @@ public class ManagerProfileScreen {
                     break;
                 case 3:
                     // Calls RegistrationDashboard to view all registrations
-                    RegistrationDashboard.start(user);
+                    RegistrationDashboard.viewAllRegistration(manager);
                     break;
                 case 4:
                     // Calls EnquiryDashboard to view user enquiries
