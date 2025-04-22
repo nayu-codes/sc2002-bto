@@ -115,7 +115,7 @@ public class ManagerProfileScreen {
                     break;
                 case 9:
                     // Calls ApplicationDashboard to view all applications
-                    ApplicationDashboard.start(user);                    
+                    ApplicationDashboard.managerView(manager);                    
                     break;
                 case 10:
                     // Calls RegistrationDashboard to view all registrations
