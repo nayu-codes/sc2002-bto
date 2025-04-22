@@ -93,10 +93,20 @@ public class ApplicationController {
 
             switch (option) {
                 case 2:
+                    // Check if project has 2-room flats
+                    if (!project.getFlatType().contains(FlatType.TWO_ROOM)) {
+                        System.out.println("This project does not have 2-room flats available. Please select another flat type.");
+                        break;
+                    }
                     // Submit application for 2-room flat
                     submitApplication(user, project, FlatType.TWO_ROOM);
                     return;
                 case 3:
+                    // Check if project has 3-room flats
+                    if (!project.getFlatType().contains(FlatType.THREE_ROOM)) {
+                        System.out.println("This project does not have 3-room flats available. Please select another flat type.");
+                        break;
+                    }
                     // Submit application for 3-room flat
                     submitApplication(user, project, FlatType.THREE_ROOM);
                     return;

@@ -90,10 +90,21 @@ public class ProjectCreatorWizard {
                 break; // Exit the loop if 2 flat types are already added
             }
             System.out.print("Select flat type to add to project ('2' for 2-room, '3' for 3-room, '0' when done): ");
-            option = scanner.nextInt(); // Read the user's choice
-            scanner.nextLine(); // Consume the newline character
+            try {
+                option = scanner.nextInt(); // Read the user's choice
+                scanner.nextLine(); // Consume the newline character
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input
+                option = -1; // Reset option to -1 for re-entry
+                continue;
+            }
             switch(option) {
                 case 2:
+                    if (flatTypes.contains(FlatType.TWO_ROOM)) {
+                        System.out.println("2-room flat type already added. Please choose another flat type.");
+                        break; // Skip to the next iteration of the loop
+                    }
                     flatTypes.add(FlatType.TWO_ROOM);
                     // Get price and count for 2-room flat
                     do {
@@ -131,6 +142,10 @@ public class ProjectCreatorWizard {
                     flatCount.put(FlatType.TWO_ROOM, numberInput); // Store the count for 2-room flat
                     break;
                 case 3:
+                    if (flatTypes.contains(FlatType.THREE_ROOM)) {
+                        System.out.println("3-room flat type already added. Please choose another flat type.");
+                        break; // Skip to the next iteration of the loop
+                    }
                     flatTypes.add(FlatType.THREE_ROOM);
                     // Get price and count for 3-room flat
                     do {
@@ -243,8 +258,15 @@ public class ProjectCreatorWizard {
         // Step 5: Get officer slots
         do {
             System.out.print("Enter the number of officer slots available for this project: ");
-            numberInput = scanner.nextInt(); // Read the user's choice
-            scanner.nextLine(); // Consume the newline character
+            try {
+                numberInput = scanner.nextInt(); // Read the user's choice
+                scanner.nextLine(); // Consume the newline character
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input
+                numberInput = -1; // Reset numberInput to -1 for re-entry
+                continue;
+            }
             if (numberInput <= 0) {
                 System.out.println("Number of officer slots must be a positive number. Please try again.");
             }

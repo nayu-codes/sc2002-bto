@@ -110,18 +110,28 @@ public class BTOProjectDB implements CsvDatabase {
                     String name = values[0].trim().replace("\"", "");
                     String neighbourhood = values[1].trim().replace("\"", "");
                     
-                    List<FlatType> flatType = List.of(FlatType.fromString(values[2].trim()), FlatType.fromString(values[6].trim()));
+                    ArrayList<FlatType> flatType = new ArrayList<>();
+                    flatType.add(FlatType.fromString(values[2].trim()));
+                    if (!values[6].trim().isEmpty()){
+                        flatType.add(FlatType.fromString(values[6].trim()));
+                    }
                     HashMap<FlatType, Integer> flatCount = new HashMap<>();
                     flatCount.put(FlatType.fromString(values[2].trim()), Integer.parseInt(values[3].trim()));
-                    flatCount.put(FlatType.fromString(values[6].trim()), Integer.parseInt(values[7].trim()));
+                    if (!values[6].trim().isEmpty()){
+                        flatCount.put(FlatType.fromString(values[6].trim()), Integer.parseInt(values[7].trim()));
+                    }
 
                     HashMap<FlatType, Integer> flatCountRemaining = new HashMap<>();
                     flatCountRemaining.put(FlatType.fromString(values[2].trim()), Integer.parseInt(values[5].trim()));
-                    flatCountRemaining.put(FlatType.fromString(values[6].trim()), Integer.parseInt(values[9].trim()));
+                    if (!values[6].trim().isEmpty()){
+                        flatCountRemaining.put(FlatType.fromString(values[6].trim()), Integer.parseInt(values[9].trim()));
+                    }
 
                     HashMap<FlatType, Integer> flatPrice = new HashMap<>();
                     flatPrice.put(FlatType.fromString(values[2].trim()), Integer.parseInt(values[4].trim()));
-                    flatPrice.put(FlatType.fromString(values[6].trim()), Integer.parseInt(values[8].trim()));
+                    if (!values[6].trim().isEmpty()){
+                        flatPrice.put(FlatType.fromString(values[6].trim()), Integer.parseInt(values[8].trim()));
+                    }
 
                     Date applicationOpeningDate = new SimpleDateFormat("MM/dd/yyyy").parse(values[10].trim());
                     Date applicationClosingDate = new SimpleDateFormat("MM/dd/yyyy").parse(values[11].trim());
@@ -172,12 +182,16 @@ public class BTOProjectDB implements CsvDatabase {
                         .append(project.getFlatType().get(0).getDisplayName()).append(",")
                         .append(project.getFlatCount(project.getFlatType().get(0))).append(",")
                         .append(project.getFlatPrice(project.getFlatType().get(0))).append(",")
-                        .append(project.getFlatCountRemaining(project.getFlatType().get(0))).append(",")
-                        .append(project.getFlatType().get(1).getDisplayName()).append(",")
+                        .append(project.getFlatCountRemaining(project.getFlatType().get(0))).append(",");
+                if (project.getFlatType().size() > 1) {
+                    sb.append(project.getFlatType().get(1).getDisplayName()).append(",")
                         .append(project.getFlatCount(project.getFlatType().get(1))).append(",")
                         .append(project.getFlatPrice(project.getFlatType().get(1))).append(",")
-                        .append(project.getFlatCountRemaining(project.getFlatType().get(1))).append(",")
-                        .append(new SimpleDateFormat("MM/dd/yyyy").format(project.getApplicationOpeningDate())).append(",")
+                        .append(project.getFlatCountRemaining(project.getFlatType().get(1))).append(",");
+                } else {
+                    sb.append(",,,,"); // Placeholder for missing flat type
+                }
+                    sb.append(new SimpleDateFormat("MM/dd/yyyy").format(project.getApplicationOpeningDate())).append(",")
                         .append(new SimpleDateFormat("MM/dd/yyyy").format(project.getApplicationClosingDate())).append(",")
                         .append(project.getProjectManager().getName()).append(",")
                         .append(project.getAvailableOfficerSlots()).append(",");
