@@ -24,7 +24,7 @@ public class ProjectManagement {
         
         TerminalUtils.clearScreen();
         for (OfficerRegistration registration : RegistrationController.getRegistrationsByOfficer(user)){
-            if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (ProjectController.getProjectStatus(registration.getProject()) == "Current")){
+            if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (ProjectController.getProjectStatus(registration.getProject()) != "Upcoming")){
                 do{
                     // Printing the managed project details
                     System.out.print("\n---------- Managed project ----------");

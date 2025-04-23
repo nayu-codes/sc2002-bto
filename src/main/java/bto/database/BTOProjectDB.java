@@ -138,8 +138,10 @@ public class BTOProjectDB implements CsvDatabase {
                     HDBManager projectManager = (HDBManager) UserDB.getUserByName(values[12].trim());
                     ArrayList<String> assignedOfficers = new ArrayList<>();
                     String[] officers = values[14].replace("\"", "").trim().split(",");
-                    for (String officer : officers) {
-                        assignedOfficers.add(officer.trim());
+                    if (officers.length > 0 && !officers[0].isEmpty()) {
+                        for (String officer : officers) {
+                            assignedOfficers.add(officer.trim());
+                        }
                     }
                     int availableOfficerSlots = Integer.parseInt(values[13].trim());
                     boolean visibility = Boolean.parseBoolean(values[15].trim());

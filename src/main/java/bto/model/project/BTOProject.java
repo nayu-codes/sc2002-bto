@@ -290,8 +290,8 @@ public class BTOProject {
      * @param officer The officer to add.
      */
     public void addAssignedOfficer(String officer) {
-        if (assignedOfficers.size() < availableOfficerSlots) {
-            System.out.println("Officer does not exist in the system.");
+        if (assignedOfficers.size() >= availableOfficerSlots) {
+            System.out.println("No available slots for officers in this project.");
             return;
         }
         // Ensure that officer exists
