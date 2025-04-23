@@ -8,6 +8,7 @@ import bto.controller.ProjectController;
 import bto.controller.RegistrationController;
 import bto.controller.EnquiryController;
 import bto.database.BTOProjectDB;
+import bto.model.user.HDBManager;
 import bto.model.user.User;
 import bto.model.user.UserType;
 import bto.model.project.BTOProject;
@@ -42,6 +43,8 @@ public class ProjectDetails {
             // Check if the user is a manager
             if (user.getUserType() == UserType.HDB_MANAGER) {
                 System.out.println("| 1 | Set Visibility             |");
+                System.out.println("| 2 | Edit Project               |");
+                System.out.println("| 3 | Delete Project             |");
             }
 
             System.out.println("| 0 | Go Back                    |\n" +
@@ -89,7 +92,12 @@ public class ProjectDetails {
                     if(user.getUserType() != UserType.HDB_MANAGER){
                         // Creates an enquiry
                         EnquiryController.createEnquiry(user, project);
-                    }else{
+                    }
+                    else if (user.getUserType() == UserType.HDB_MANAGER) {
+                        // Go to ProjectCreatorWizard to edit project
+                        ProjectCreatorWizard.editProject((HDBManager) user, project);
+                    }
+                    else{
                         System.out.println("Invalid option. Please try again.");
                         break;
                     }
@@ -113,7 +121,12 @@ public class ProjectDetails {
                                 continue;
                             }
                         }while(!(register.toLowerCase().contains("y")) || !(register.toLowerCase().contains("n")));
-                    }else{
+                    }
+                    else if (user.getUserType() == UserType.HDB_MANAGER) {
+                        // Go to ProjectCreatorWizard to delete project
+                        ProjectCreatorWizard.deleteProject((HDBManager) user, project);
+                    }
+                    else{
                         System.out.println("Invalid option. Please try again.");
                         break;
                     }

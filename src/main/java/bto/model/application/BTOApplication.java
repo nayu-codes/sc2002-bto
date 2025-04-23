@@ -104,6 +104,17 @@ public class BTOApplication {
     }
 
     /**
+     * Sets the BTO project associated with this application.
+     * 
+     * @param project The new BTO project associated with this application.
+     */
+    public void setProject(BTOProject project) {
+        this.project = project;
+        // Update the application in the database
+        ApplicationDB.updateApplication(this);
+    }
+
+    /**
      * Gets the type of flat applied for.
      * 
      * @return The type of flat applied for (e.g., 2-room, 3-room, etc.).

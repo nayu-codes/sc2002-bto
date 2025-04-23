@@ -8,7 +8,7 @@ import java.util.Date;
 public class Enquiry {
     private final int enquiryId;
     private final String applicantName;
-    private final String projectName;
+    private String projectName;
     private EnquiryMessage applicantMessage;
     private EnquiryMessage replyMessage;
     private boolean isSolved = false;
@@ -71,6 +71,16 @@ public class Enquiry {
      */
     public String getProjectName() {
         return projectName;
+    }
+
+    /**
+     * Set the project name.
+     * 
+     * @param projectName The name of the project.
+     */
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+        EnquiryDB.updateEnquiry(this); // Update the enquiry in the database
     }
 
     /**

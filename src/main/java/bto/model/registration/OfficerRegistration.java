@@ -1,5 +1,6 @@
 package bto.model.registration;
 
+import bto.database.RegistrationDB;
 import bto.model.project.BTOProject;
 import bto.model.user.HDBOfficer;
 
@@ -65,5 +66,16 @@ public class OfficerRegistration {
      */
     public BTOProject getProject() {
         return project;
+    }
+
+    /**
+     * Sets the BTO project associated with this registration.
+     * 
+     * @param project The new BTO project associated with this registration.
+     */
+    public void setProject(BTOProject project) {
+        this.project = project;
+        // Update the registration in the database
+        RegistrationDB.updateRegistration(this);
     }
 }
