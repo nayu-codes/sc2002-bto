@@ -16,6 +16,7 @@ import bto.model.user.UserType;
 
 public class ProjectFilter {
     private ProjectFilter(){} // Prevents Instantiation
+    
     /**
      * Getting available projects based on the age and marital status filter
      * 

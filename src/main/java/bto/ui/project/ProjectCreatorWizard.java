@@ -1,5 +1,15 @@
 package bto.ui.project;
 
+import java.util.Scanner;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.InputMismatchException;
+import java.text.SimpleDateFormat;
+import java.util.stream.Collectors;
+
+import bto.ui.TerminalUtils;
 import bto.database.ApplicationDB;
 import bto.database.BTOProjectDB;
 import bto.database.EnquiryDB;
@@ -11,17 +21,6 @@ import bto.model.project.FlatType;
 import bto.model.registration.OfficerRegistration;
 import bto.model.user.HDBManager;
 import bto.model.user.User;
-import bto.ui.TerminalUtils;
-
-import java.util.Scanner;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.InputMismatchException;
-import java.text.SimpleDateFormat;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ProjectCreatorWizard {
     private ProjectCreatorWizard(){} // Prevents instantiation

@@ -9,7 +9,6 @@ import bto.database.EnquiryDB;
 import bto.model.enquiry.Enquiry;
 import bto.model.user.HDBManager;
 import bto.model.user.User;
-
 import bto.ui.TerminalUtils;
 
 public class EnquiryDashboard {
@@ -35,7 +34,7 @@ public class EnquiryDashboard {
 
             // Check if the user has sent any enquiries
             if (applicantEnquiries.isEmpty()) {
-                System.out.println("You have not sent any equiries.");
+                System.out.println("You have not sent any enquiries.");
                 System.out.println("Enter any key to go back to the main menu.");
                 scanner.nextLine();
                 TerminalUtils.clearScreen();

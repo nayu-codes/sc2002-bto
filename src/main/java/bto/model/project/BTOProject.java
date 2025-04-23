@@ -185,7 +185,6 @@ public class BTOProject {
             this.flatCount.put(flatType, newFlatCount);
         } else {
             System.out.println("Flat type not found in the project.");
-            // TODO: Throw Exceptions?
         }
     }
 
@@ -216,7 +215,6 @@ public class BTOProject {
             this.flatPrice.put(flatType, newFlatPrice);
         } else {
             System.out.println("Flat type not found in the project.");
-            // TODO: Throw Exceptions?
         }
     }
 
@@ -298,7 +296,6 @@ public class BTOProject {
         if (UserDB.getUserByName(officer) == null) {
             System.out.println("Officer does not exist in the system.");
             return;
-            // TODO: Throw Exceptions?
         }
         // Ensure that officer is of type HDBOfficer
         if (UserDB.getUserByName(officer).getUserType() != UserType.HDB_OFFICER) {

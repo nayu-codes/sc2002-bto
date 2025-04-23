@@ -7,6 +7,7 @@ import bto.model.user.User;
 import bto.model.user.UserType;
 import bto.model.project.BTOProject;
 import bto.model.registration.OfficerRegistration;
+import bto.model.registration.RegistrationStatus;
 
 import java.util.List;
 
@@ -37,8 +38,23 @@ public class RegistrationController {
 
         // Submit registration request
         try {
-            officer.registerForProject(project);
-            System.out.println("Registration request submitted successfully!");
+            if((officer.getRegisteredProjects().isEmpty()) || (officer.getRegisteredProjects() == null)){
+                officer.registerForProject(project);
+                System.out.println("Registration request submitted successfully!");
+            }else{
+                for(OfficerRegistration registered : officer.getRegisteredProjects()){
+                    if(registered.getRegistrationStatus() == RegistrationStatus.UNSUCCESSFUL){
+                        if(registered.getProject().getName().equals(project.getName())){
+                            System.out.println("You are unsuccessful as an officer in this project. You cannot apply again. Please apply for another project.");
+                        }else{
+                            officer.registerForProject(project);
+                            System.out.println("Registration request submitted successfully!");
+                        }
+                    }else{
+                        System.out.println("You have already submitted an officer application for a project. Cannot apply as an officer for multiple projects.");
+                    }
+                }
+            }
         } catch (IllegalStateException e) {
             System.out.println("Failed to submit registration request: " + e.getMessage());
             return;

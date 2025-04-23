@@ -1,8 +1,8 @@
 package bto.ui.enquiry;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import java.util.List;
 
 import bto.controller.EnquiryController;
 import bto.database.BTOProjectDB;
@@ -16,6 +16,12 @@ import bto.ui.TerminalUtils;
 public class EnquiryDetails {
     private EnquiryDetails(){} // Prevents Instantiation
 
+    /**
+     * Displays the enquiry details for a selected enquiry.
+     * 
+     * @param user The user whose enquiry details is to be displayed.
+     * @param enquiry The selected enquiry which details is to be displayed.
+     */    
     public static void start(User user, Enquiry enquiry){
         int option = -1;
         String delete = "";

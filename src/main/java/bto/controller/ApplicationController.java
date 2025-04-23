@@ -20,7 +20,8 @@ public class ApplicationController {
     private ApplicationController(){} // Prevents Instantiation
 
     /**
-     * Check if the user is an applicant and if he/she has already applied for the project.
+     * Check if the user has already applied for the project.
+     * 
      * @param user the user who wants to submit the application
      * @param project the project to which the application is submitted
      * 
@@ -57,6 +58,7 @@ public class ApplicationController {
 
     /**
      * Let the user select the flat type (2-room, 3-room).
+     * 
      * @param user the user who wants to submit the application
      * @param project the project to which the application is submitted
      */
@@ -95,14 +97,19 @@ public class ApplicationController {
                     submitApplication(user, project, FlatType.TWO_ROOM);
                     return;
                 case 3:
-                    // Check if project has 3-room flats
-                    if (!project.getFlatType().contains(FlatType.THREE_ROOM)) {
-                        System.out.println("This project does not have 3-room flats available. Please select another flat type.");
+                    if(user.getMaritalStatus() != MaritalStatus.SINGLE){
+                        // Check if project has 3-room flats
+                        if (!project.getFlatType().contains(FlatType.THREE_ROOM)) {
+                            System.out.println("This project does not have 3-room flats available. Please select another flat type.");
+                            break;
+                        }
+                        // Submit application for 3-room flat
+                        submitApplication(user, project, FlatType.THREE_ROOM);
+                        return;
+                    }else{
+                        System.out.println("Invalid option. Please try again.");
                         break;
                     }
-                    // Submit application for 3-room flat
-                    submitApplication(user, project, FlatType.THREE_ROOM);
-                    return;
                 case 0:
                     // Goes back to ProjectDetails
                     TerminalUtils.clearScreen();
@@ -115,6 +122,7 @@ public class ApplicationController {
 
     /**
      * Submit an application to the system for a given user.
+     * 
      * @param user the user who wants to submit the application
      * @param project the project to which the application is submitted
      * @param flatType the type of flat being applied for

@@ -1,6 +1,10 @@
 package bto.ui;
 
 public class TerminalUtils {
+    private TerminalUtils(){} // Prevents instantiation
+    /**
+     * Clears the screen whenever there is a change of UI for better readibility
+     */
     public static void clearScreen() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {

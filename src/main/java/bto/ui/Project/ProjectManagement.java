@@ -18,6 +18,12 @@ import bto.ui.application.ApplicationManagement;
 public class ProjectManagement {
     private ProjectManagement(){} // Prevents Instantiation
 
+    /**
+     * Displays the project details for a managed project for a HDB officer
+     * Displays all the applicants for the project
+     * 
+     * @param user A HDB officer 
+     */
     public static void start(User user){
         int option = -1;
         Scanner scanner = new Scanner(System.in);

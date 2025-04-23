@@ -25,13 +25,7 @@ public class UserDB {
     private static HashMap<String, User> userList = new HashMap<>(); // HashMap to store users with userId as the key
     private static final String CSV_FILE_PATH = "resources/UserList.csv"; // Path to the CSV file
 
-    /**
-     * Constructor to initialize the UserDB object with a user list.
-     * The user list is represented as a HashMap where the key is the userId and the value is the User object.
-     */
-    public UserDB() {
-        // Constructor to initialize the user list
-    }
+    private UserDB(){} // Prevents Instantiation
 
     /**
      * Method to initialize the user list.
@@ -49,9 +43,6 @@ public class UserDB {
             processRawCsv("OfficerList.csv", UserType.HDB_OFFICER);
             processRawCsv("ManagerList.csv", UserType.HDB_MANAGER);
         }
-
-        // Export users to CSV file after loading
-        exportToCsv();
     }
 
     /**
@@ -196,6 +187,7 @@ public class UserDB {
             System.err.println("Error processing line: " + line + " - " + e.getMessage());
         }
     }
+
     /**
      * Method to add a user to the user list.
      * The user is added to the HashMap with the userId as the key.
@@ -239,6 +231,7 @@ public class UserDB {
         User user = userList.get(userId);
         return typecastUser(user); // Typecast the user to the correct type
     }
+
     /**
      * Method to retrieve a user from the user list using their name.
      * @param name The name of the user to be retrieved. (This program assumes that names are unique)
@@ -264,6 +257,7 @@ public class UserDB {
         // Save to CSV file after removing the user
         exportToCsv();
     }
+
     /**
      * Method to check if a user exists in the user list using the userId.
      * @param userId The unique identifier of the user to be checked.
@@ -272,6 +266,7 @@ public class UserDB {
     public static boolean userExists(String userId) {
         return userList.containsKey(userId);
     }
+
     /**
      * Method to get the user list.
      * @return The HashMap containing all users in the user list.
@@ -279,6 +274,7 @@ public class UserDB {
     public static HashMap<String, User> getUserList() {
         return userList;
     }
+
     /**
      * Method to clear the user list.
      * This method removes all users from the user list.
@@ -289,6 +285,7 @@ public class UserDB {
         // Save to CSV file after nuking the user list
         exportToCsv();
     }
+
     /**
      * Method to get the count of users in the user list.
      * @return The number of users in the user list.
@@ -296,6 +293,7 @@ public class UserDB {
     public static int getUserCount() {
         return userList.size();
     }
+
     /**
      * Method to check if the user list is empty.
      * @return true if the user list is empty, false otherwise.
@@ -303,6 +301,7 @@ public class UserDB {
     public static boolean isEmpty() {
         return userList.isEmpty();
     }
+
     /**
      * Method to print the user list.
      * This method prints all users in the user list to the console.
@@ -321,6 +320,7 @@ public class UserDB {
             }
         }
     }
+    
     /**
      * Method to update a user in the user list.
      * This method replaces the existing user with the same userId with the new user object.

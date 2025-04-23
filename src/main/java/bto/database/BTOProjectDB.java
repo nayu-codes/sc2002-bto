@@ -25,9 +25,13 @@ public class BTOProjectDB implements CsvDatabase {
     public static HashMap<Integer, BTOProject> btoProjectList = new HashMap<>();
     public static Integer nextProjectId = 0;
 
-    public BTOProjectDB() {
-    }
+    private BTOProjectDB(){} // Prevents Instantiation
 
+    /**
+     * Initializes the BTOProjectDB by loading data from the CSV file.
+     * This method reads the CSV file and populates the btoProjectList with
+     * BTOProject objects.
+     */
     public static void init() {
         try {
             // Read from CSV file and populate the btoProjectList
@@ -36,8 +40,6 @@ public class BTOProjectDB implements CsvDatabase {
             System.out.println("Error reading from CSV file: " + e.getMessage());
             readFromDefaultCsv();
         }
-        exportToCsv();
-        System.out.println("Total BTO projects loaded: " + btoProjectList.size()); // TODO: Remove in production
     }
 
     public static void readFromDefaultCsv() {
@@ -441,7 +443,7 @@ public class BTOProjectDB implements CsvDatabase {
             }
             if(user.getUserType() != UserType.APPLICANT)
             {
-                System.out.println("\nOfficer slot(s) available: " + project.getAvailableOfficerSlots());
+                System.out.println("\nOfficer slot(s) available: " + (project.getAvailableOfficerSlots() - project.getAssignedOfficers().size()));
                 if(user.getUserType() == UserType.HDB_MANAGER){
                     System.out.print("Current Visibility: ");
                     if(project.getVisibility()){

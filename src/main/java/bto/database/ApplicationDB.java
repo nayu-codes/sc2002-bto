@@ -21,26 +21,16 @@ public class ApplicationDB implements CsvDatabase {
     private static final String CSV_FILE_PATH = "resources/ApplicationList.csv"; // Path to the CSV file
     private static ArrayList<BTOApplication> applicationList = new ArrayList<>(); // List to store Application objects
 
+    private ApplicationDB(){} // Prevents Instantiation
+
     /**
      * Initializes the ApplicationDB by loading data from the CSV file.
-     * This method reads the CSV file and populates the ApplicationList with
+     * This method reads the CSV file and populates the applicationList with
      * OfficerApplication objects.
      */
     public static void init() {
-        // Read from CSV file and populate the ApplicationList
+        // Read from CSV file and populate the applicationList
         readFromCSV();
-        // Print the total number of Applications loaded from the CSV file
-        System.out.println("Total Applications loaded: " + applicationList.size()); // TODO: Remove in production
-
-        // Print the details of each Application loaded from the CSV file
-        for (BTOApplication application : applicationList) {
-            System.out.println("Application ID: " + application.getApplicationId() + ", Applicant Name: "
-                    + application.getApplicant().getName() + ", Application Status: "
-                    + application.getStatus().toString()
-                    + application.getApplicationDate()); // TODO: Remove in production
-        }
-        // Export the ApplicationList to a CSV file
-        exportToCSV();
     }
 
     /**
@@ -96,11 +86,11 @@ public class ApplicationDB implements CsvDatabase {
                 applicationList.add(Application);
             }
         } catch (IOException e) {
-            System.err.println("Error reading CSV file: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error reading CSV file: " + e.getMessage());
         } catch (NumberFormatException e) {
-            System.err.println("Error parsing number: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error parsing number: " + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("Error parsing CSV line: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error parsing CSV line: " + e.getMessage());
         }
     }
 
@@ -129,7 +119,7 @@ public class ApplicationDB implements CsvDatabase {
                 bw.write(sb.toString());
             }
         } catch (IOException e) {
-            System.err.println("Error writing to CSV file: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error writing to CSV file: " + e.getMessage());
         }
     }
 

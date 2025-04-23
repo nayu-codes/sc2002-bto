@@ -13,6 +13,12 @@ import bto.ui.TerminalUtils;
 public class ApplicationDetails {
     private ApplicationDetails(){} // Prevents Instantiation
 
+    /**
+     * Displays the application details for a selected application.
+     * 
+     * @param user The user whose application details is to be displayed.
+     * @param application The selected application which details is to be displayed.
+     */
     public static void start(User user, BTOApplication application){
         int option = -1;
         String userOption = "";

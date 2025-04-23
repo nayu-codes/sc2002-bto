@@ -17,6 +17,8 @@ public class RegistrationDB implements CsvDatabase {
     private static final String CSV_FILE_PATH = "resources/OfficerRegistrationList.csv"; // Path to the CSV file
     private static ArrayList<OfficerRegistration> registrationList = new ArrayList<>(); // List to store Registration objects
 
+    private RegistrationDB(){} // Prevents Instantiation
+
     /**
      * Initializes the RegistrationDB by loading data from the CSV file.
      * This method reads the CSV file and populates the registrationList with OfficerRegistration objects.
@@ -24,15 +26,6 @@ public class RegistrationDB implements CsvDatabase {
     public static void init() {
         // Read from CSV file and populate the registrationList
         readFromCSV();
-        // Print the total number of registrations loaded from the CSV file
-        System.out.println("Total registrations loaded: " + registrationList.size()); // TODO: Remove in production
-
-        // Print the details of each registration loaded from the CSV file
-        for (OfficerRegistration registration : registrationList) {
-            System.out.println("Registration ID: " + registration.getRegistrationId() + ", Officer Name: " + registration.getOfficer().getName() + "Project Name" + registration.getProject().getName() + ", Registration Status: " + registration.getRegistrationStatus().toString()); // TODO: Remove in production
-        }
-        // Export the registrationList to a CSV file
-        exportToCSV();
     }
 
     /**
@@ -67,11 +60,11 @@ public class RegistrationDB implements CsvDatabase {
                 registrationList.add(registration);
             }
         } catch (IOException e) {
-            System.err.println("Error reading CSV file: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error reading CSV file: " + e.getMessage()); 
         } catch (NumberFormatException e) {
-            System.err.println("Error parsing number: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error parsing number: " + e.getMessage()); 
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("Error parsing CSV line: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error parsing CSV line: " + e.getMessage()); 
         }
     }
 
@@ -91,7 +84,7 @@ public class RegistrationDB implements CsvDatabase {
                 registration.getRegistrationStatus().toString() + "\n");
             }
         } catch (IOException e) {
-            System.err.println("Error writing to CSV file: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error writing to CSV file: " + e.getMessage()); 
         }
     }
 

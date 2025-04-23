@@ -9,18 +9,23 @@ import bto.controller.RegistrationController;
 import bto.model.user.User;
 import bto.model.registration.OfficerRegistration;
 import bto.model.registration.RegistrationStatus;
-import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
-import bto.ui.enquiry.EnquiryDashboard;
-import bto.ui.enquiry.EnquiryManagement;
+import bto.ui.ChangePassword;
 import bto.ui.project.ProjectDashboard;
-import bto.ui.project.ProjectManagement;
-import bto.ui.registration.RegistrationDashboard;
 import bto.ui.application.ApplicationDashboard;
+import bto.ui.enquiry.EnquiryDashboard;
+import bto.ui.registration.RegistrationDashboard;
+import bto.ui.project.ProjectManagement;
+import bto.ui.enquiry.EnquiryManagement;
 
 public class OfficerProfileScreen {
     public OfficerProfileScreen() {} // Prevents instantiation
 
+    /**
+     * Displays the profile screen for a HDB officer
+     * 
+     * @param user a HDB officer
+     */
     public static void start(User user){
         int option = -1;
         Scanner scanner = new Scanner(System.in);
@@ -31,7 +36,7 @@ public class OfficerProfileScreen {
             System.out.print("\nLogin successful! Welcome, " + user.getName() + ".\n" +
                                "HDB Officer for: ");
 
-            if(RegistrationController.getRegistrationsByOfficer(user) != null){
+            if(!RegistrationController.getRegistrationsByOfficer(user).isEmpty()){
                 for (OfficerRegistration registration : RegistrationController.getRegistrationsByOfficer(user)){
                     if ((registration.getRegistrationStatus() == RegistrationStatus.SUCCESSFUL) && (ProjectController.getProjectStatus(registration.getProject()) == "Current")){
                         // Project Name (openingDate - ClosingDate)
@@ -39,8 +44,13 @@ public class OfficerProfileScreen {
                                            new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationOpeningDate()) + " - " +
                                            new SimpleDateFormat("dd/MM/yyyy").format(registration.getProject().getApplicationClosingDate()) + ")\n"
                                            );
+                    }else{
+                        System.out.println();
+                        break;
                     }
                 }
+            }else{
+                System.out.println();
             }
 
             // Menu for the user to select an option

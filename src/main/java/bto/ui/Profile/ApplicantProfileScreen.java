@@ -4,15 +4,20 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 import bto.model.user.User;
-import bto.ui.ChangePassword;
 import bto.ui.TerminalUtils;
-import bto.ui.enquiry.EnquiryDashboard;
+import bto.ui.ChangePassword;
 import bto.ui.project.ProjectDashboard;
 import bto.ui.application.ApplicationDashboard;
+import bto.ui.enquiry.EnquiryDashboard;
 
 public class ApplicantProfileScreen {
     private ApplicantProfileScreen() {} // Prevents instantiation
 
+    /**
+     * Displays the profile screen for an applicant.
+     * 
+     * @param user an Applicant
+     */
     public static void start(User user){
         int option = -1;
         Scanner scanner = new Scanner(System.in);

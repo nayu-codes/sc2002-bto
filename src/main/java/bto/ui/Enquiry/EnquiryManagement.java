@@ -16,6 +16,11 @@ import bto.ui.TerminalUtils;
 public class EnquiryManagement {
     private EnquiryManagement(){} // Prevents Instantiation
 
+         /**
+         * Displays the enquiries for a managed project for a HDB officer to view/reply
+         * 
+         * @param user A HDB officer 
+         */
         public static void start(User user){
         int option = -1;
         Scanner scanner = new Scanner(System.in);

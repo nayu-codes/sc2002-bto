@@ -11,6 +11,12 @@ import java.util.Scanner;
 public class ReportDashboard {
     private ReportDashboard(){} // Prevents Instantiation
 
+    /**
+     * Displays the report dashboard.
+     * This method is called when a HDB manager selects the option to view booking reports
+     * 
+     * @param manager the HDB manager
+     */
     public static void start(HDBManager manager) {
         int option = -1;
 
@@ -19,7 +25,7 @@ public class ReportDashboard {
         do {
             // Clear the screen and display the welcome message
             TerminalUtils.clearScreen();
-            System.out.println("\n+--------------------------------+\n" +
+            System.out.println("\n+---------------------------------+\n" +
                                 "|         Booking Reports         |\n" +
                                 "+---------------------------------+");
 
@@ -27,7 +33,7 @@ public class ReportDashboard {
             System.out.println("1. View Overall BTO Booking Report");
             System.out.println("2. View BTO Booking Report with filters");
             System.out.println("0. Exit");
-            System.out.println("+---------------------------------+");
+            System.out.println("+----------------------------------+");
 
             // Get user input for the menu option
             System.out.print("Please select an option: ");

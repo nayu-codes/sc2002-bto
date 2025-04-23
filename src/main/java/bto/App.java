@@ -10,8 +10,9 @@ import bto.database.Database;
 
 public final class App {
     private App(){} // Prevents instantiation
+
     /**
-     * Main class for the BTO application system.
+     * Main App for the BTO Application System.
      * This class contains the main method to run the application.
      * 
      * @param args Command line arguments (not used)

@@ -18,6 +18,12 @@ import bto.ui.TerminalUtils;
 public class ProjectDetails {
     private ProjectDetails(){} // Prevents Instantiation
 
+    /**
+     * Displays the project details for a selected project.
+     * 
+     * @param user The user whose project details is to be displayed.
+     * @param project The selected project which details is to be displayed.
+     */
     public static void start(User user, BTOProject project){
         int option = -1;
         String register = "";

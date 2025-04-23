@@ -1,19 +1,24 @@
 package bto.ui.application;
 
-import bto.model.user.User;
-import bto.ui.TerminalUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.text.SimpleDateFormat;
 
 import bto.controller.ApplicationController;
 import bto.controller.ReportController;
 import bto.model.application.BTOApplication;
+import bto.model.user.User;
+import bto.ui.TerminalUtils;
 
 public class ApplicationManagement {
     private ApplicationManagement(){} // Prevents Instantiation
 
+     /**
+     * Displays the application details for a selected application for a HDB officer to book/generate receipt
+     * 
+     * @param user A HDB officer 
+     * @param application The selected application which details is to be displayed.
+     */
     public static void start(User user, BTOApplication application){
         int option = -1;
         String book = "";

@@ -12,16 +12,16 @@ import bto.model.project.BTOProject;
 import bto.model.user.User;
 import bto.model.user.Applicant;
 import bto.model.user.HDBManager;
-
 import bto.ui.TerminalUtils;
 
 public class ApplicationDashboard {
     private ApplicationDashboard(){} // Prevents Instantiation
 
     /**
-     * Displays the application dashboard for the Applicant.
+     * Displays the application dashboard for the user.
+     * This method is called when the user selects the option to view their project applications.
      * 
-     * @param user The user whose application dashboard is to be displayed.
+     * @param user the user (Applicant/HDB Officer) whose application dashboard is to be displayed.
      */
     public static void start(User user){
         int choice = -1; // Initialize choice to an invalid value
@@ -87,6 +87,11 @@ public class ApplicationDashboard {
         }while(choice != 0); // Continue until the user chooses to go back to the main menu
     }
 
+    /**
+     * Displays the application dashboard for a managed project for a HDB manager.
+     * 
+     * @param manager the HDB manager
+     */
     public static void managerView(HDBManager manager) {
         int choice = -1; // Initialize choice to an invalid value
         Scanner scanner = new Scanner(System.in);

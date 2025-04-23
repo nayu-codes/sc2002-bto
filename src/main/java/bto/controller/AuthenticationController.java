@@ -12,6 +12,7 @@ public class AuthenticationController {
 
     /**
      * Login method to authenticate the user.
+     * 
      * @param userId the user ID entered by the user
      * @param password the password entered by the user
      * 
@@ -30,8 +31,10 @@ public class AuthenticationController {
 
     /**
      * Validates the user credentials against the database.
+     * 
      * @param userId the user ID entered by the user
      * @param password the password entered by the user
+     * 
      * @return true if the credentials are valid, false otherwise
      */
     public static boolean validateCredentials(String userId, String password) {
@@ -53,6 +56,7 @@ public class AuthenticationController {
 
     /**
      * Create a new Applicant user in the database.
+     * 
      * @param userId the user ID entered by the user
      * @param password the password entered by the user
      * @param name the name entered by the user

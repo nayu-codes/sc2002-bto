@@ -8,6 +8,11 @@ import java.util.Scanner;
 public class ChangePassword {
     private ChangePassword(){} // Prevents instantiation
 
+    /**
+     * This method is called when the user selects the option to change their password
+     * 
+     * @param user any user
+     */
     public static void start(User user) {
         Scanner scanner = new Scanner(System.in);
 
@@ -22,7 +27,7 @@ public class ChangePassword {
         }
 
         // Prompt the user to confirm the new password
-        System.out.print("  Confirm new password: ");
+        System.out.println("\nConfirm new password: ");
         String confirmPassword = scanner.nextLine();
 
         // Check if the new password and confirm password match

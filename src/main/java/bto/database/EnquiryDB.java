@@ -26,6 +26,8 @@ public class EnquiryDB implements CsvDatabase {
     private static ArrayList<Enquiry> enquiryList = new ArrayList<>(); // List to store Enquiry objects
     private static final String CSV_FILE_PATH = "resources/EnquiryList.csv"; // Path to the CSV file
 
+    private EnquiryDB(){} // Prevents Instantiation
+
     /**
      * Initializes the EnquiryDB by loading data from the CSV file.
      * This method reads the CSV file and populates the EnquiryList HashMap with Enquiry objects.
@@ -33,13 +35,6 @@ public class EnquiryDB implements CsvDatabase {
     public static void init() {
         // Read from CSV file and populate the enquiryList HashMap
         readFromCSV();
-        // Print the total number of enquiries loaded from the CSV file
-        System.out.println("Total enquiries loaded: " + enquiryList.size()); // TODO: Remove in production
-
-        // Print the details of each enquiry loaded from the CSV file
-        for (Enquiry enquiry : enquiryList) {
-            System.out.println("Enquiry ID: " + enquiry.getEnquiryId() + ", Applicant Name: " + enquiry.getApplicantName() + ", Project Name: " + enquiry.getProjectName() + ", Applicant Message: " + enquiry.getApplicantMessage().getMessage() + ", Reply Message: " + (enquiry.getReplyMessage() != null ? enquiry.getReplyMessage().getMessage() : "No reply yet")); // TODO: Remove in production
-        }
     }
 
     /**
@@ -109,11 +104,11 @@ public class EnquiryDB implements CsvDatabase {
                 enquiryList.add(enquiry);
             }
         } catch (IOException e) {
-            System.err.println("Error reading CSV file: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error reading CSV file: " + e.getMessage()); 
         } catch (NumberFormatException e) {
-            System.err.println("Error parsing number: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error parsing number: " + e.getMessage()); 
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("Error parsing CSV line: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error parsing CSV line: " + e.getMessage()); 
         }
     }
 
@@ -143,7 +138,7 @@ public class EnquiryDB implements CsvDatabase {
                 bw.write(sb.toString());
             }
         } catch (IOException e) {
-            System.err.println("Error writing to CSV file: " + e.getMessage()); // TODO: Remove in production
+            System.err.println("Error writing to CSV file: " + e.getMessage()); 
         }
     }
 
