@@ -291,6 +291,8 @@ public class ProjectCreatorWizard {
         Scanner scanner = new Scanner(System.in);
         int option = -2;
 
+        // Variables for project editing
+        int projectId = project.getProjectId(); // Get the project ID
         String originalProjectName = project.getName(); // Store the original project name
         String projectName = project.getName();
         String neighbourhood = project.getNeighbourhood();
@@ -343,32 +345,44 @@ public class ProjectCreatorWizard {
             switch (option) {
                 case 1:
                     projectName = handleProjectName(scanner, projectName); // Get new project name
-                    project.setName(projectName); // Update the project name
                     break;
                 case 2:
                     neighbourhood = handleNeighbourhood(scanner, neighbourhood); // Get new neighbourhood
-                    project.setNeighbourhood(neighbourhood);
                     break;
                 case 3:
                     List<Date> applicationDates = handleApplicationDates(scanner, manager, applicationOpeningDate, applicationClosingDate); // Get new application dates
                     applicationOpeningDate = applicationDates.get(0); // Get the opening date from the list
                     applicationClosingDate = applicationDates.get(1); // Get the closing date from the list
 
-                    project.setApplicationOpeningDate(applicationOpeningDate); // Update the project opening date
-                    project.setApplicationClosingDate(applicationClosingDate); // Update the project closing date
                     break;
                 case 4:
                     availableOfficerSlots = handleOfficerSlots(scanner, availableOfficerSlots); // Get new officer slots
-                    project.setAvailableOfficerSlots(availableOfficerSlots); // Update the project officer slots
                     break;
                 case 5:
                     visibility = handleProjectVisibility(scanner, visibility); // Get new project visibility
-                    project.setVisibility(visibility);
                     break;
                 case 0:
                     // Save changes and exit
                     try {
-                        BTOProjectDB.updateBTOProject(originalProjectName, project); // Update the project in the database
+                        // Create a new BTOProject object with the updated details
+                        BTOProject updatedProject = new BTOProject(projectId, projectName, neighbourhood, flatTypes, flatCount, flatPrice, applicationOpeningDate, applicationClosingDate, manager, project.getAssignedOfficers(), availableOfficerSlots, visibility);
+
+                        // If project name changes, update ApplicationDB, RegistrationDB, and EnquiryDB
+                        for (BTOApplication application : ApplicationDB.getApplicationsByProjectName(originalProjectName)) {
+                            application.setProject(updatedProject);
+                        }
+                        for (OfficerRegistration registration : RegistrationDB.getAllRegistrations()) {
+                            if (registration.getProject().getName().equals(originalProjectName)) {
+                                registration.setProject(updatedProject);
+                            }
+                        }
+                        for (Enquiry enquiry : EnquiryDB.getEnquiryList()) {
+                            if (enquiry.getProjectName().equals(originalProjectName)) {
+                                enquiry.setProjectName(projectName);
+                            }
+                        }
+
+                        BTOProjectDB.updateBTOProject(originalProjectName, updatedProject); // Update the project in the database
                         System.out.println("Project updated successfully!");
                     } catch (Exception e) {
                         System.out.println("Error updating project: " + e.getMessage());
@@ -382,21 +396,6 @@ public class ProjectCreatorWizard {
             }
 
         } while (option != 0); // Continue until user enters '0'
-
-        // If project name changes, update ApplicationDB, RegistrationDB, and EnquiryDB
-        for (BTOApplication application : ApplicationDB.getApplicationsByProjectName(originalProjectName)) {
-            application.setProject(project);
-        }
-        for (OfficerRegistration registration : RegistrationDB.getAllRegistrations()) {
-            if (registration.getProject().getName().equals(originalProjectName)) {
-                registration.setProject(project);
-            }
-        }
-        for (Enquiry enquiry : EnquiryDB.getEnquiryList()) {
-            if (enquiry.getProjectName().equals(originalProjectName)) {
-                enquiry.setProjectName(projectName);
-            }
-        }
     }
 
     /**
