@@ -403,8 +403,6 @@ public class ProjectCreatorWizard {
      * 
      * @param manager     The HDB Manager who is deleting the project.
      * @param project     The BTOProject to be deleted. 
-     * 
-     * @return
      */
     public static void deleteProject(HDBManager manager, BTOProject project) {
         Scanner scanner = new Scanner(System.in);
@@ -671,6 +669,11 @@ public class ProjectCreatorWizard {
 
     /**
      * Handle project visibility creation/editing.
+     * 
+     * @param scanner The Scanner object for user input.
+     * @param visibility null if project visibility is not yet created, otherwise the current project visibility.
+     * 
+     * @return The project visibility entered by the user.
      */
     private static boolean handleProjectVisibility(Scanner scanner, boolean visibility) {
         String visibilityInput = null;

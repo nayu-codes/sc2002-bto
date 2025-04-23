@@ -19,8 +19,7 @@ public class ProjectFilter {
     /**
      * Getting available projects based on the age and marital status filter
      * 
-     * @param age The age of the user.
-     * @param maritalStatus The marital status of the user (e.g., "Single", "Married").
+     * @param user The user object representing the logged-in user.
      * 
      * @return A list of BTOProject objects that are eligible for the user based on the filters.
      */

@@ -11,3 +11,5 @@ bto.ui.application
 bto.ui.enquiry
 bto.ui.profile
 bto.ui.project
+bto.ui.registration
+bto.ui.report

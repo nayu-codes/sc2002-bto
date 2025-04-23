@@ -18,6 +18,7 @@ public class RegistrationDetails {
     * This method is called when the user selects the option to view their registration details.
     * 
     * @param manager the HDB Manager user whose registration details are to be displayed
+    * @param registration the OfficerRegistration object containing the registration details
     */
     public static void start(HDBManager manager, OfficerRegistration registration){
         Scanner scanner = new Scanner(System.in);
