@@ -41,7 +41,7 @@ public class ProjectDetails {
                 System.out.println("| 3 | Register for Project       |");
             }
             // Check if the user is a manager
-            if (user.getUserType() == UserType.HDB_MANAGER) {
+            if (user.getUserType() == UserType.HDB_MANAGER && project.getProjectManager().getName().equals(user.getName())) {
                 System.out.println("| 1 | Set Visibility             |");
                 System.out.println("| 2 | Edit Project               |");
                 System.out.println("| 3 | Delete Project             |");
