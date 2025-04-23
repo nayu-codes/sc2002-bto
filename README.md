@@ -66,11 +66,16 @@ The BTO Management System is a centralized platform designed for applicants and 
 - [x] Submit/withdraw BTO applications
 
 **HDB Officer:**
-- [ ] Handle applicant enquiries
-- [ ] Generate Application receipt for flat booking
+- [x] Handle applicant enquiries
+- [x] Generate Application receipt for flat booking
 
 **HDB Manager:**
-- [ ] Create/delete BTO Projects
-- [ ] Approve/reject HDB Officer registrations
-- [ ] Approve/reject BTO Applications for managed projects
-- [ ] Generate application reports
+- [x] Create/delete BTO Projects
+- [x] Approve/reject HDB Officer registrations
+- [x] Approve/reject BTO Applications for managed projects
+- [x] Generate application reports
+
+# Notes
+This project assumes the following
+- User names are UNIQUE and DISTINCT
+- Project names are UNIQUE and DISTINCT

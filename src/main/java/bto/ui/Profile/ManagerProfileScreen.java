@@ -53,11 +53,10 @@ public class ManagerProfileScreen {
                                "| 1 | Change Password                  |\n" +
                                "| 2 | View All Projects                |\n" +
                                "| 3 | Create New Project               |\n" +
-                               "| 4 | Edit / Delete A Project          |\n" +
-                               "| 5 | Officer Registration Management  |\n" + 
-                               "| 6 | BTO Application Management       |\n" +
-                               "| 7 | Enquiry Management               |\n" +
-                               "| 8 | Generate Booking Reports         |\n" +
+                               "| 4 | Officer Registration Management  |\n" + 
+                               "| 5 | BTO Application Management       |\n" +
+                               "| 6 | Enquiry Management               |\n" +
+                               "| 7 | Generate Booking Reports         |\n" +
                                "+---+----------------------------------+\n" +
                                "| 0 | Log Out                          |\n" +
                                "+---+----------------------------------+\n");
@@ -88,22 +87,18 @@ public class ManagerProfileScreen {
                     ProjectCreatorWizard.start(user);
                     break;
                 case 4:
-                    // Calls ProjectCreatorWizard to edit/delete a project
-                    //ProjectCreatorWizard.start(user);
-                    break;
-                case 5:
                     // Calls RegistrationDashboard to view all registrations
                     RegistrationDashboard.managerView(manager);
                     break;
-                case 6:
+                case 5:
                     // Calls ApplicationDashboard as a manager
                     ApplicationDashboard.managerView(manager);                    
                     break;
-                case 7:
+                case 6:
                     // Calls EnquiryDashboard to view all enquiries
                     EnquiryDashboard.managerView(manager);
                     break;
-                case 8:
+                case 7:
                     // Calls ReportDashboard to generate booking reports
                     ReportDashboard.start(manager);
                     break;

@@ -56,10 +56,11 @@ public class ProjectDashboard{
                 for (BTOProject project : filteredProjects) {
                     // Print in table format, with consistent spacing
                     // i | Project Name | Neighbourhood: Location | Application Opening - Closing Date
-                    System.out.printf("  %3d. | %15s | %15s | %10s - %10s\n", 
+                    System.out.printf("  %3d. | %15s | %15s | %10s - %10s %3s\n", 
                         i, project.getName(), project.getNeighbourhood(),
                         new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationOpeningDate()),
-                        new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationClosingDate())
+                        new SimpleDateFormat("dd/MM/yyyy").format(project.getApplicationClosingDate()),
+                        project.getProjectManager().getName().equals(user.getName()) ? "(m)" : "" // Check if the user is the project manager
                     );
                     i++;
                 };
