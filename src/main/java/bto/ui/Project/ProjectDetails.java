@@ -68,7 +68,7 @@ public class ProjectDetails {
                         if(ApplicationController.checkStatus(user, project)){
                             ApplicationController.selectFlatType(user, project);
                         }
-                    }else{
+                    } else if (user.getUserType() == UserType.HDB_MANAGER && project.getProjectManager().getName().equals(user.getName())){
                         do{
                             System.out.println("Do you want to toggle the visibility of this project? (Y for Yes, N for No)");
                             System.out.print("Enter your choice: ");
@@ -86,6 +86,9 @@ public class ProjectDetails {
                                 continue;
                             }
                         }while(!(visible.toLowerCase().contains("y")) || !(visible.toLowerCase().contains("n")));
+                    } else{
+                        System.out.println("Invalid option. Please try again.");
+                        break;
                     }
                     break;
                 case 2:
@@ -93,7 +96,7 @@ public class ProjectDetails {
                         // Creates an enquiry
                         EnquiryController.createEnquiry(user, project);
                     }
-                    else if (user.getUserType() == UserType.HDB_MANAGER) {
+                    else if (user.getUserType() == UserType.HDB_MANAGER && project.getProjectManager().getName().equals(user.getName())) {
                         // Go to ProjectCreatorWizard to edit project
                         ProjectCreatorWizard.editProject((HDBManager) user, project);
                     }
@@ -122,7 +125,7 @@ public class ProjectDetails {
                             }
                         }while(!(register.toLowerCase().contains("y")) || !(register.toLowerCase().contains("n")));
                     }
-                    else if (user.getUserType() == UserType.HDB_MANAGER) {
+                    else if (user.getUserType() == UserType.HDB_MANAGER && project.getProjectManager().getName().equals(user.getName())) {
                         // Go to ProjectCreatorWizard to delete project
                         ProjectCreatorWizard.deleteProject((HDBManager) user, project);
                     }
